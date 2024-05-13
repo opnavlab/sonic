@@ -1,0 +1,325 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Camera &#8212; SONIC  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Centroider" href="centroider.html" />
+    <link rel="prev" title="BrownConrady" href="brownconrady.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-+sonic">
+<span id="camera"></span><h1>Camera<a class="headerlink" href="#module-+sonic" title="Permalink to this heading">¶</a></h1>
+<dl class="mat class">
+<dt class="sig sig-object mat" id="sonic.Camera">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">sonic.</span></span><span class="sig-name descname"><span class="pre">Camera</span></span><a class="headerlink" href="#sonic.Camera" title="Permalink to this definition">¶</a></dt>
+<dd><div class="members docutils container">
+<dl>
+<dt>Constructor Summary</dt><dd><dl class="mat method">
+<dt class="sig sig-object mat" id="sonic.Camera.Camera">
+<span class="sig-name descname"><span class="pre">Camera</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">varargin</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Camera.Camera" title="Permalink to this definition">¶</a></dt>
+<dd><p>Instantiates a model for a framing camera. Depending on the
+arguments, either invokes <cite>constructFromFOV()</cite> or
+<cite>constructFromK()</cite> to complete the model instantiation. See
+those methods below for details.</p>
+<dl class="simple">
+<dt>Inputs:</dt><dd><ul class="simple">
+<li><p>varargin: see <cite>constructFromFOV()</cite> and <cite>constructFromK()</cite>.</p></li>
+</ul>
+</dd>
+<dt>Outputs:</dt><dd><ul class="simple">
+<li><p>obj (sonic.Camera): Camera object, containing camera
+intrinsics and a distortion model.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Last revised: 03/15/24
+Last author: Michael Krause</p>
+</dd></dl>
+
+</dd>
+<dt>Property Summary</dt><dd><dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.Camera.K">
+<span class="sig-name descname"><span class="pre">K</span></span><a class="headerlink" href="#sonic.Camera.K" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.Camera.Kinv">
+<span class="sig-name descname"><span class="pre">Kinv</span></span><a class="headerlink" href="#sonic.Camera.Kinv" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.Camera.alpha">
+<span class="sig-name descname"><span class="pre">alpha</span></span><a class="headerlink" href="#sonic.Camera.alpha" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.Camera.d_x">
+<span class="sig-name descname"><span class="pre">d_x</span></span><a class="headerlink" href="#sonic.Camera.d_x" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.Camera.d_y">
+<span class="sig-name descname"><span class="pre">d_y</span></span><a class="headerlink" href="#sonic.Camera.d_y" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.Camera.dist_model">
+<span class="sig-name descname"><span class="pre">dist_model</span></span><a class="headerlink" href="#sonic.Camera.dist_model" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.Camera.hfov_RAD">
+<span class="sig-name descname"><span class="pre">hfov_RAD</span></span><a class="headerlink" href="#sonic.Camera.hfov_RAD" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.Camera.ifov_h_RAD">
+<span class="sig-name descname"><span class="pre">ifov_h_RAD</span></span><a class="headerlink" href="#sonic.Camera.ifov_h_RAD" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.Camera.ifov_v_RAD">
+<span class="sig-name descname"><span class="pre">ifov_v_RAD</span></span><a class="headerlink" href="#sonic.Camera.ifov_v_RAD" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.Camera.u_p">
+<span class="sig-name descname"><span class="pre">u_p</span></span><a class="headerlink" href="#sonic.Camera.u_p" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.Camera.v_p">
+<span class="sig-name descname"><span class="pre">v_p</span></span><a class="headerlink" href="#sonic.Camera.v_p" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.Camera.vfov_RAD">
+<span class="sig-name descname"><span class="pre">vfov_RAD</span></span><a class="headerlink" href="#sonic.Camera.vfov_RAD" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd>
+<dt>Method Summary</dt><dd><dl class="mat method">
+<dt class="sig sig-object mat" id="sonic.Camera.constructFromFOV">
+<span class="sig-name descname"><span class="pre">constructFromFOV</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">fov</span></em>, <em class="sig-param"><span class="pre">fov_type</span></em>, <em class="sig-param"><span class="pre">direction</span></em>, <em class="sig-param"><span class="pre">res</span></em>, <em class="sig-param"><span class="pre">dist_model</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Camera.constructFromFOV" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a model for a framing camera using information about
+the camera’s FOV or instantaneous FOV, as well as sensor
+resolution. Also consumes a distortion model. Note that x/y
+directions here coorespond with the canonical camera
+model, i.e.: +z along boresight, +x to the right looking out of
+the camera, +y down looking out of the camera. As well, u/v
+cooresponds to x/y directions, but is centered in the top-left
+of the image.</p>
+<p>NOTE: Cannot directly call this method. Will be invoked based
+on the appropriate arguments being passed into the constructor.</p>
+<p>NOTE: When constructing a camera model with this method, square
+pixels and no shear are assumed. If this is not the case,
+construct the camera model directly from the camera intrinsics.</p>
+<dl class="simple">
+<dt>Inputs:</dt><dd><ul class="simple">
+<li><p>fov (1x1 double): Field-of-view or IFOV, in radians. In
+either case, these are full-angle values.</p></li>
+<li><p>fov_type (1x1 string): String specifying whether the
+previous argument was an FOV (‘fov’) or IFOV (‘ifov’).</p></li>
+<li><p>direction (1x1 string): String indicating the direction
+of the aforementioned FOV/IFOV: ‘h’ for horizontal
+FOV/IFOV, and ‘v’ for vertical FOV/IFOV.</p></li>
+<li><p>res (2 double): Resolution of the sensor, specified as
+[# of rows, # of cols]</p></li>
+<li><p>dist_model (1x1 sonic.DistortionModel): Distortion model
+used to transform projected points prior to being passed
+through the camera intrinsics.</p></li>
+</ul>
+</dd>
+<dt>Outputs:</dt><dd><ul class="simple">
+<li><p>obj (sonic.Camera): Camera object, containing camera
+intrinsics and a distortion model.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Last revised: 03/15/24
+Last author: Michael Krause</p>
+</dd></dl>
+
+<dl class="mat method">
+<dt class="sig sig-object mat" id="sonic.Camera.constructFromK">
+<span class="sig-name descname"><span class="pre">constructFromK</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">d_x</span></em>, <em class="sig-param"><span class="pre">d_y</span></em>, <em class="sig-param"><span class="pre">alpha</span></em>, <em class="sig-param"><span class="pre">u_p</span></em>, <em class="sig-param"><span class="pre">v_p</span></em>, <em class="sig-param"><span class="pre">dist_model</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Camera.constructFromK" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a model for a framing camera using elements of the
+camera calibration matrix. Also consumes a distortion model.
+Note that x/y directions here coorespond with the canonical
+camera model, i.e.: +z along boresight, +x to the right looking
+out of the camera, +y down looking out of the camera. As well,
+u/v cooresponds to x/y directions, but is centered in the
+top-left of the image.</p>
+<p>NOTE: Cannot directly call this method. Will be invoked based
+on the appropriate arguments being passed into the constructor.</p>
+<dl class="simple">
+<dt>Inputs:</dt><dd><ul class="simple">
+<li><p>d_x (1x1 double): Focal length/pixel pitch, x direction</p></li>
+<li><p>d_y (1x1 double): Focal length/pixel pitch, y direction</p></li>
+<li><p>alpha (1x1 double): Pixel shear</p></li>
+<li><p>u_p (1x1 double): Center point, u coordinates (pixels)</p></li>
+<li><p>v_p (1x1 double): Center point, v coordinates (pixels)</p></li>
+<li><p>dist_model (1x1 sonic.DistortionModel): Distortion model
+used to transform projected points prior to being passed
+through the camera intrinsics.</p></li>
+</ul>
+</dd>
+<dt>Outputs:</dt><dd><ul class="simple">
+<li><p>obj (sonic.Camera): Camera object, containing camera
+intrinsics and a distortion model.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Last revised: 03/15/24
+Last author: Michael Krause</p>
+</dd></dl>
+
+<dl class="mat method">
+<dt class="sig sig-object mat" id="sonic.Camera.synthImage">
+<span class="sig-name descname"><span class="pre">synthImage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">to_proj</span></em>, <em class="sig-param"><span class="pre">attitude</span></em>, <em class="sig-param"><span class="pre">velocity</span></em>, <em class="sig-param"><span class="pre">opts</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Camera.synthImage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given 3D geometry (currently only supports 3D points, i.e.,
+Points3 or PointsS2), projects this geometry into a synthetic
+image per the camera model.</p>
+<dl class="simple">
+<dt>Inputs:</dt><dd><ul class="simple">
+<li><p>obj (1x1 sonic.Camera): Camera object, containing camera
+intrinsics and a distortion model.</p></li>
+<li><p>to_proj (1x1 sonic.Points3 or sonic.PointsS2): Points to
+project into an image.</p></li>
+<li><p>attitude (1x1 sonic.Attitude): Attitude of the object
+relative to the camera</p></li>
+<li><p>velocity (3x1 double): OPTIONAL: Velocity of the camera
+in the inertial frame. Defaults to zero if not supplied.</p></li>
+<li><p>opts.projectBehindCamera (1x1 logical): OPTIONAL:
+defaults to false. If true, also projects points that lie
+behind the camera. See sonic.Project for more details.</p></li>
+<li><p>opts.cropFOV (2 double or []): OPTIONAL: If
+specified, allows the user to override the FOV of
+the camera when cropping the projected image. Can specify
+as a 2 element vector, [hfov_RAD, vfov_RAD], or [] to not
+crop at all. Defaults to the HFOV/VFOV of the camera.</p></li>
+</ul>
+</dd>
+<dt>Outputs:</dt><dd><ul class="simple">
+<li><p>proj_px (1x1 sonic.Points2): 2D points lying in the image
+plane, in pixel coordinates. Represents the projection of
+the provided points per the camera model.</p></li>
+<li><p>proj_map (1xn logical): Given that <cite>to_proj</cite> contains n
+points, this is 1-by-n logical vector containing m true
+values (where m points were successfully projected into the
+resultant image), corresponding to each index of a
+successful projection.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Last revised: 03/15/24
+Last author: Michael Krause</p>
+</dd></dl>
+
+</dd>
+</dl>
+</div>
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">SONIC</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installing SONIC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples with SONIC</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../api.html">API</a><ul>
+      <li>Previous: <a href="brownconrady.html" title="previous chapter">BrownConrady</a></li>
+      <li>Next: <a href="centroider.html" title="next chapter">Centroider</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2024, SEAL.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.0.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/api_src/camera.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

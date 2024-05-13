@@ -35,30 +35,28 @@ classdef Lines2 < sonic.GeometryP2
         %   and perpendicular distance, the convention for conversion into
         %   P2 coordinates is:
         %       
-        %           Coords = [  cos(angle)
-        %                       sin(angle)
-        %                       -distance  ];
+        %           Coords = [cos(angle); sin(angle); -distance];
         %
         %   Note that this object can contain an arbitrary number of lines.
         %
         %   Inputs:
         %       - coeffs (3xn double): P2 coordinates of `n` lines, with 
-        %       the coordinates of each line as the columns of the matrix.
+        %         the coordinates of each line as the columns of the matrix.
         %   
         %           OR
         %   
         %       - angle (n double): Vector of angles in radians (measured 
-        %       clockwise from the +x axis) for each line, with the n-th 
-        %       entry cooresponding to the n-th line. Must have the same 
-        %       length as `perp_dist`.
+        %         clockwise from the +x axis) for each line, with the n-th 
+        %         entry cooresponding to the n-th line. Must have the same 
+        %         length as `perp_dist`.
         %       - perp_dist (n double): Vector of perpendicular distances 
-        %       from the origin to each line, with the n-th entry
-        %       cooresponding to the n-th line. Must have same length as
-        %       `angle`.
+        %         from the origin to each line, with the n-th entry
+        %         cooresponding to the n-th line. Must have same length as
+        %         `angle`.
         %
         %   Outputs:
         %       - obj (1x1 sonic.Lines2): Lines2 object, which can contain
-        %       a multitude of lines.
+        %         a multitude of lines.
         %
         %   Last revised: 4/05/24
         %   Last author: Michael Krause
@@ -179,7 +177,7 @@ classdef Lines2 < sonic.GeometryP2
         %   
         %   Inputs:
         %       - obj (sonic.Lines2): A Lines2 object with m finite
-        %           lines
+        %         lines
         %
         %   Outputs:
         %       - val (3xm): The P2 realization of all finite lines
@@ -197,7 +195,7 @@ classdef Lines2 < sonic.GeometryP2
         %   
         %   Inputs:
         %       - obj (sonic.Lines2): A Lines2 object with k lines at
-        %           infinity
+        %         infinity
         %
         %   Outputs:
         %       - val (3xk): The P2 realization of all infinite lines
@@ -216,7 +214,7 @@ classdef Lines2 < sonic.GeometryP2
         %   
         %   Inputs:
         %       - obj (sonic.Lines2): A Lines2 object with m finite
-        %           lines
+        %         lines
         %
         %   Outputs:
         %       - val (1xm): The angle of each line, in radians.
@@ -234,7 +232,7 @@ classdef Lines2 < sonic.GeometryP2
         %   
         %   Inputs:
         %       - obj (sonic.Lines2): A Lines2 object with m finite
-        %           lines
+        %         lines
         %
         %   Outputs:
         %       - val (1xm): The perpendicular distance of each line

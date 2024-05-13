@@ -12,21 +12,21 @@ classdef Project
         %
         %   Inputs:
         %       - to_proj (1x1 sonic.Points3 OR sonic.PointsS2 OR 
-        %       sonic.Ellipsoid): Object to project. Must be expressed in 
-        %       the camera frame.
+        %         sonic.Ellipsoid): Object to project. Must be expressed in 
+        %         the camera frame.
         %       - proj_behind_cam (1x1 logical): Flag indicating whether
-        %       to project points that lie behind the plane of the camera.
-        %       OPTIONAL: defaults to FALSE. 
+        %         to project points that lie behind the plane of the camera.
+        %         OPTIONAL: defaults to FALSE. 
         %
         %   Outputs:
         %       - proj_obj (1x1): Set of projected object(s),
-        %       lying on the image plane at z = 1.
+        %         lying on the image plane at z = 1.
         %       - did_proj (1xn logical): Mapping of which points were
-        %       successfully projected. If proj_behind_cam was set to false
-        %       (as it is by default), only points in front of the camera
-        %       will be projected. Thus, it will be a 1xn vector (where n
-        %       is the number of points contained in to_proj), with m true
-        %       entries, where m points lie in front of the camera. 
+        %         successfully projected. If proj_behind_cam was set to false
+        %         (as it is by default), only points in front of the camera
+        %         will be projected. Thus, it will be a 1xn vector (where n
+        %         is the number of points contained in to_proj), with m true
+        %         entries, where m points lie in front of the camera. 
         %
         %   Last revised: 03/06/24
         %   Last author: Michael Krause
@@ -98,22 +98,22 @@ classdef Project
         %
         %   Inputs:
         %       - to_proj (1x1 sonic.Points3 OR sonic.PointsS2): Object to
-        %       project. Currently only supports projection of points,
-        %       which must either be 3D points or points lying on the
-        %       sphere.
+        %         project. Currently only supports projection of points,
+        %         which must either be 3D points or points lying on the
+        %         sphere.
         %       - proj_behind_cam (1x1 logical): Flag indicating whether
-        %       to project points that lie behind the plane of the camera.
-        %       OPTIONAL: defaults to FALSE. 
+        %         to project points that lie behind the plane of the camera.
+        %         OPTIONAL: defaults to FALSE. 
         %
         %   Outputs:
         %       - proj_obj (1x1 sonic.Points2): Set of projected points,
-        %       lying on the image plane at z = 0.
+        %         lying on the image plane at z = 0.
         %       - did_proj (1xn logical): Mapping of which points were
-        %       successfully projected. If proj_behind_cam was set to false
-        %       (as it is by default), only points in front of the camera
-        %       will be projected. Thus, it will be a 1xn vector (where n
-        %       is the number of points contained in to_proj), with m true
-        %       entries, where m points lie in front of the camera. 
+        %         successfully projected. If proj_behind_cam was set to false
+        %         (as it is by default), only points in front of the camera
+        %         will be projected. Thus, it will be a 1xn vector (where n
+        %         is the number of points contained in to_proj), with m true
+        %         entries, where m points lie in front of the camera. 
         %
         %   Last revised: 03/06/24
         %   Last author: Michael Krause
@@ -168,12 +168,12 @@ classdef Project
         %
         %   Inputs:
         %       - to_rot (1x1 sonic.Points3 or sonic.PointsS2): Object to
-        %       rotate. Currently only supports rotating 3D points.
+        %         rotate. Currently only supports rotating 3D points.
         %       - rot_att (1x1 sonic.Attitude): Object to Camera attitude. 
         %
         %   Outputs:
         %       - rot_obj (1x1 sonic.Points3 or sonic.PointsS2): Rotated
-        %       object. Return type will match the input type.
+        %         object. Return type will match the input type.
         %
         %   Last revised: 03/06/24
         %   Last author: Michael Krause
@@ -221,23 +221,23 @@ classdef Project
         %
         %   Inputs:
         %       - to_crop (1x1 sonic.Points2): 2D scene to crop. Currently
-        %       only supports cropping a set of 2D points. 
+        %         only supports cropping a set of 2D points. 
         %       - hfov_RAD (1x1 double): Horizontal field-of-view, in
-        %       radians. This is a full-angle FOV.
+        %         radians. This is a full-angle FOV.
         %       - vfov_RAD (1x1 double): Vertical field-of-view, in
-        %       radians. This is a full-angle FOV.
+        %         radians. This is a full-angle FOV.
         %       - dist_model (1x1 sonic.DistortionModel): OPTIONAL, if
-        %       specified will consider the effect of the distortion model
-        %       when calculating the cropping bounds. 
+        %         specified will consider the effect of the distortion model
+        %         when calculating the cropping bounds. 
         %
         %   Outputs:
         %       - cropped_obj (1x1 sonic.Points2): Set of points which were
-        %       contained within the calculated cropping bounds. 
+        %         contained within the calculated cropping bounds. 
         %       - crop_map (1xn logical): Mapping of which points were
-        %       successfully projected. It will be a 1xn vector (where n
-        %       is the number of points contained in to_crop), with m true
-        %       entries, where m points lie within the calculated cropping
-        %       bounds. 
+        %         successfully projected. It will be a 1xn vector (where n
+        %         is the number of points contained in to_crop), with m true
+        %         entries, where m points lie within the calculated cropping
+        %         bounds. 
         %
         %   Last revised: 03/15/24
         %   Last author: Michael Krause

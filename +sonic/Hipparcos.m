@@ -27,10 +27,10 @@ classdef Hipparcos < sonic.StarCatalog
         %   
         %   Inputs:
         %       - [No Input]: uses the internal cache location to find the 
-        %       SONIC-generated Hipparcos datafile
-        %       OR
+        %         SONIC-generated Hipparcos datafile
+        %         OR
         %       - hip_db (table): table from the SONIC-generated Hipparcos
-        %       datafile
+        %         datafile
         %   Outputs:
         %       - obj (sonic.Hipparcos): Hipparcos catalog object
         %
@@ -71,13 +71,13 @@ classdef Hipparcos < sonic.StarCatalog
         %   Inputs:
         %       - obj (sonic.Hipparcos): Hipparcos catalog object
         %       - filt_vec (1xm double): Vector of indices to filter to 
-        %       (where `m` will be the size of the resultant catalog), OR
-        %       a logical vector of size `n`, with `m` true values, where
-        %       only those marked `true` will be retained by the filter. 
+        %         (where `m` will be the size of the resultant catalog), OR
+        %         a logical vector of size `n`, with `m` true values, where
+        %         only those marked `true` will be retained by the filter. 
         %   Outputs:
         %       - filtered_cat (sonic.Hipparcos): Filtered Hipparcos 
-        %       catalog object, with `n` corresponding to the number of 
-        %       `true` found in bin_vec.
+        %         catalog object, with `n` corresponding to the number of 
+        %         `true` found in bin_vec.
         %
         %   Last revised: 2/14/24
         %   Last author: Michael Krause
@@ -141,67 +141,6 @@ classdef Hipparcos < sonic.StarCatalog
         
         end
 
-
-        % function filtered_cat = filter(obj, bin_vec)
-        % %% filtered_cat = filter(obj, bin_vec)
-        % %   Filter the catalog based on the supplied binary vector, which
-        % %   can be arbitrarily crafted.
-        % %   
-        % %   Inputs:
-        % %       - obj (sonic.Hipparcos): Hipparcos catalog object
-        % %       - bin_vec (1xn logical): Logical vector of the length of
-        % %       `n` for the input catalog, with true indicating a given 
-        % %       star should be retained.
-        % %   Outputs:
-        % %       - filtered_cat (sonic.Hipparcos): Filtered Hipparcos 
-        % %       catalog object, with `n` corresponding to the number of 
-        % %       `true` found in bin_vec.
-        % %
-        % %   Last revised: 2/14/24
-        % %   Last author: Michael Krause
-        % 
-        % arguments
-        %     obj         (1, 1)      sonic.Hipparcos
-        %     bin_vec     (1, :)      logical
-        % end
-        % 
-        %     if length(bin_vec) ~= obj.n
-        %         error('sonic:Hipparcos:filter:invalidFilterLength', ...
-        %             ['Invalid filter length (=%d, must =%d). Filter ' ...
-        %             'must be a 1-by-n logical vector, where n is the ' ...
-        %             'number of elements in the catalog being ' ...
-        %             'filtered.'], ...
-        %             length(bin_vec), obj.n);
-        %     end
-        % 
-        %     % The rationale here is that users can concoct their own filter
-        %     % with standard Matlab syntax, and that'll just form a binary
-        %     % vector. 
-        % 
-        %     % This will then copy the catalog to a new object, grab each
-        %     % property, and filter accordingly. A couple of properties are
-        %     % special cases.
-        %     filtered_cat = obj;
-        %     cat_props = properties(filtered_cat);
-        % 
-        %     for idx = 1:length(cat_props)
-        %         switch cat_props{idx}
-        %             case 'n'
-        %                 % Save the new number of stars directly:
-        %                 filtered_cat.n = sum(bin_vec);
-        %             case 'filter_map'
-        %                 % Save the filter map in case it's needed for
-        %                 % traceability
-        %                 filtered_cat.filter_map = find(bin_vec);
-        %             otherwise
-        %                 % Just filter!
-        %                 filtered_cat.(cat_props{idx}) = ...
-        %                     filtered_cat.(cat_props{idx})(bin_vec);
-        %         end
-        %     end
-        % 
-        % end
-
         function u = eval(obj, et, r_obs_AU)
         %% u = eval(obj, et, r_obs_AU)
         %   Evaluate the Hipparcos catalog per the 5-parameter standard
@@ -210,12 +149,12 @@ classdef Hipparcos < sonic.StarCatalog
         %   Inputs:
         %       - obj (sonic.Hipparcos): Hipparcos catalog object
         %       - et (1x1 double): Epoch at which to evaluate the catalog,
-        %       in TDB (consistent with SPICE ephemeris time)
+        %         in TDB (consistent with SPICE ephemeris time)
         %       - r_obs_AU (3x1 double): The position of the observer in 
-        %       ICRF, in astronomical units (AU).
+        %         ICRF, in astronomical units (AU).
         %   Outputs:
         %       - u (1x1 sonic.Points3): The resultant star unit vectors,
-        %       packed into a Points3 object. 
+        %         packed into a Points3 object. 
         %
         %   Last revised: 2/14/24
         %   Last author: Michael Krause
@@ -291,11 +230,11 @@ classdef Hipparcos < sonic.StarCatalog
         %   Inputs:
         %       - raw_tab (table): an arbitrary table
         %       - parse_targs (1xn struct): a struct array, where each
-        %       entry indicates a column to select and a desired name for
-        %       each column
+        %         entry indicates a column to select and a desired name for
+        %         each column
         %   Outputs:
         %       - parsed_tab (table): retained columns from the input
-        %       table, renamed accordingly
+        %         table, renamed accordingly
         %
         %   Last revised: 2/14/24
         %   Last author: Michael Krause
@@ -322,12 +261,12 @@ classdef Hipparcos < sonic.StarCatalog
         %   
         %   Inputs:
         %       - hip_data (table): table containing (parsed) Hipparcos 
-        %       catalog
+        %         catalog
         %       - bayer_data (table): table containing (parsed) Bayer 
-        %       catalog
+        %         catalog
         %   Outputs:
         %       - comb_data (table): combined table, with Hipparcos and
-        %       Bayer data correlated
+        %         Bayer data correlated
         %
         %   Last revised: 2/14/24
         %   Last author: Michael Krause
@@ -373,8 +312,8 @@ classdef Hipparcos < sonic.StarCatalog
         %   
         %   Outputs:
         %       - hip_parse_targs (nx1 struct): a struct array, where each
-        %       entry indicates a column to select and a desired name for
-        %       each column
+        %         entry indicates a column to select and a desired name for
+        %         each column
         %
         %   Last revised: 2/14/24
         %   Last author: Michael Krause
@@ -416,8 +355,8 @@ classdef Hipparcos < sonic.StarCatalog
         %   
         %   Outputs:
         %       - bayer_parse_targs (nx1 struct): a struct array, where 
-        %       each entry indicates a column to select and a desired name 
-        %       for each column
+        %         each entry indicates a column to select and a desired name 
+        %         for each column
         %
         %   Last revised: 2/14/24
         %   Last author: Michael Krause

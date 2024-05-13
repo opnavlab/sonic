@@ -49,7 +49,7 @@ classdef Units
         %       - val_DEG (1xn double): vector of angles in degrees
         %   Outputs:
         %       - val_HMS (3xn double): vector of angles, first row =
-        %       hours, second row = minutes, third row = seconds
+        %         hours, second row = minutes, third row = seconds
         %
         %   Last revised: 2/14/24
         %   Last author: Michael Krause
@@ -76,7 +76,7 @@ classdef Units
         %   
         %   Inputs:
         %       - val_HMS (3xn double): vector of angles, first row =
-        %       hours, second row = minutes, third row = seconds
+        %         hours, second row = minutes, third row = seconds
         %   Outputs:
         %       - val_DEG (1xn double): vector of angles in degrees
         %
@@ -181,10 +181,10 @@ classdef Units
         %   
         %   Inputs:
         %       - val_MASPY (1xn double): vector of angular rates in
-        %       milliarcseconds per year
+        %         milliarcseconds per year
         %   Outputs:
         %       - val_RPS (1xn double): vector of angular rates in radians
-        %       per second
+        %         per second
         %
         %   Last revised: 2/14/24
         %   Last author: Michael Krause

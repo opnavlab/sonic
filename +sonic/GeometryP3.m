@@ -17,11 +17,11 @@ classdef (Abstract) GeometryP3 < sonic.MeetJoinable & matlab.mixin.Heterogeneous
         %
         %   Inputs:
         %       - varargin (n sonic.GeometryP3): A number of subclasses of
-        %       GeometryP3. 
+        %         GeometryP3. 
         %   Outputs:
         %       - res (1x1 sonic.GeometryP3 or double): The result of the
-        %       join operation, which could be another GeometryP3 object or
-        %       simply a number. 
+        %         join operation, which could be another GeometryP3 object or
+        %         simply a number. 
         %
         %   Last revised: 5/06/24
         %   Last author: Michael Krause
@@ -58,11 +58,11 @@ classdef (Abstract) GeometryP3 < sonic.MeetJoinable & matlab.mixin.Heterogeneous
         %
         %   Inputs:
         %       - varargin (n sonic.GeometryP3): A number of subclasses of
-        %       GeometryP3. 
+        %         GeometryP3. 
         %   Outputs:
         %       - res (1x1 sonic.GeometryP3 or double): The result of the
-        %       meet operation, which could be another GeometryP3 object or
-        %       simply a number. 
+        %         meet operation, which could be another GeometryP3 object or
+        %         simply a number. 
         %
         %   Last revised: 5/06/24
         %   Last author: Michael Krause 
@@ -98,9 +98,9 @@ classdef (Abstract) GeometryP3 < sonic.MeetJoinable & matlab.mixin.Heterogeneous
         %
         %   Inputs:
         %       - pt1 (1x1 sonic.Points3): A point in P3. If pt2 contains
-        %       multiple points, must contain only one point.
+        %         multiple points, must contain only one point.
         %       - pt2 (1x1 sonic.Points3): A point in P3. If pt1 contains
-        %       multiple points, must contain only one point.
+        %         multiple points, must contain only one point.
         %
         %   Outputs:
         %       - line (1x1 sonic.Lines3): A line or set of lines in P3
@@ -138,9 +138,9 @@ classdef (Abstract) GeometryP3 < sonic.MeetJoinable & matlab.mixin.Heterogeneous
         %
         %   Inputs:
         %       - pt (1x1 sonic.Points3): A point in P3. Must contain only
-        %       one point.
+        %         one point.
         %       - line (1x1 sonic.Lines3): A line in P3. Must contain only
-        %       one line.
+        %         one line.
         %
         %   Outputs:
         %       - plane (1x1 sonic.Plane3): A plane in P3
@@ -183,7 +183,7 @@ classdef (Abstract) GeometryP3 < sonic.MeetJoinable & matlab.mixin.Heterogeneous
         %
         %   Inputs:
         %       - pt (1x1 sonic.Points3): A point in P3. Must contain only
-        %       one point.
+        %         one point.
         %       - plane (1x1 sonic.Plane3): A plane in P3
         %
         %   Outputs:
@@ -215,9 +215,9 @@ classdef (Abstract) GeometryP3 < sonic.MeetJoinable & matlab.mixin.Heterogeneous
         %
         %   Inputs:
         %       - line (1x1 sonic.Lines3): A line in P3. If line2 contains
-        %       multiple lines, must contain only one line.
+        %         multiple lines, must contain only one line.
         %       - line (1x1 sonic.Lines3): A line in P3. If line1 contains
-        %       multiple lines, must contain only one line.
+        %         multiple lines, must contain only one line.
         %
         %   Outputs:
         %       - val (1x1 double): Join of line and line in P3
@@ -289,7 +289,7 @@ classdef (Abstract) GeometryP3 < sonic.MeetJoinable & matlab.mixin.Heterogeneous
         %   Inputs:
         %       - plane (1x1 sonic.Plane3): A plane in P3
         %       - line (1x1 sonic.Lines3): A line in P3. Must contain only
-        %       one line.
+        %         one line.
         %
         %   Outputs:
         %       - point (1x1 sonic.Points3): Meet of plane and line in P3
@@ -336,7 +336,7 @@ classdef (Abstract) GeometryP3 < sonic.MeetJoinable & matlab.mixin.Heterogeneous
         %   Inputs:
         %       - plane (1x1 sonic.Plane3): A plane in P3
         %       - pt (1x1 sonic.Points3): A point in P3. Must contain only
-        %       one point.
+        %         one point.
         %
         %   Outputs:
         %       - line (1x1 sonic.Lines3): Meet of plane and point in P3
@@ -366,9 +366,9 @@ classdef (Abstract) GeometryP3 < sonic.MeetJoinable & matlab.mixin.Heterogeneous
         %
         %   Inputs:
         %       - line1 (1x1 sonic.Lines3): A line in P3. If line2 contains
-        %       multiple lines, must contain only one line.
+        %         multiple lines, must contain only one line.
         %       - line2 (1x1 sonic.Lines3): A line in P3. If line1 contains
-        %       multiple lines, must contain only one line.
+        %         multiple lines, must contain only one line.
         %
         %   Outputs:
         %       - val (1x1 double): Meet of two lines in P3

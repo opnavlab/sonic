@@ -1,0 +1,265 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Kvector &#8212; SONIC  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Lines2" href="lines2.html" />
+    <link rel="prev" title="Image" href="image.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-+sonic">
+<span id="kvector"></span><h1>Kvector<a class="headerlink" href="#module-+sonic" title="Permalink to this heading">¶</a></h1>
+<dl class="mat class">
+<dt class="sig sig-object mat" id="sonic.Kvector">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">sonic.</span></span><span class="sig-name descname"><span class="pre">Kvector</span></span><a class="headerlink" href="#sonic.Kvector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Last Revised: 5/1/2024
+Last author: Sebastien Henry</p>
+<div class="members docutils container">
+<dl>
+<dt>Constructor Summary</dt><dd><dl class="mat method">
+<dt class="sig sig-object mat" id="sonic.Kvector.Kvector">
+<span class="sig-name descname"><span class="pre">Kvector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">hip_cat</span></em>, <em class="sig-param"><span class="pre">min_angle</span></em>, <em class="sig-param"><span class="pre">max_angle</span></em>, <em class="sig-param"><span class="pre">max_Vmag</span></em>, <em class="sig-param"><span class="pre">bin_width_cos_angle</span></em>, <em class="sig-param"><span class="pre">et</span></em>, <em class="sig-param"><span class="pre">r_obs_AU</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Kvector.Kvector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Instantiate the Kvector table
+no preallocation but fast append in MATLAB</p>
+<dl class="simple">
+<dt>Inputs:</dt><dd><ul class="simple">
+<li><p>hip_cat (sonic.Hipparcos): Hipparcso Catalog, or
+subset thereof that we wish to create a k-ver</p></li>
+<li><p>min_angle (1x1 double): the minimum interstar angle
+that will be stored in the k-vector (radians)</p></li>
+<li><p>max_angle (1x1 double): the maximum interstar angle
+that will be stored in the k-vector (radians)</p></li>
+<li><p>max_Vmag (1x1 double): maximum visual magnitude</p></li>
+<li><p>bin_width_cos_angle (1x1): OPTIONAL
+the width of a bin of the histogram reprentation of
+the k-vector. Default to 0, which means there will be
+as many bins as interstar angle pairs.</p></li>
+<li><p>et (1x1 double): OPTIONAL Epoch at which to evaluate
+the catalog, in TDB (consistent with SPICE ephemeris
+time)</p></li>
+<li><p>r_obs_AU (3x1 double): OPTIONAL The position of the
+observer in ICRF, in astronomical units (AU).</p></li>
+</ul>
+</dd>
+<dt>Outputs:</dt><dd><ul class="simple">
+<li><p>obj (sonic.Kvector): Kvector object</p></li>
+</ul>
+</dd>
+</dl>
+<p>Last revised: 4/7/24
+Last author: Sebastien Henry</p>
+</dd></dl>
+
+</dd>
+<dt>Property Summary</dt><dd><dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.Kvector.Is">
+<span class="sig-name descname"><span class="pre">Is</span></span><a class="headerlink" href="#sonic.Kvector.Is" title="Permalink to this definition">¶</a></dt>
+<dd><p>1xn, always smaller than Js</p>
+</dd></dl>
+
+<dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.Kvector.Js">
+<span class="sig-name descname"><span class="pre">Js</span></span><a class="headerlink" href="#sonic.Kvector.Js" title="Permalink to this definition">¶</a></dt>
+<dd><p>1xn</p>
+</dd></dl>
+
+<dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.Kvector.bin_width">
+<span class="sig-name descname"><span class="pre">bin_width</span></span><a class="headerlink" href="#sonic.Kvector.bin_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>constant bin width in cos(angle)</p>
+</dd></dl>
+
+<dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.Kvector.cos_interstar_angle">
+<span class="sig-name descname"><span class="pre">cos_interstar_angle</span></span><a class="headerlink" href="#sonic.Kvector.cos_interstar_angle" title="Permalink to this definition">¶</a></dt>
+<dd><p>1xn</p>
+</dd></dl>
+
+<dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.Kvector.et">
+<span class="sig-name descname"><span class="pre">et</span></span><a class="headerlink" href="#sonic.Kvector.et" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.Kvector.k">
+<span class="sig-name descname"><span class="pre">k</span></span><a class="headerlink" href="#sonic.Kvector.k" title="Permalink to this definition">¶</a></dt>
+<dd><p>the “k” vector</p>
+</dd></dl>
+
+<dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.Kvector.m">
+<span class="sig-name descname"><span class="pre">m</span></span><a class="headerlink" href="#sonic.Kvector.m" title="Permalink to this definition">¶</a></dt>
+<dd><p>slope</p>
+</dd></dl>
+
+<dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.Kvector.n">
+<span class="sig-name descname"><span class="pre">n</span></span><a class="headerlink" href="#sonic.Kvector.n" title="Permalink to this definition">¶</a></dt>
+<dd><p>number of pairs</p>
+</dd></dl>
+
+<dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.Kvector.n_bins">
+<span class="sig-name descname"><span class="pre">n_bins</span></span><a class="headerlink" href="#sonic.Kvector.n_bins" title="Permalink to this definition">¶</a></dt>
+<dd><p>number of bins in histogram</p>
+</dd></dl>
+
+<dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.Kvector.q">
+<span class="sig-name descname"><span class="pre">q</span></span><a class="headerlink" href="#sonic.Kvector.q" title="Permalink to this definition">¶</a></dt>
+<dd><p>intercept</p>
+</dd></dl>
+
+<dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.Kvector.r_obs_AU">
+<span class="sig-name descname"><span class="pre">r_obs_AU</span></span><a class="headerlink" href="#sonic.Kvector.r_obs_AU" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.Kvector.ymax">
+<span class="sig-name descname"><span class="pre">ymax</span></span><a class="headerlink" href="#sonic.Kvector.ymax" title="Permalink to this definition">¶</a></dt>
+<dd><p>max cos interstar angle</p>
+</dd></dl>
+
+<dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.Kvector.ymin">
+<span class="sig-name descname"><span class="pre">ymin</span></span><a class="headerlink" href="#sonic.Kvector.ymin" title="Permalink to this definition">¶</a></dt>
+<dd><p>min cos interstar angle</p>
+</dd></dl>
+
+</dd>
+<dt>Method Summary</dt><dd><dl class="mat method">
+<dt class="sig sig-object mat" id="sonic.Kvector.query">
+<span class="sig-name descname"><span class="pre">query</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">min_angle</span></em>, <em class="sig-param"><span class="pre">max_angle</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Kvector.query" title="Permalink to this definition">¶</a></dt>
+<dd><p>Query the Kvector table and return the indices that
+define the limits for the interstar angles</p>
+<blockquote>
+<div><dl class="simple">
+<dt>Inputs:</dt><dd><ul class="simple">
+<li><p>obj (1x1 sonic.Kvector): Kvector object</p></li>
+<li><p>min_angle (1x1 double): the minimum interstar angle
+(radians)</p></li>
+<li><p>max_angle (1x1 double): the maximum interstar angle
+(radians)</p></li>
+</ul>
+</dd>
+<dt>Outputs:</dt><dd><ul class="simple">
+<li><p>min_idx (1x1, double): the approximate index
+corresponding to min_angle</p></li>
+<li><p>max_idx (1x1, double): the approximate index
+corresponding to max_angle</p></li>
+</ul>
+</dd>
+</dl>
+<p>Last revised: 4/12/24
+Last author: Sebastien Henry</p>
+</div></blockquote>
+</dd></dl>
+
+</dd>
+</dl>
+</div>
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">SONIC</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installing SONIC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples with SONIC</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../api.html">API</a><ul>
+      <li>Previous: <a href="image.html" title="previous chapter">Image</a></li>
+      <li>Next: <a href="lines2.html" title="next chapter">Lines2</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2024, SEAL.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.0.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/api_src/kvector.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

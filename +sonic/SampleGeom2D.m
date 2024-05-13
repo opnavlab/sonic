@@ -9,14 +9,14 @@ classdef SampleGeom2D
         %   
         %   Inputs:
         %       - obj (1x1 sonic.Conic object): Conic object to generate
-        %       points on
+        %         points on
         %       - points (1,1 double): OPTIONAL. Number of points to 
-        %       generate. Defaults to 360 points.
+        %         generate. Defaults to 360 points.
         %       - thetaRange (1,2 double): OPTIONAL. Angular position (in 
-        %       radians) to sample the conic from. Defaults to [-pi, pi].
+        %         radians) to sample the conic from. Defaults to [-pi, pi].
         %   Outputs:
         %       - conicPoints (1x1 sonic.Points2 object): Points2 object
-        %       containing the generated points
+        %         containing the generated points
         %
         %   Last revised: 2/28/24
         %   Last author: Ava Thrasher

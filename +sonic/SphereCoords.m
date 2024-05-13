@@ -10,16 +10,16 @@ classdef SphereCoords
         %   
         %   Inputs:
         %       - ra_RAD (nx1 double): Column vector of right ascension 
-        %       values, in radians.
+        %         values, in radians.
         %       - dec_RAD (nx1 double): Column vector of declination 
-        %       values, in radians.
+        %         values, in radians.
         %       - r (nx1 double): OPTIONAL: Column vector of vector
-        %       magnitude, defaults to unit magnitude if not specified.
+        %         magnitude, defaults to unit magnitude if not specified.
         %   Outputs:
         %       - v (3xn double): Matrix of resultant vectors, with the vectors 
-        %           making up the columns. The n-th vector corresponds to the
-        %           n-th (RA, DEC) pair. If r is not specified, these are
-        %           all unit vectors. 
+        %         making up the columns. The n-th vector corresponds to the
+        %         n-th (RA, DEC) pair. If r is not specified, these are
+        %         all unit vectors. 
         %
         %   Last revised: 03/01/24
         %   Last author: Michael Krause
@@ -53,14 +53,14 @@ classdef SphereCoords
         % 
         %   Inputs:
         %       - v (3xn double): Matrix of vectors, with the vectors making
-        %           up the columns. The n-th unit vector corresponds to the
-        %           n-th (RA, DEC) pair.
+        %         up the columns. The n-th unit vector corresponds to the
+        %         n-th (RA, DEC) pair.
         % 
         %   Outputs:
         %       - ra_RAD (nx1 double): Column vector of right ascension 
-        %       values, in radians.
+        %         values, in radians.
         %       - dec_RAD (nx1 double): Column vector of declination 
-        %       values, in radians.
+        %         values, in radians.
         %       - r (nx1 double): Magnitude of each vector.
         %
         %   Last revised: 03/04/24

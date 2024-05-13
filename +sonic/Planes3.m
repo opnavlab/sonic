@@ -13,21 +13,23 @@ classdef Planes3 < sonic.GeometryP3
     methods
 
         function obj = Planes3(varargin)
-        %% obj = Plane3(varargin)
+        %% obj = Planes3(varargin)
         %   Constructs a Plane object in P3/R3. This object can contain a
         %   multitude of planes, including planes at infinity. 
         %   
         %   Inputs:
         %       - coords (4xn double): A set of coordinates specifying 
-        %           `n` planes in P3
-        %       OR
+        %         `n` planes in P3
+        %       
+        %           OR
+        %
         %       - normal (3xn double): Normal vector for each plane,
-        %       with the normals as the columns of this matrix
+        %         with the normals as the columns of this matrix
         %       - dist (1xn double): Signed distance from origin for `n`
-        %       planes
+        %         planes
         %   Outputs:
         %       - obj (sonic.Planes3): Planes3 object, which can contain
-        %       multiple planes. 
+        %         multiple planes. 
         %
         %   Last revised: 5/06/24
         %   Last author: Michael Krause

@@ -33,7 +33,7 @@ classdef Camera
         %
         %   Outputs:
         %       - obj (sonic.Camera): Camera object, containing camera
-        %       intrinsics and a distortion model.
+        %         intrinsics and a distortion model.
         %
         %   Last revised: 03/15/24
         %   Last author: Michael Krause
@@ -58,7 +58,7 @@ classdef Camera
     end
 
     % Constructor helper methods:
-    methods (Access=private)
+    methods
         
         function obj = constructFromFOV(obj, fov, fov_type, direction, res, dist_model)
         %% obj = constructFromFOV(obj, fov, fov_type, direction, res, dist_model)
@@ -72,27 +72,30 @@ classdef Camera
         %   cooresponds to x/y directions, but is centered in the top-left
         %   of the image. 
         %
+        %   NOTE: Cannot directly call this method. Will be invoked based
+        %   on the appropriate arguments being passed into the constructor.
+        %
         %   NOTE: When constructing a camera model with this method, square
         %   pixels and no shear are assumed. If this is not the case,
         %   construct the camera model directly from the camera intrinsics.
         %   
         %   Inputs:
         %       - fov (1x1 double): Field-of-view or IFOV, in radians. In
-        %       either case, these are full-angle values.
+        %         either case, these are full-angle values.
         %       - fov_type (1x1 string): String specifying whether the
-        %       previous argument was an FOV ('fov') or IFOV ('ifov').
+        %         previous argument was an FOV ('fov') or IFOV ('ifov').
         %       - direction (1x1 string): String indicating the direction
-        %       of the aforementioned FOV/IFOV: 'h' for horizontal
-        %       FOV/IFOV, and 'v' for vertical FOV/IFOV.
+        %         of the aforementioned FOV/IFOV: 'h' for horizontal
+        %         FOV/IFOV, and 'v' for vertical FOV/IFOV.
         %       - res (2 double): Resolution of the sensor, specified as
-        %       [# of rows, # of cols]
+        %         [# of rows, # of cols]
         %       - dist_model (1x1 sonic.DistortionModel): Distortion model
-        %       used to transform projected points prior to being passed
-        %       through the camera intrinsics.
+        %         used to transform projected points prior to being passed
+        %         through the camera intrinsics.
         %
         %   Outputs:
         %       - obj (sonic.Camera): Camera object, containing camera
-        %       intrinsics and a distortion model.
+        %         intrinsics and a distortion model.
         %
         %   Last revised: 03/15/24
         %   Last author: Michael Krause
@@ -150,6 +153,9 @@ classdef Camera
         %   out of the camera, +y down looking out of the camera. As well, 
         %   u/v cooresponds to x/y directions, but is centered in the 
         %   top-left of the image.
+        %
+        %   NOTE: Cannot directly call this method. Will be invoked based
+        %   on the appropriate arguments being passed into the constructor.
         %   
         %   Inputs:
         %       - d_x (1x1 double): Focal length/pixel pitch, x direction
@@ -158,12 +164,12 @@ classdef Camera
         %       - u_p (1x1 double): Center point, u coordinates (pixels)
         %       - v_p (1x1 double): Center point, v coordinates (pixels)
         %       - dist_model (1x1 sonic.DistortionModel): Distortion model
-        %       used to transform projected points prior to being passed
-        %       through the camera intrinsics.
+        %         used to transform projected points prior to being passed
+        %         through the camera intrinsics.
         %
         %   Outputs:
         %       - obj (sonic.Camera): Camera object, containing camera
-        %       intrinsics and a distortion model.
+        %         intrinsics and a distortion model.
         %
         %   Last revised: 03/15/24
         %   Last author: Michael Krause
@@ -227,11 +233,11 @@ classdef Camera
         %   
         %   Inputs:
         %       - obj (1x1 sonic.Camera): Camera object, containing camera
-        %       intrinsics and a distortion model.
+        %         intrinsics and a distortion model.
         %
         %   Outputs:
         %       - val (3x3 double): Inverse of the camera intrinsics 
-        %       matrix (see `K` for details).
+        %         matrix (see `K` for details).
         %
         %   Last revised: 03/13/24
         %   Last author: Michael Krause
@@ -252,11 +258,11 @@ classdef Camera
         %   
         %   Inputs:
         %       - obj (1x1 sonic.Camera): Camera object, containing camera
-        %       intrinsics and a distortion model.
+        %         intrinsics and a distortion model.
         %
         %   Outputs:
         %       - val (1x1 double): Horizontal field-of-view of the camera,
-        %       in radians.
+        %         in radians.
         %
         %   Last revised: 03/06/24
         %   Last author: Michael Krause
@@ -272,11 +278,11 @@ classdef Camera
         %   
         %   Inputs:
         %       - obj (1x1 sonic.Camera): Camera object, containing camera
-        %       intrinsics and a distortion model.
+        %         intrinsics and a distortion model.
         %
         %   Outputs:
         %       - val (1x1 double): Vertical field-of-view of the camera,
-        %       in radians.
+        %         in radians.
         %
         %   Last revised: 03/06/24
         %   Last author: Michael Krause
@@ -292,11 +298,11 @@ classdef Camera
         %   
         %   Inputs:
         %       - obj (1x1 sonic.Camera): Camera object, containing camera
-        %       intrinsics and a distortion model.
+        %         intrinsics and a distortion model.
         %
         %   Outputs:
         %       - val (1x1 double): Horizontal instantaneous field-of-view 
-        %       (IFOV) of the camera, in radians.
+        %         (IFOV) of the camera, in radians.
         %
         %   Last revised: 03/13/24
         %   Last author: Michael Krause
@@ -313,11 +319,11 @@ classdef Camera
         %   
         %   Inputs:
         %       - obj (1x1 sonic.Camera): Camera object, containing camera
-        %       intrinsics and a distortion model.
+        %         intrinsics and a distortion model.
         %
         %   Outputs:
         %       - val (1x1 double): Vertical instantaneous field-of-view 
-        %       (IFOV) of the camera, in radians.
+        %         (IFOV) of the camera, in radians.
         %
         %   Last revised: 03/13/24
         %   Last author: Michael Krause
@@ -339,31 +345,31 @@ classdef Camera
         %   
         %   Inputs:
         %       - obj (1x1 sonic.Camera): Camera object, containing camera
-        %       intrinsics and a distortion model.
+        %         intrinsics and a distortion model.
         %       - to_proj (1x1 sonic.Points3 or sonic.PointsS2): Points to
-        %       project into an image.
+        %         project into an image.
         %       - attitude (1x1 sonic.Attitude): Attitude of the object
-        %       relative to the camera
+        %         relative to the camera
         %       - velocity (3x1 double): OPTIONAL: Velocity of the camera 
-        %       in the inertial frame. Defaults to zero if not supplied.
+        %         in the inertial frame. Defaults to zero if not supplied.
         %       - opts.projectBehindCamera (1x1 logical): OPTIONAL: 
-        %       defaults to false. If true, also projects points that lie 
-        %       behind the camera. See sonic.Project for more details. 
+        %         defaults to false. If true, also projects points that lie 
+        %         behind the camera. See sonic.Project for more details. 
         %       - opts.cropFOV (2 double or []): OPTIONAL: If
-        %       specified, allows the user to override the FOV of
-        %       the camera when cropping the projected image. Can specify
-        %       as a 2 element vector, [hfov_RAD, vfov_RAD], or [] to not
-        %       crop at all. Defaults to the HFOV/VFOV of the camera. 
+        %         specified, allows the user to override the FOV of
+        %         the camera when cropping the projected image. Can specify
+        %         as a 2 element vector, [hfov_RAD, vfov_RAD], or [] to not
+        %         crop at all. Defaults to the HFOV/VFOV of the camera. 
         %
         %   Outputs:
         %       - proj_px (1x1 sonic.Points2): 2D points lying in the image
-        %       plane, in pixel coordinates. Represents the projection of
-        %       the provided points per the camera model.
+        %         plane, in pixel coordinates. Represents the projection of
+        %         the provided points per the camera model.
         %       - proj_map (1xn logical): Given that `to_proj` contains n
-        %       points, this is 1-by-n logical vector containing m true
-        %       values (where m points were successfully projected into the
-        %       resultant image), corresponding to each index of a 
-        %       successful projection. 
+        %         points, this is 1-by-n logical vector containing m true
+        %         values (where m points were successfully projected into the
+        %         resultant image), corresponding to each index of a 
+        %         successful projection. 
         %
         %   Last revised: 03/15/24
         %   Last author: Michael Krause

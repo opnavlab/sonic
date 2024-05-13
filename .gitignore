@@ -1,0 +1,22 @@
+# Ignore autosaves:
+*.asv
+
+# Ignore scratch test files and demos:
+scratchfile.m
+demos/
+
+# Explicitly whitelist data files by:
+# a) excluding the data folder and all .mat files by default:
++sonic/+data/*
+*.mat
+# And b) adding the whitelisted files:
+!+sonic/+data/hipdata.mat
+!+sonic/+data/constdata.mat
+
+# Ignore .DS_Store:
+.DS_Store
+
+# Docs gitignores:
+__pycache__/
+_build/
+_sources/

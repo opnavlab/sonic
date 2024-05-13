@@ -18,20 +18,20 @@ classdef EdgeFinder
         %
         %   Inputs:
         %       - im_obj (1x1 sonic.Image): grayscale image containing the
-        %           body on which to find limb points
+        %         body on which to find limb points
         %       - pixelEdge (1,1 sonic.Points2): pixel level points in the
-        %           image where edges are found. Must be rounded to nearest 
-        %           pixel. 
+        %         image where edges are found. Must be rounded to nearest 
+        %         pixel. 
         %       - BlurWidth (1x1 double) width of Gaussian blur in image
         %       - kernel_type (1x1 double) flag for type of Zernike moment 
-        %           kernels. Input 5 for 5x5 moment or 7 for 7x7 moment.
+        %         kernels. Input 5 for 5x5 moment or 7 for 7x7 moment.
         %       - M (nxn logical): optional forground mask to only include
-        %           a masked part of the image in the search
+        %         a masked part of the image in the search
         %
         %   Outputs:
         %       - subPixelEdge (1x1 sonic.Points2): edge points 
         %       - subPixelNormals (1x1 sonic.Points2): normal of edge
-        %           points, corresponding to edge points by index
+        %         points, corresponding to edge points by index
         %
         % The edge normals are defined positive going from background (darker
         % region) to foreground (brighter region).
@@ -229,7 +229,7 @@ classdef EdgeFinder
         %   Inputs:
         %       - im_obj (1,1 sonic.Image): image object to find edges in
         %       - gradThresh (1,1 double): Threshhold above which a gradient i
-        %           considered as a potential edge
+        %         considered as a potential edge
         %   Outputs:
         %       - E (nxm logical): mask which is true where edges were detecte
         
@@ -301,23 +301,23 @@ classdef EdgeFinder
         %  Performs a scan across the provided image in the direction of
         %  sun illumination to find candidate edge points.
         % 
-        %   Inputs: %% TAKES IN A SCANLINES OBJECT
+        %   Inputs: 
         %       - im_obj (1x1 sonic.Image): SONIC Image object containing 
-        %           the limb to find points on.
+        %         the limb to find points on.
         %       - scans_lines (1x1 sonic.ScanLines): Lines in the image to
-        %           perform scan along.
+        %         perform scan along.
         %       - min_consec (1x1 double): Minimum number of consecutive
-        %           bright pixels found on a scan for the first bright
-        %           pixel to be considered a limb point. Used to keep hot
-        %           pixels, stars, or debries from being falsely identified
-        %           as an edge
+        %         bright pixels found on a scan for the first bright
+        %         pixel to be considered a limb point. Used to keep hot
+        %         pixels, stars, or debries from being falsely identified
+        %         as an edge
         %       - run_start_thresh (1x1 double): Minimum digital number to 
-        %           flag as a limb point 
+        %         flag as a limb point 
         %
         %   Outputs:
         %       - limb_pts (1x1 sonic.Points2): SONIC Points2 object 
-        %           containing the determined u v coordinate limb points. U
-        %           in first row V in second row.
+        %         containing the determined u v coordinate limb points. U
+        %         in first row V in second row.
         %
         %   Last revised: 3/28/24
         %   Last author: Ava Thrasher
@@ -373,18 +373,18 @@ classdef EdgeFinder
         end
 
         function activeBorders = getActiveBorder(u_illum_obj)
-        %% getActiveBorder(u_illum_obj)
+        %% activeBorders = getActiveBorder(u_illum_obj)
         %   Determines which image borders are active, meaning which image
         %   borders have light coming in
         %
         %   Inputs:
         %       - u_illum_obj (1x1 sonic.Points2): Sonic Points2 object
-        %           containing the uv direction of illumination from the 
-        %           sun to the body in the image
+        %         containing the uv direction of illumination from the 
+        %         sun to the body in the image
         %   Outputs:
         %       - active_mask (1x4 logical): Logical array containing true
-        %           for and active edge and false for an inactive edge in 
-        %           the clockwise order of [top, right, bottom, left]
+        %         for and active edge and false for an inactive edge in 
+        %         the clockwise order of [top, right, bottom, left]
             
             % Edge normals defined as positive pointing inwards (MAKE ONE BIG MATRI AND DO TRANPOE MULTIPLE)
             edges = [0 1; -1 0; 0 -1; 1 0];

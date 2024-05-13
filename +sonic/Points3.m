@@ -24,14 +24,14 @@ classdef Points3 < sonic.GeometryP3
         %   
         %   Inputs:
         %       - pts: A set of points, either in P3 or R3. The source of
-        %       the points is inferred from the dimension of the input
-        %       points:
+        %         the points is inferred from the dimension of the input
+        %         points:
         %           - (3xn double): points are in R3
         %           - (4xn double): points are in P3
         %
         %   Outputs:
         %       - obj (sonic.Points3): Points3 object, a container for
-        %       a multitude of 3D points.
+        %         a multitude of 3D points.
         %
         %   Last revised: 2/15/24
         %   Last author: Michael Krause
@@ -102,7 +102,7 @@ classdef Points3 < sonic.GeometryP3
         %   
         %   Inputs:
         %       - obj (sonic.Points3): A Points3 object with m finite
-        %           points
+        %         points
         %
         %   Outputs:
         %       - val (3xm): The R3 realization of all finite points
@@ -120,7 +120,7 @@ classdef Points3 < sonic.GeometryP3
         %   
         %   Inputs:
         %       - obj (sonic.Points3): A Points3 object with m finite
-        %           points
+        %         points
         %
         %   Outputs:
         %       - val (4xm): The P3 realization of all finite points
@@ -139,7 +139,7 @@ classdef Points3 < sonic.GeometryP3
         %   
         %   Inputs:
         %       - obj (sonic.Points3): A Points3 object with k infinite
-        %           points
+        %         points
         %
         %   Outputs:
         %       - val (4xk): The P3 realization of all infinite points

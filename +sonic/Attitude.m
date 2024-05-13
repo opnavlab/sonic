@@ -27,21 +27,21 @@ classdef Attitude
         %   
         %   Inputs:
         %       - raw_att: A valid parameterization of attitude. Valid 
-        %       input representations are:
+        %         input representations are:
         %           - (3 double): Rotation vector
         %           - (4 double): Quaternion
         %           - (3x3 double): Direction Cosine Matrix (DCM)
-        %       The type of attitude parameterization is inferred from the 
-        %       number of elements in the supplied parameterization.
+        %         The type of attitude parameterization is inferred from the 
+        %         number of elements in the supplied parameterization.
         %       - quat_flag (char/string): If inputting a quaternion, this
-        %       is REQUIRED. Specify 'vs' or 'sv' to indicate the
-        %       convention of the quaternion as scalar-last or
-        %       scalar-first, respectively. 
+        %         is REQUIRED. Specify 'vs' or 'sv' to indicate the
+        %         convention of the quaternion as scalar-last or
+        %         scalar-first, respectively. 
         %
         %   Outputs:
         %       - obj (sonic.Attitude): Attitude object, encoding a
-        %       particular attitude which can be viewed in multiple 
-        %       parameterizations. 
+        %         particular attitude which can be viewed in multiple 
+        %         parameterizations. 
         %
         %   Last revised: 2/15/24
         %   Last author: Michael Krause
@@ -144,11 +144,11 @@ classdef Attitude
         %   Inputs:
         %       - obj (1x1 sonic.Attitude): Attitude object
         %       - obj2 (1x1 sonic.Attitude): Another attitude object to
-        %       compose with the calling object
+        %         compose with the calling object
         %
         %   Outputs:
         %       - new_att (1x1 sonic.Attitude): The resultant composed
-        %       attitude object
+        %         attitude object
         %
         %   Last revised: 3/15/24
         %   Last author: Michael Krause
@@ -163,28 +163,6 @@ classdef Attitude
             new_att = sonic.Attitude([qv_comp; qs_comp], 'vs');
         end
 
-        function new_att = mtimes(obj, att_obj)
-        %% new_att = mtimes(obj, att_obj)
-        %  
-        %   Syntax shortcut to the `comp()` method of sonic.Attitude, via 
-        %   the multiplication `*` symbol: i.e., new_att = obj*att_obj. See
-        %   the `comp()` method for details on the composition operation.
-        %
-        %   Inputs:
-        %       - obj (1x1 sonic.Attitude): Attitude object
-        %       - att_obj (1x1 sonic.Attitude): Another attitude object to
-        %       compose with the calling object
-        %
-        %   Outputs:
-        %       - new_att (1x1 sonic.Attitude): The resultant composed
-        %       attitude object
-        %
-        %   Last revised: 3/15/24
-        %   Last author: Michael Krause
-
-            new_att = obj.comp(att_obj);
-        end
-
     end
 
     %% Conversion Functions
@@ -197,7 +175,7 @@ classdef Attitude
         %   Converts a DCM to a quaternion.
         %   
         %   Inputs:
-        %       - T: (3x3 double): Valid DCM
+        %       - T (3x3 double): Valid DCM
         %   Outputs:
         %       - qv (3x1 double): Vector component of the quaternion.
         %       - qs (1x1 double): Scalar component of the quaternion.
@@ -243,7 +221,7 @@ classdef Attitude
         %   Inputs:
         %       - ax: (3x1 double): Valid Euler rotation axis
         %       - ang_RAD: (1x1 double): Valid Euler rotation angle, in
-        %           radians. 
+        %         radians. 
         %   Outputs:
         %       - qv (3x1 double): Vector component of the quaternion.
         %       - qs (1x1 double): Scalar component of the quaternion.
@@ -266,7 +244,7 @@ classdef Attitude
         %       - qv (3x1 double): Vector component of the quaternion.
         %       - qs (1x1 double): Scalar component of the quaternion.
         %   Outputs:       
-        %       - T: (3x3 double): DCM representation of attitude.
+        %       - T (3x3 double): DCM representation of attitude.
         %
         %   Last revised: 2/15/24
         %   Last author: Michael Krause
@@ -282,9 +260,9 @@ classdef Attitude
         %   matrix (DCM).
         %   
         %   Inputs:
-        %       - rotation_vec: (3x1 double): Valid rotation vector
+        %       - rotation_vec (3x1 double): Valid rotation vector
         %   Outputs:       
-        %       - T: (3x3 double): DCM representation of attitude.
+        %       - T (3x3 double): DCM representation of attitude.
         %
         %   Last revised: 2/15/24
         %   Last author: Michael Krause
@@ -308,11 +286,11 @@ classdef Attitude
         %   matrix (DCM).
         %   
         %   Inputs:
-        %       - ax: (3x1 double): Valid Euler rotation axis
-        %       - ang_RAD: (1x1 double): Valid Euler rotation angle, in
+        %       - ax (3x1 double): Valid Euler rotation axis
+        %       - ang_RAD (1x1 double): Valid Euler rotation angle, in
         %           radians. 
         %   Outputs:       
-        %       - T: (3x3 double): DCM representation of attitude.
+        %       - T (3x3 double): DCM representation of attitude.
         %
         %   Last revised: 2/15/24
         %   Last author: Michael Krause
@@ -350,9 +328,9 @@ classdef Attitude
         %   vector.
         %   
         %   Inputs:
-        %       - T: (3x3 double): Valid DCM
+        %       - T (3x3 double): Valid DCM
         %   Outputs:       
-        %       - rotation_vec: (3x1 double): Euler rotation vector.
+        %       - rotation_vec (3x1 double): Euler rotation vector.
         %
         %   Last revised: 2/15/24
         %   Last author: Michael Krause
@@ -372,9 +350,9 @@ classdef Attitude
         %   Euler rotation vector.
         %   
         %   Inputs:
-        %       - ax: (3x1 double): Valid Euler rotation axis
-        %       - ang_RAD: (1x1 double): Valid Euler rotation angle, in
-        %           radians. 
+        %       - ax (3x1 double): Valid Euler rotation axis
+        %       - ang_RAD (1x1 double): Valid Euler rotation angle, in
+        %         radians. 
         %   Outputs:       
         %       - rotation_vec: (3x1 double): Euler rotation vector.
         %
@@ -392,10 +370,10 @@ classdef Attitude
         %   pair (angle in radians).
         %   
         %   Inputs:
-        %       - T: (3x3 double): Valid DCM
+        %       - T (3x3 double): Valid DCM
         %   Outputs:       
-        %       - ax: (3x1 double): Euler rotation axis
-        %       - ang_RAD: (1x1 double): Euler rotation angle, in radians
+        %       - ax (3x1 double): Euler rotation axis
+        %       - ang_RAD (1x1 double): Euler rotation angle, in radians
         %
         %   Last revised: 2/15/24
         %   Last author: Michael Krause
@@ -417,10 +395,10 @@ classdef Attitude
         %   pair (angle in radians).
         %   
         %   Inputs:
-        %       - rotation_vec: (3x1 double): Euler rotation vector.
+        %       - rotation_vec (3x1 double): Euler rotation vector.
         %   Outputs:       
-        %       - ax: (3x1 double): Euler rotation axis
-        %       - ang_RAD: (1x1 double): Euler rotation angle, in radians
+        %       - ax (3x1 double): Euler rotation axis
+        %       - ang_RAD (1x1 double): Euler rotation angle, in radians
         %
         %   Last revised: 2/15/24
         %   Last author: Michael Krause
@@ -444,8 +422,8 @@ classdef Attitude
         %       - qv (3x1 double): Vector component of the quaternion.
         %       - qs (1x1 double): Scalar component of the quaternion.
         %   Outputs:       
-        %       - ax: (3x1 double): Euler rotation axis
-        %       - ang_RAD: (1x1 double): Euler rotation angle, in radians
+        %       - ax (3x1 double): Euler rotation axis
+        %       - ang_RAD (1x1 double): Euler rotation angle, in radians
         %
         %   Last revised: 2/15/24
         %   Last author: Michael Krause
@@ -471,7 +449,7 @@ classdef Attitude
         %% verifyValidDCM(cand_dcm)
         %   Verifies that a DCM is valid. Errors if invalid, runs to
         %   completion if valid. Currently, the validity checks are:
-        %       -> Ensure determinant is +1.
+        %       - Ensure determinant is +1.
         %   
         %   Inputs:
         %       - cand_dcm (3x3 double): Possible DCM
@@ -500,10 +478,10 @@ classdef Attitude
         end
 
         function verifyValidQuat(cand_quat)
-        %% verifyValidDCM(cand_dcm)
+        %% verifyValidQuat(cand_quat)
         %   Verifies that a quaternion is valid. Errors if invalid, runs to
         %   completion if valid. Currently, the validity checks are:
-        %       -> Ensure norm of quaternion is 1.
+        %       - Ensure norm of quaternion is 1.
         %   
         %   Inputs:
         %       - cand_quat (4x1 double): Possible quaternion
@@ -521,7 +499,7 @@ classdef Attitude
         end
 
         function verifyValidRotationVec(cand_rotation_vec)
-        %% verifyValidDCM(cand_dcm)
+        %% verifyValidRotationVec(cand_rotation_vec)
         %   Verifies that a rotation vector is valid. Errors if invalid, 
         %   runs to completion if valid. Currently, there are no validity
         %   checks, and this serves as a placeholder. 
@@ -536,24 +514,24 @@ classdef Attitude
         end
 
         function [att, proper] = solveWahbasProblem(pointsS2_cam, pointsS2_world)
-            %% [att, proper] = solveWahbasProblem(pointsS2_cam, pointsS2_world)
-            %   Compute attitude from world to camera using directions in
-            %   the camera frame and corresponding directions in the world
-            %   frame. Requires at least 2 points.
-            %
-            %   Inputs:
-            %       - pointsS2_cam (1x1 sonic.PointsS2): directions in the
-            %       camera frame
-            %       - pointsS2_world (1x1 sonic.PointsS2): directions in the
-            %       world frame
-            %   Outputs:
-            %       - att (1x1 sonic.Attitude): attitude object that goes 
-            %       from world to camera
-            %       - proper (1x1 logical): a flag that indicates true
-            %       if the found Attitude is proper (DCM has det = +1) or
-            %       false if improper (e.g. det = -1)
-            %   Last revised: 4/15/24
-            %   Last author: Sebastien Henry
+        %% [att, proper] = solveWahbasProblem(pointsS2_cam, pointsS2_world)
+        %   Compute attitude from world to camera using directions in
+        %   the camera frame and corresponding directions in the world
+        %   frame. Requires at least 2 points.
+        %
+        %   Inputs:
+        %       - pointsS2_cam (1x1 sonic.PointsS2): directions in the
+        %         camera frame
+        %       - pointsS2_world (1x1 sonic.PointsS2): directions in the
+        %         world frame
+        %   Outputs:
+        %       - att (1x1 sonic.Attitude): attitude object that goes 
+        %         from world to camera
+        %       - proper (1x1 logical): a flag that indicates true
+        %         if the found Attitude is proper (DCM has det = +1) or
+        %         false if improper (e.g. det = -1)
+        %   Last revised: 4/15/24
+        %   Last author: Sebastien Henry
 
             arguments
                 pointsS2_cam    (1, 1) sonic.PointsS2
@@ -616,12 +594,12 @@ classdef Attitude
         %       - att1 (1x1 sonic.Attitude): an Attitude object
         %       - att2 (1x1 sonic.Attitude): an Attitude object
         %       - t (1x1 double): a fraction of the spherical arclength
-        %       between `att1` and `att2` at which to interpolate the
-        %       attitude. 
+        %         between `att1` and `att2` at which to interpolate the
+        %         attitude. 
         %
         %   Outputs:
         %       - interp_att (1x1 sonic.Attitude): a new Attitude object
-        %       representing the desired interpolated attitude. 
+        %         representing the desired interpolated attitude. 
         %
         %   Last revised: 4/18/24
         %   Last author: Michael Krause
@@ -661,14 +639,14 @@ classdef Attitude
         %       - qv2 (3x1 double): Vector part of the second quaternion
         %       - qs2 (1x1 double): Scalar part of the second quaternion
         %       - t (1x1 double): a fraction of the spherical arclength
-        %       between the two quaternions at which to interpolate the
-        %       resultant quaternion.
+        %         between the two quaternions at which to interpolate the
+        %         resultant quaternion.
         %
         %   Outputs:
         %       - qvr (3x1 double): Vector part of the interpolated
-        %       quaternion.
+        %         quaternion.
         %       - qsr (1x1 double): Scalar part of the interpolated
-        %       quaternion.
+        %         quaternion.
         %
         %   Last revised: 4/18/24
         %   Last author: Michael Krause
@@ -699,9 +677,9 @@ classdef Attitude
         %
         %   Outputs:
         %       - qvr (3x1 double): Vector part of the multiplied
-        %       quaternion.
+        %         quaternion.
         %       - qsr (1x1 double): Scalar part of the multiplied
-        %       quaternion.
+        %         quaternion.
         %
         %   Last revised: 4/18/24
         %   Last author: Michael Krause
