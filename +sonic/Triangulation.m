@@ -14,32 +14,34 @@ classdef Triangulation
             %
             %   Inputs:
             %       - x_C (sonic.Points2): image_plane coordinates 
-            %        (equivalent of K^-1 * pixel coordinate)
+            %         (equivalent of K^-1 * pixel coordinate)
             %       - p_I  (sonic.Points3): respective 3D position objects
-            %       that are used to triangulate (resection) OR position of
-            %       the respective cameras (intersection)
+            %         that are used to triangulate (resection) OR position of
+            %         the respective cameras (intersection)
             %       - attitudes
             %           - (nx1 sonic.Attitude): attitudes of the cameras
+            %   
             %           OR
+            %
             %           - (1x1 sonic.Attitude): then all cameras have 
-            %           the same attitude
+            %             the same attitude
             %       - method (string): "midpoint", "DLT", or "LOST"
-            %       - cov_x OPTIONAL
+            %       - cov_x (OPTIONAL)
             %           - DEFAULT: unit variance
             %           - (1x1 double): isotropic variance, same for all
-            %           measurements
+            %             measurements
             %           - (1xn double): isotropic variance of points2
             %           - (2x2xn double): NOT YET IMPLEMENTED. Isotropic
-            %           variance MUST be assumed.
-            %       - compute_cov (1x1, logical): flag to decide whether to
-            %       compute covariance or not. This will make the
-            %       triangulation function slightly slower, especially for
-            %       DLT and midpoint.
+            %             variance MUST be assumed.
+            %       - compute_cov (1x1 logical) (OPTIONAL): flag to decide 
+            %         whether to compute covariance or not. This will make 
+            %         the triangulation function slightly slower, 
+            %         especially for DLT and midpoint. Defaults to false.
             %           
             %   Outputs:
             %       - rI (sonic.Points3): triangulated 3D point in inertial
             %       - cov_r (3x3 double): 3D covariance of the triangulated
-            %       point
+            %         point
             %
             %   Last revised: 4/26/24
             %   Last author: Sebastien Henry

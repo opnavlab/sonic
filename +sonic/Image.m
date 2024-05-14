@@ -15,7 +15,7 @@ classdef Image
         %   
         %   Inputs:
         %       - DNmat  (nxm double): matrix containing the digital number 
-        %           values of each pixel in an image 
+        %         values of each pixel in an image 
         %
         %   Outputs:
         %       - obj (1x1 sonic.Image): Image object, encoding an image
@@ -39,13 +39,13 @@ classdef Image
         %   
         %   Inputs:
         %       - obj (1x1 sonic.Image): matrix containing the digital 
-        %           number values of each pixel in an image 
+        %         number values of each pixel in an image 
         %       - med_area (1x1 double): optional input neighborhood size
-        %           to calculate median
+        %         to calculate median
         %
         %   Outputs:
         %       - flatImgObj (1x1 sonic.Image): Image object of the 
-        %           flattened image
+        %         flattened image
         %
         %   Last revised: 2/29/24
         %   Last author: Ava Thrasher
@@ -72,15 +72,15 @@ classdef Image
         %   
         %   Inputs:
         %       - obj (1x1 sonic.Image): Sonic image object of which the 
-        %           background noise will be estimated
+        %         background noise will be estimated
         %       - sigMultiple (1x1 double): optional input that will adjust
-        %           how many sigma multiples are used    
+        %         how many sigma multiples are used    
         %       - randNum (1x1 double): optional total number of random
-        %           pixel pairs selected for estimation
+        %         pixel pairs selected for estimation
         %
         %   Outputs:
         %       - noiseThresh (1x1 double): digital number cut off for
-        %           background noise
+        %         background noise
         %
         %   Last revised: 2/29/24
         %   Last author: Ava Thrasher
@@ -115,15 +115,15 @@ classdef Image
         %   
         %   Inputs:
         %       - obj (1x1 sonic.Image): Sonic image object of which the 
-        %           background noise will be estimated
+        %         background noise will be estimated
         %       - sigMultiple (1x1 double): Optional sigma multiplier 
         %       - cutOff (1x1 double): Optional cutoff percentage ranging
-        %           between 0 and 1 that determines the upper bound for the
-        %           sorted pixels to be considered
+        %         between 0 and 1 that determines the upper bound for the
+        %         sorted pixels to be considered
         %
         %   Outputs:
         %       - noiseThresh (1x1 double): digital number cut off for
-        %           background noise
+        %         background noise
         %
         %   Last revised: 2/29/24
         %   Last author: Ava Thrasher
@@ -151,8 +151,8 @@ classdef Image
         %   Inputs
         %       - obj (1,1 sonic.Image): Image to sample
         %       - pts_obj (1,1 sonic.Points2): Contains the u,v coordinates
-        %           to sample in the image (u's in row 1, v's in row 2)
-        %           where the first pixel is centered at 1,1
+        %         to sample in the image (u's in row 1, v's in row 2)
+        %         where the first pixel is centered at 1,1
         %   Outputs
         %       - DN (n,1 double): Sampled pixel values
         %
@@ -233,17 +233,17 @@ classdef Image
         % Inputs:
         %   - obj (1,1 sonic.Image): Image object to find pixel values in
         %   - scanlines (1,1 sonic.ScanLines): ScanLines object containing
-        %       the lines and direction for the lines to get
+        %     the lines and direction for the lines to get
         %
         % Outputs:
         %   - pxVals (1,n cell): cell array containing the pixel
-        %       values along the n lines specified. Order of cell array
-        %       will be the same as the input line order.
+        %     values along the n lines specified. Order of cell array
+        %     will be the same as the input line order.
         %   - pxLocs (1,n cell): cell array containing Points2 objects
-        %       of each [u,v] coordinate sampled for each line. The order
-        %       of vector will be the same as the input line order.
+        %     of each [u,v] coordinate sampled for each line. The order
+        %     of vector will be the same as the input line order.
         %   - lineLengths (n,1 double): contains length of each line in the
-        %       image in the same order that lines were provided
+        %     image in the same order that lines were provided
             arguments
                 obj (1,1) sonic.Image
                 scan_lines (1,1) sonic.ScanLines

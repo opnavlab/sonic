@@ -13,17 +13,17 @@ classdef ScanLines
         %
         %   Inputs
         %       - lines (1,1 sonic.Lines2): Lines2 object containing all
-        %           the lines for a scan 
+        %         the lines for a scan 
         %       - ispos (n,1 logical): list of direction flagss for each
-        %           line indicating the desired direction of scan. true for a
-        %           positive direction (in direction of increasing u or top to
-        %           bottom for verticle lines) or false for a negative 
-        %           direction (in direction of decreasing u or bottom to top    
-        %           for verticle lines).
+        %         line indicating the desired direction of scan. true for a
+        %         positive direction (in direction of increasing u or top to
+        %         bottom for verticle lines) or false for a negative 
+        %         direction (in direction of decreasing u or bottom to top    
+        %         for verticle lines).
         %
         %   Outputs
         %       - obj (1,1 sonic.ScanLines): ScanLines object containing
-        %       the lines for a scan and their directionality
+        %         the lines for a scan and their directionality
         %
         %   Last revised: 04/26/24
         %   Last author: Ava Thrasher
@@ -48,16 +48,16 @@ classdef ScanLines
         %
         %   Inputs
         %       - img_obj (1,1 sonic.Image): Image for which to generate 
-        %           parallel scan lines 
+        %         parallel scan lines 
         %       - drho (1,1 double): Perpendicular distance between 
-        %           parallel lines
+        %         parallel lines
         %       - u_illum_obj (1,1 sonic.Points2): Illumination direction
-        %           in the image specified from the image top left corner
+        %         in the image specified from the image top left corner
         %
         %   Outputs
         %       - obj (1,1 sonic.ScanLines): ScanLines object containing
-        %           the lines for a scan and their directionality, which 
-        %           are parallel and intersect with the specified image
+        %         the lines for a scan and their directionality, which 
+        %         are parallel and intersect with the specified image
         %
         %   Last revised: 05/01/24
         %   Last author: Ava Thrasher

@@ -10,15 +10,15 @@ classdef Aberration
         % 
         %   Inputs:
         %       - u_in (1x1 sonic.Points2 or sonic.PointsS2): either a 
-        %           SONIC Points2 object or PointsS2 object containing 
-        %           vectors to correct via stellar aberration.
+        %         SONIC Points2 object or PointsS2 object containing 
+        %         vectors to correct via stellar aberration.
         %       - v_KMS (3x1 double): velocity vector of b 
-        %           with respect to a.
+        %         with respect to a.
         % 
         %   Outputs:
         %       - u_adj (1x1 sonic.Points2 or sonic.PointsS2): SONIC 
-        %           PointsS2 object containing the LOS vectors from the 
-        %           observer to the stars corrected for stellar aberration  
+        %         PointsS2 object containing the LOS vectors from the 
+        %         observer to the stars corrected for stellar aberration  
         %
         %   Last revised: 3/5/24
         %   Last author: Ava Thrasher

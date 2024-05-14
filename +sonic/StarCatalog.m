@@ -20,9 +20,9 @@ classdef (Abstract) StarCatalog
         %
         %   Outputs:
         %       - obj (1x1 concrete subclass of sonic.StarCatalog): As this
-        %       will be implicitly called by any subclass of StarCatalog,
-        %       this will be an instance of that subclass type, containing
-        %       constellation data.
+        %         will be implicitly called by any subclass of StarCatalog,
+        %         this will be an instance of that subclass type, containing
+        %         constellation data.
         %
         %   Last revised: 3/29/24
         %   Last author: Michael Krause
@@ -45,14 +45,14 @@ classdef (Abstract) StarCatalog
         %
         %   Inputs:
         %       - obj (1x1 concrete subclass of sonic.StarCatalog): object
-        %       containing constellation data.
+        %         containing constellation data.
         %       - ra_RAD (1x1 double): Right ascension to query, in
-        %       radians. 
+        %         radians. 
         %       - dec_RAD (1x1 double): Declination to query, in radians. 
         %
         %   Outputs:
         %       - const (1x1 char array): Name of resultant constellation,
-        %       where the point specified by (ra_RAD, dec_RAD) lies. 
+        %         where the point specified by (ra_RAD, dec_RAD) lies. 
         %
         %   Last revised: 3/29/24
         %   Last author: Michael Krause
@@ -107,16 +107,16 @@ classdef (Abstract) StarCatalog
         %
         %   Inputs:
         %       - obj (1x1 concrete subclass of sonic.StarCatalog): object
-        %       containing constellation data.
+        %         containing constellation data.
         %       - targ_pt (1x1 sonic.Points3): Unit vector specifying the
-        %       query point.
+        %         query point.
         %       - const_idx (1x1 double): Index into the constellation data
-        %       (contained within `obj`), yielding information on the
-        %       spherical polygon we're attempting to test. 
+        %         (contained within `obj`), yielding information on the
+        %         spherical polygon we're attempting to test. 
         %
         %   Outputs:
         %       - isInPolygon (1x1 logical): True if point lies within
-        %       spherical polygon, false otherwise. 
+        %         spherical polygon, false otherwise. 
         %
         %   Last revised: 3/29/24
         %   Last author: Michael Krause
@@ -201,18 +201,18 @@ classdef (Abstract) StarCatalog
         %
         %   Inputs:
         %       - obj (1x1 concrete subclass of sonic.StarCatalog): object
-        %       containing constellation data.
+        %         containing constellation data.
         %       - targ_pt (1x1 sonic.Points3): Unit vector specifying the
-        %       query point.
+        %         query point.
         %
         %   Outputs:
         %       - sort_mapping (1xm double): Given that `obj` contains
-        %       information on `n` constellations, this returns the indices
-        %       of the closest `m` constellations ordered such that
-        %       the dot products corresponding to each index are in
-        %       descending order. Note that m < n, where m is the number of
-        %       constellations where the dot product with the query point
-        %       is positive.
+        %         information on `n` constellations, this returns the indices
+        %         of the closest `m` constellations ordered such that
+        %         the dot products corresponding to each index are in
+        %         descending order. Note that m < n, where m is the number of
+        %         constellations where the dot product with the query point
+        %         is positive.
         %
         %   Last revised: 3/29/24
         %   Last author: Michael Krause   
@@ -252,7 +252,7 @@ classdef (Abstract) StarCatalog
         %   
         %   Inputs:
         %       - const_dir (char): directory where IAU constellation files
-        %       live
+        %         live
         %
         %   Last revised: 2/14/24
         %   Last author: Michael Krause
@@ -287,7 +287,7 @@ classdef (Abstract) StarCatalog
         %       - const_file (char): constellation boundary filename
         %   Outputs:
         %       - const_bounds (2xn double): List of `n` RA/DEC (in
-        %       degrees) boundary points
+        %         degrees) boundary points
         %
         %   Last revised: 2/14/24
         %   Last author: Michael Krause

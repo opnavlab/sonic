@@ -17,15 +17,15 @@ classdef Ellipsoid < sonic.Quadric
         %
         %   Inputs
         %       - principleAxis (3x1 double): The principle axis radii of
-        %           the ellipsoid in x,y,z order
+        %         the ellipsoid in x,y,z order
         %       - att_O2P (1,1 sonic.Attitude): OPTIONAL attitude of the 
-        %           ellipsoid relative to the camera frame
+        %         ellipsoid relative to the camera frame
         %       - rc (1,1 sonic.Points3): OPTIONAL position of the
-        %           ellipsoid center relative to the camera
+        %         ellipsoid center relative to the camera
         %
         %   Outputs
         %       - obj (1,1 sonic.Ellipsoid): Object containing the
-        %           ellipsoid
+        %         ellipsoid
             arguments
                 principleAxes (3,1) double
                 att_C2P       (1,1) sonic.Attitude = sonic.Attitude(eye(3))

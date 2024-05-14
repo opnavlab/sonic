@@ -37,32 +37,37 @@ classdef Conic
         %   
         %   Inputs:
         %       - raw_conic (1,6 double): Implicit representation of the
-        %           conic. If inputs with 6 parameters, this is assumed to 
-        %           be the coefficients of the implicit equation 
-        %           [A;B;C;D;E;F] satisfying the equation 
-        %           Ax^2 + Bxy + Cy^2 + Dx + Ey + F = 0.
+        %         conic. If inputs with 6 parameters, this is assumed to 
+        %         be the coefficients of the implicit equation 
+        %         [A;B;C;D;E;F] satisfying the equation 
+        %         Ax^2 + Bxy + Cy^2 + Dx + Ey + F = 0.
+        %
         %       OR
+        %
         %       - raw_conic (1,5 double): Explicit representation of the
-        %           conic. If inputs with 5 parameters, this is assumed to 
-        %           be [xc; yc; a; b; psi] where xc and yc are the center, 
-        %           a and b are the semi major and minor axis, and psi is 
-        %           the conic rotation.
+        %         conic. If inputs with 5 parameters, this is assumed to 
+        %         be [xc; yc; a; b; psi] where xc and yc are the center, 
+        %         a and b are the semi major and minor axis, and psi is 
+        %         the conic rotation.
+        %
         %       OR
+        %
         %       - raw_conic (3,3 double): Matrix containing either the
-        %           locus or envelope representation of the conic. Must 
-        %           specify using varargin whether this is a locus or 
-        %           envelope as shown below.
-        %           AND
-        %           - varargin (string): "locus" for the locus
-        %               representation and "envelope" for the envelope
-        %               representation.
+        %         locus or envelope representation of the conic. Must 
+        %         specify using varargin whether this is a locus or 
+        %         envelope as shown below.
+        %       - varargin (string): "locus" for the locus
+        %         representation and "envelope" for the envelope
+        %         representation.
+        %
         %       OR
+        %
         %       - raw_conic (1,1 sonic.Lines2): Lines2 object containing
-        %           the degenerate conic representation of 2 lines. Must
-        %           contain exactly two lines.
+        %         the degenerate conic representation of 2 lines. Must
+        %         contain exactly two lines.
         %   Outputs:
         %       - obj (1,1 sonic.Conic): Conic object containing properties
-        %           of the input conic.
+        %         of the input conic.
         %
         %   Last revised: 4/19/24
         %   Last author: Michela Mancini
@@ -228,7 +233,7 @@ classdef Conic
         %       - matrix (3x3 double): conic locus or conic envelope
         %   Outputs:
         %       - proper (1x1 logical): true if the conic is proper, false
-        %       otherwise
+        %         otherwise
         %
         %   Last revised: 4/19/24
         %   Last author: Michela Mancini
@@ -254,7 +259,7 @@ classdef Conic
         %   
         %   Inputs:
         %       - locus_det1 (6x1 double): Vector containing implicit 
-        %       coefficients [A;B;C;D;E;F]
+        %         coefficients [A;B;C;D;E;F]
         %   Outputs:
         %       - locus_det1 (3x3 double): Conic locus matrix
         %
@@ -277,10 +282,10 @@ classdef Conic
         %   
         %   Inputs:
         %       - implicit_normalized (6x1 double): Vector containing implicit 
-        %       coefficients [A;B;C;D;E;F]
+        %         coefficients [A;B;C;D;E;F]
         %   Outputs:
         %       - explicit (5x1 double): Explicit representation of conic 
-        %       [xc; yc; a; b; psi]
+        %         [xc; yc; a; b; psi]
         %
         %   Last revised: 2/15/24
         %   Last author: Ava Thrasher
@@ -295,10 +300,10 @@ classdef Conic
         %   
         %   Inputs:
         %       - implicit_normalized (6x1 double): Vector containing implicit 
-        %       coefficients [A;B;C;D;E;F]
+        %         coefficients [A;B;C;D;E;F]
         %   Outputs:
         %       - degenerateConic (1x1 Lines2 object): representation of
-        %       the degenerate conic in terms of two lines
+        %         the degenerate conic in terms of two lines
         %
         %   Last revised: 4/15/24
         %   Last author: Michela Mancini
@@ -315,7 +320,7 @@ classdef Conic
         %       - locus (3x3 double): conic locus
         %   Outputs:
         %       - implicit_normalized (6x1 double): normalized implicit
-        %       coefficients
+        %         coefficients
         %
         %   Last revised: 2/15/24
         %   Last author: Ava Thrasher
@@ -337,7 +342,7 @@ classdef Conic
         %       - locus (3x3 double): conic locus
         %   Outputs:
         %       - explicit (5x1 double): explicit representation
-        %       of the conic
+        %         of the conic
         %
         %   Last revised: 4/19/24
         %   Last author: Michela Mancini
@@ -461,7 +466,7 @@ classdef Conic
         %       - locus (3x3 double): conic locus
         %   Outputs:
         %       - degenerateConic (1x1 Lines2 object): two lines
-        %       representing the degenerate conic
+        %         representing the degenerate conic
         %
         %   Last revised: 4/15/24
         %   Last author: Michela Mancini            
@@ -544,7 +549,7 @@ classdef Conic
         %   
         %   Inputs:
         %       - explicit (5x1 double): explicit representation
-        %       of the conic
+        %         of the conic
         %   Outputs:
         %       - locus (3x3 double): conic locus
         %
@@ -588,10 +593,10 @@ classdef Conic
         %   
         %   Inputs:
         %       - explicit (5x1 double): explicit representation
-        %       of the conic
+        %         of the conic
         %   Outputs:
         %       - implicit_normalized (6x1 double): normalized implicit
-        %       coefficients
+        %         coefficients
         %
         %   Last revised: 2/15/24
         %   Last author: Ava Thrasher
@@ -619,10 +624,10 @@ classdef Conic
         %   
         %   Inputs:
         %       - degenerateLocus (1x1 Lines2 object): lines representing
-        %       the degenerate conic
+        %         the degenerate conic
         %    Outputs:
         %       - implicit_normalized (6x1 double): normalized implicit
-        %       coefficients
+        %         coefficients
         %
         %   Last revised: 4/15/24
         %   Last author: Michela Mancini
@@ -642,7 +647,7 @@ classdef Conic
         %   
         %   Inputs:
         %       - degenerateLocus (1x1 Lines2 object): lines representing
-        %       the degenerate conic
+        %         the degenerate conic
         %    Outputs:
         %       - locus (3x3 double): conic locus
         %
@@ -683,8 +688,8 @@ classdef Conic
         %       - locus (3x3 double): conic locus matrix
         %   Outputs:
         %       - type (1xn string): string signifying the type of the
-        %       conic. Will be one of: "circle", "ellipse", "hyperbola",
-        %       "parabola", "point", "intersecting_lines", "parallel_lines"
+        %         conic. Will be one of: "circle", "ellipse", "hyperbola",
+        %         "parabola", "point", "intersecting_lines", "parallel_lines"
         %        
         %
         %   Last revised: 4/18/24
@@ -778,10 +783,10 @@ classdef Conic
         %   
         %   Inputs:
         %       - explicit_parabola (4x1 double): contains a
-        %       parameterization of the parabola in terms of vertex
-        %       coordinates (xc,yc), tilt angle (psi) and the semi-latus
-        %       rectum (p). The expected ordering is the following: 
-        %       explicit_parabola = [xc; yc; psi; p]. 
+        %         parameterization of the parabola in terms of vertex
+        %         coordinates (xc,yc), tilt angle (psi) and the semi-latus
+        %         rectum (p). The expected ordering is the following: 
+        %         explicit_parabola = [xc; yc; psi; p]. 
         %   Outputs:
         %       - locus (3x3 double): conic locus
         %
@@ -816,7 +821,7 @@ classdef Conic
         %       - locus (a 3x3 double array): A conic locus
         %   Outputs:
         %       - pts (1x1 sonic.Points2): two points of intersection of
-        %       line and conic
+        %         line and conic
         %
         %   Last revised: 04/22/2024
         %   Last author: Michela Mancini
@@ -907,7 +912,7 @@ classdef Conic
         %       - locus2 (a 3x3 double array): A non-degenerate conic locus
         %   Outputs:
         %       - pts (1x1 sonic.Points2): four points of intersection of
-        %       the two conics
+        %         the two conics
         %
         %   Last revised: 04/19/2024
         %   Last author: Michela Mancini

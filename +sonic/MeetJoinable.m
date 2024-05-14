@@ -15,21 +15,21 @@ classdef (Abstract) MeetJoinable
         %
         %   Inputs:
         %       - oper (1x1 string or char): String specifying the type of
-        %       operation ('meet' or 'join') being conducted. Used for
-        %       pretty-printing.
+        %         operation ('meet' or 'join') being conducted. Used for
+        %         pretty-printing.
         %       - handles (nx1 cell array): Handler to call depending on
-        %       object type. The i-th entry in `handles` corresponds to the
-        %       i-th entry in `type_pairs`. 
+        %         object type. The i-th entry in `handles` corresponds to the
+        %         i-th entry in `type_pairs`. 
         %       - type_pairs (nx1 cell array of 2x1 cell arrays): The list
-        %       of datatypes that should trigger calling a certain handler.
-        %       The i-th entry in `type_pairs` corresponds to the i-th 
-        %       entry in `handles`. 
+        %         of datatypes that should trigger calling a certain handler.
+        %         The i-th entry in `type_pairs` corresponds to the i-th 
+        %         entry in `handles`. 
         %       - varargin (m sonic.MeetJoinable): A number of objects to
-        %       either meet or join. 
+        %         either meet or join. 
         %
         %   Outputs:
         %       - res (1x1 sonic.MeetJoinable): The result of the chain of
-        %       meet or join operations.
+        %         meet or join operations.
         %
         %   Last revised: 3/28/24
         %   Last author: Michael Krause
@@ -117,10 +117,10 @@ classdef (Abstract) MeetJoinable
         %
         %   Outputs:
         %       - do_match (1x1 logical): True if the contents of A and B
-        %       are the same (in the set-wise sense).
+        %         are the same (in the set-wise sense).
         %       - do_flip (1x1 logical): If do_match is true, this will be
-        %       true if the ordering of items in A and B are flipped. It
-        %       will be false in all other cases. 
+        %         true if the ordering of items in A and B are flipped. It
+        %         will be false in all other cases. 
         %
         %   Last revised: 3/28/24
         %   Last author: Michael Krause
@@ -151,9 +151,9 @@ classdef (Abstract) MeetJoinable
         %
         %   Outputs:
         %       - types (nx1 cell): the type of each object. Given
-        %       conditions in the method, this will only return if it is a
-        %       subclass of sonic.MeetJoinable, so the `sonic.` in the type
-        %       designator is omitted in this vector. 
+        %         conditions in the method, this will only return if it is a
+        %         subclass of sonic.MeetJoinable, so the `sonic.` in the type
+        %         designator is omitted in this vector. 
         %
         %   Last revised: 3/28/24
         %   Last author: Michael Krause
@@ -199,19 +199,19 @@ classdef (Abstract) MeetJoinable
         %
         %   Inputs:
         %       - obj1 (1x1 sonic.MeetJoinable): An object undergoing a
-        %       meet/join that may or may not contain more than one
-        %       geometrical instance.
+        %         meet/join that may or may not contain more than one
+        %         geometrical instance.
         %       - obj2 (1x1 sonic.MeetJoinable): An object undergoing a
-        %       meet/join that may or may not contain more than one
-        %       geometrical instance.
+        %         meet/join that may or may not contain more than one
+        %         geometrical instance.
         %
         %   Outputs:
         %       - obj_mult (1x1 sonic.MeetJoinable): If `has_mult` is true,
-        %       this is the object (either `obj1` or `obj2`) with `n` > 1.
-        %       If `has_mult` is false, this is [].
+        %         this is the object (either `obj1` or `obj2`) with `n` > 1.
+        %         If `has_mult` is false, this is [].
         %       - obj_single (1x1 sonic.MeetJoinable): If `has_mult` is 
-        %       true, this is the object (either `obj1` or `obj2`) with 
-        %       `n` = 1. If `has_mult` is false, this is [].
+        %         true, this is the object (either `obj1` or `obj2`) with 
+        %         `n` = 1. If `has_mult` is false, this is [].
         %
         %   Last revised: 4/18/24
         %   Last author: Michael Krause

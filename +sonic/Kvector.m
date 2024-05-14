@@ -44,21 +44,21 @@ classdef Kvector
             %
             %   Inputs:
             %       - hip_cat (sonic.Hipparcos): Hipparcso Catalog, or
-            %       subset thereof that we wish to create a k-ver
+            %         subset thereof that we wish to create a k-ver
             %       - min_angle (1x1 double): the minimum interstar angle
-            %       that will be stored in the k-vector (radians)
+            %         that will be stored in the k-vector (radians)
             %       - max_angle (1x1 double): the maximum interstar angle
-            %       that will be stored in the k-vector (radians)
+            %         that will be stored in the k-vector (radians)
             %       - max_Vmag (1x1 double): maximum visual magnitude
             %       - bin_width_cos_angle (1x1): OPTIONAL
-            %       the width of a bin of the histogram reprentation of
-            %       the k-vector. Default to 0, which means there will be
-            %       as many bins as interstar angle pairs.
+            %         the width of a bin of the histogram reprentation of
+            %         the k-vector. Default to 0, which means there will be
+            %         as many bins as interstar angle pairs.
             %       - et (1x1 double): OPTIONAL Epoch at which to evaluate
-            %       the catalog, in TDB (consistent with SPICE ephemeris
-            %       time)
+            %         the catalog, in TDB (consistent with SPICE ephemeris
+            %         time)
             %       - r_obs_AU (3x1 double): OPTIONAL The position of the
-            %       observer in ICRF, in astronomical units (AU).
+            %         observer in ICRF, in astronomical units (AU).
             %   Outputs:
             %       - obj (sonic.Kvector): Kvector object
             %
@@ -164,21 +164,21 @@ classdef Kvector
         end
         
         function [min_idx, max_idx] = query(obj, min_angle, max_angle)
-            %% [idx_min, idx_man] = Kvector(obj, min_angle, max_angle)
-            %  query the Kvector table and return the indices that
+            %% [min_idx, max_idx] = query(obj, min_angle, max_angle)
+            %  Query the Kvector table and return the indices that
             %  define the limits for the interstar angles
             %
             %   Inputs:
             %       - obj (1x1 sonic.Kvector): Kvector object
             %       - min_angle (1x1 double): the minimum interstar angle 
-            %       (radians)
+            %         (radians)
             %       - max_angle (1x1 double): the maximum interstar angle 
-            %       (radians)
+            %         (radians)
             %   Outputs:
             %       - min_idx (1x1, double): the approximate index
-            %   corresponding to min_angle
+            %         corresponding to min_angle
             %       - max_idx (1x1, double): the approximate index
-            %   corresponding to max_angle
+            %         corresponding to max_angle
             %
             %   Last revised: 4/12/24
             %   Last author: Sebastien Henry

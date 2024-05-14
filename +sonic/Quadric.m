@@ -20,13 +20,13 @@ classdef Quadric
             %
             %   Inputs:
             %       - raw_quadric (4x4 double): a 4x4 matrix representing the
-            %           quadric
+            %         quadric
             %       - type (string or char): specifying what type of input.
-            %           "locus", "envelope"
+            %         "locus", "envelope"
             %
             %   Outputs:
             %       - obj (1,1 sonic.Quadric): Quadric object containing locus
-            %           and envelope
+            %         and envelope
             %
             %   Last revised: 05/07/24
             %   Last author:Michela Mancini
@@ -77,7 +77,7 @@ classdef Quadric
             %       - matrix (4x4 double): quadric locus or quadric envelope
             %   Outputs:
             %       - proper (1x1 logical): true if the quadric is proper,
-            %       false otherwise
+            %         false otherwise
             %
             %   Last revised: 4/24/24
             %   Last author: Michela Mancini

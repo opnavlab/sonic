@@ -3,7 +3,7 @@ classdef Math
     methods (Static)
 
         function adj = adjoint3x3(matrix)
-        %% [adj] = adjoint3Matrix(matrix)
+        %% adj = adjoint3x3(matrix)
         %   Determines the adjoint of the given 3x3 matrix
         %
         %   Inputs:
@@ -34,8 +34,8 @@ classdef Math
         %       - v (3 double): vector to convert to cross-product matrix
         %   Outputs:
         %       - T (3x3 double): skew-symmetric matrix, such that multiplying this
-        %           matrix with another 3x1 vector is equivalent to the 
-        %           cross-product of those two vectors.
+        %         matrix with another 3x1 vector is equivalent to the 
+        %         cross-product of those two vectors.
         %
         %   Last revised: 2/14/24
         %   Last author: Michael Krause
@@ -59,14 +59,14 @@ classdef Math
         %
         %   Inputs:
         %       - y (1xn double): Numerator of the tangent (Y/X). May be
-        %       complex.
+        %         complex.
         %       - x (1xn double): Denominator of the tangent (Y/X). May be
-        %       complex.
+        %         complex.
         %
         %   Outputs:
         %       - val (1xn double): The 4-quadrant arctangent of Y/X, in 
-        %       radians. If Y and X are real, this is equivalent to 
-        %       atan2(). 
+        %         radians. If Y and X are real, this is equivalent to 
+        %         atan2(). 
         %
         %   Last revised: 5/07/24
         %   Last author: Michael Krause  

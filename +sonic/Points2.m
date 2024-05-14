@@ -24,14 +24,14 @@ classdef Points2 < sonic.GeometryP2
         %   
         %   Inputs:
         %       - pts: A set of points, either in P2 or R2. The source of
-        %       the points is inferred from the dimension of the input
-        %       points:
+        %         the points is inferred from the dimension of the input
+        %         points:
         %           - (2xn double): points are in R2
         %           - (3xn double): points are in P2
         %
         %   Outputs:
         %       - obj (sonic.Points2): Points2 object, a container for
-        %       a multitude of 2D points.
+        %         a multitude of 2D points.
         %
         %   Last revised: 2/15/24
         %   Last author: Michael Krause
@@ -102,7 +102,7 @@ classdef Points2 < sonic.GeometryP2
         %   
         %   Inputs:
         %       - obj (sonic.Points2): A Points2 object with m finite
-        %           points
+        %         points
         %
         %   Outputs:
         %       - val (2xm): The R2 realization of all finite points
@@ -120,7 +120,7 @@ classdef Points2 < sonic.GeometryP2
         %   
         %   Inputs:
         %       - obj (sonic.Points2): A Points2 object with m finite
-        %           points
+        %         points
         %
         %   Outputs:
         %       - val (3xm): The P2 realization of all finite points
@@ -138,7 +138,7 @@ classdef Points2 < sonic.GeometryP2
         %   
         %   Inputs:
         %       - obj (sonic.Points2): A Points2 object with k infinite
-        %           points
+        %         points
         %
         %   Outputs:
         %       - val (3xk): The P2 realization of all infinite points

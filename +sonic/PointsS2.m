@@ -19,15 +19,15 @@ classdef PointsS2
         %   
         %   Inputs:
         %       - pts: A set of points, either as unit vectors or in a 
-        %       set of right ascension/declination pairs. The source of
-        %       the points is inferred from the dimension of the input
-        %       points:
+        %         set of right ascension/declination pairs. The source of
+        %         the points is inferred from the dimension of the input
+        %         points:
         %           - (2xn double): points are RA/Dec pairs (in radians)
         %           - (3xn double): points are unit vectors
         %
         %   Outputs:
         %       - obj (sonic.PointsS2): PointsS2 object, a container for
-        %       a multitude of spherical points.
+        %         a multitude of spherical points.
         %
         %   Last revised: 2/18/24
         %   Last author: Michael Krause

@@ -9,30 +9,30 @@ classdef Centroider
         %   
         %   Inputs:
         %       - imgObj (1x1 sonic.Image): Sonic image to detect
-        %           centroids in
+        %         centroids in
         %       - thresh (1x1 double): threshold value for noise usually
-        %           determined by running img.estNoiseRand or 
-        %           img.estNoiseSort
+        %         determined by running img.estNoiseRand or 
+        %         img.estNoiseSort
         %       - minStarSize (1x1 double): Optional cutoff for minimum
-        %           cluster size. Good for removing hot pixels.
+        %         cluster size. Good for removing hot pixels.
         %       - maxStarSize (1x1 double): Optional cutoff for maximum
-        %           cluster size.
+        %         cluster size.
         %       - nonMaxSupDist (1x1 double): Optional minimum distance 
-        %           between cluster centroids. Will always save centroids
-        %           with largest DN within this area. Used for non maximum
-        %           suppression.
+        %         between cluster centroids. Will always save centroids
+        %         with largest DN within this area. Used for non maximum
+        %         suppression.
         %       - buffer (1x1 double): Optional no centroids found to be
-        %           within this many pixels from the edge will be 
-        %           considered. Often used when a median filter has been 
-        %           applied.
+        %         within this many pixels from the edge will be 
+        %         considered. Often used when a median filter has been 
+        %         applied.
         %
         %   Outputs: 
         %       - centroids (1x1 sonic.Points2 or empty 0x0 sonic.Points2): 
-        %           Points2 object containing the centroids found in the 
-        %           image. If no centroids are detected, an empty Points2 
-        %           will be output.
+        %         Points2 object containing the centroids found in the 
+        %         image. If no centroids are detected, an empty Points2 
+        %         will be output.
         %       - comps (nx1 cell array): Contains the linear indices of
-        %           the connected components corresponding to the centroids
+        %         the connected components corresponding to the centroids
         %
         %   Last revised: 3/7/24
         %   Last author: Ava Thrasher

@@ -16,15 +16,15 @@ classdef BrownConrady < sonic.DistortionModel
         %   of the Brown Conrady camera distortion model 
         %   
         %   Inputs:
-        %       p1  (1x1) double - Vertical decentering 
-        %       p2  (1x1) double - Horizontal decentering
-        %       k1  (1x1) double - Order 2 radial distortion
-        %       k2  (1x1) double - Order 4 radial distortion
-        %       k3  (1x1) double - Order 6 radial distortion 
+        %       - p1  (1x1 double): Vertical decentering 
+        %       - p2  (1x1 double): Horizontal decentering
+        %       - k1  (1x1 double): Order 2 radial distortion
+        %       - k2  (1x1 double): Order 4 radial distortion
+        %       - k3  (1x1 double): Order 6 radial distortion 
         %
         %   Outputs:
-        %       - obj (sonic.BrownConrady): BrownConrady object, encoding a
-        %       the parameters of the distortion model 
+        %       - obj (sonic.BrownConrady): BrownConrady object, encoding
+        %         the parameters of the distortion model 
         %
         %   Last revised: 2/21/24
         %   Last author: Ava Thrasher
@@ -49,12 +49,12 @@ classdef BrownConrady < sonic.DistortionModel
         %   
         %   Inputs:
         %       - obj (1x1 sonic.BrownConrady)
-        %       - points (1x1 sonic.Points2) image plane coordinates of points 
-        %           to distort
+        %       - points (1x1 sonic.Points2): image plane coordinates of 
+        %         points to distort
         %
         %   Outputs:
-        %       - pointsd (1x1 sonic.Points2) image plane coordinates of 
-        %           distorted points
+        %       - pointsd (1x1 sonic.Points2): image plane coordinates of 
+        %         distorted points
         %
         %   Last revised: 2/28/24
         %   Last author: Ava Thrasher
@@ -93,14 +93,14 @@ classdef BrownConrady < sonic.DistortionModel
         %   
         %   Inputs:
         %       - obj (1x1 sonic.BrownConrady)
-        %       - pointsd (1x1 sonic.Points2) image plane coordinates of 
-        %           distorted points
+        %       - pointsd (1x1 sonic.Points2): image plane coordinates of 
+        %         distorted points
         %
         %   Outputs:
-        %       - points (1x1 sonic.Points2) image plane coordinates of 
-        %           points to distort
-        %       - convergeMask (1xn boolean) array containing true if the 
-        %           ith point converged, or false if it did not
+        %       - points (1x1 sonic.Points2): image plane coordinates of 
+        %         points to distort
+        %       - convergeMask (1xn boolean): array containing true if the 
+        %         i-th point converged, or false if it did not
         %
         %   Last revised: 2/28/24
         %   Last author: Ava Thrasher

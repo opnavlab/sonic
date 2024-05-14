@@ -25,11 +25,11 @@ classdef Pinhole < sonic.DistortionModel
         %   Inputs:
         %       - obj (1x1 sonic.Pinhole): Pinhole distortion model object
         %       - points (1x1 sonic.Points2): image plane coordinates of 
-        %           points to distort
+        %         points to distort
         %
         %   Outputs:
         %       - pointsd (1x1 sonic.Points2): image plane coordinates of 
-        %           distorted points
+        %         distorted points
         %
         %   Last revised: 03/06/24
         %   Last author: Michael Krause
@@ -54,11 +54,11 @@ classdef Pinhole < sonic.DistortionModel
         %
         %   Outputs:
         %       - points (1x1 sonic.Points2): image plane coordinates of 
-        %           undistorted points
+        %         undistorted points
         %       - convergeMask (1xn logical): array containing true if the 
-        %           ith point converged, or false if it did not. This is to
-        %           maintain syntax compatibility with other distortion
-        %           models, and is always true for this model. 
+        %         ith point converged, or false if it did not. This is to
+        %         maintain syntax compatibility with other distortion
+        %         models, and is always true for this model. 
         %
         %   Last revised: 03/06/24
         %   Last author: Michael Krause

@@ -37,25 +37,25 @@ classdef Lines3 < sonic.GeometryP3
         %
         %   Inputs:
         %       - plucker_coords (6xn double): A set of Plucker coordinates
-        %       defining `n` lines in P3. Each column corresponds to a
-        %       line. 
+        %         defining `n` lines in P3. Each column corresponds to a
+        %         line. 
         %
         %       OR
         %
         %       - plucker_mtx (4x4xn double): A set of Plucker matrices
-        %       defining `n` lines in P3. Each 4x4 matrix corresponds to a
-        %       line. 
+        %         defining `n` lines in P3. Each 4x4 matrix corresponds to a
+        %         line. 
         %
         %       OR
         %
         %       - points (3xn double): A set of `n` points, where the n-th
-        %       line passes through the n-th point.
+        %         line passes through the n-th point.
         %       - direc (3xn double): A set of `n` unit vectors, where the
-        %       n-th line is parallel to this unit vector. 
+        %         n-th line is parallel to this unit vector. 
         %
         %   Outputs:
         %       - obj (1x1 sonic.Lines3): Lines3 object, containing
-        %       information about `n` lines. 
+        %         information about `n` lines. 
         %
         %   Last revised: 4/08/24
         %   Last author: Michael Krause
@@ -230,12 +230,12 @@ classdef Lines3 < sonic.GeometryP3
         %
         %   Inputs:
         %       - obj (1x1 sonic.Lines3): Lines3 object, containing `n`
-        %       lines.
+        %         lines.
         %   
         %   Outputs:
         %       - val (6xn double): Dual of the Plucker coordinates
-        %       corresponding to each line. Coordinates make up the columns
-        %       of this matrix. 
+        %         corresponding to each line. Coordinates make up the columns
+        %         of this matrix. 
         %
         %   Last revised: 04/08/24
         %   Last author: Michael Krause
@@ -253,12 +253,12 @@ classdef Lines3 < sonic.GeometryP3
         %
         %   Inputs:
         %       - obj (1x1 sonic.Lines3): Lines3 object, containing `n`
-        %       lines.
+        %         lines.
         %   
         %   Outputs:
         %       - val (4x4xn double): Plucker coordinates matrices
-        %       corresponding to each line. Concatenated along the third
-        %       dimension.
+        %         corresponding to each line. Concatenated along the third
+        %         dimension.
         %
         %   Last revised: 04/08/24
         %   Last author: Michael Krause
@@ -281,12 +281,12 @@ classdef Lines3 < sonic.GeometryP3
         %
         %   Inputs:
         %       - obj (1x1 sonic.Lines3): Lines3 object, containing `n`
-        %       lines.
+        %         lines.
         %   
         %   Outputs:
         %       - val (4x4xn double): Plucker coordinates matrices
-        %       corresponding to the dual of each line. Concatenated along 
-        %       the third dimension.
+        %         corresponding to the dual of each line. Concatenated along 
+        %         the third dimension.
         %
         %   Last revised: 04/08/24
         %   Last author: Michael Krause
@@ -309,11 +309,11 @@ classdef Lines3 < sonic.GeometryP3
         %
         %   Inputs:
         %       - obj (1x1 sonic.Lines3): Lines3 object, containing `n`
-        %       lines.
+        %         lines.
         %   
         %   Outputs:
         %       - val (3xn double): Moments of each line, with the moments
-        %       making up the columns. 
+        %         making up the columns. 
         %
         %   Last revised: 04/08/24
         %   Last author: Michael Krause
@@ -332,11 +332,11 @@ classdef Lines3 < sonic.GeometryP3
         %
         %   Inputs:
         %       - obj (1x1 sonic.Lines3): Lines3 object, containing `n`
-        %       lines.
+        %         lines.
         %   
         %   Outputs:
         %       - val (3xn double): Directions of each line, with the 
-        %       directions making up the columns. 
+        %         directions making up the columns. 
         %
         %   Last revised: 04/08/24
         %   Last author: Michael Krause
@@ -360,11 +360,11 @@ classdef Lines3 < sonic.GeometryP3
         %
         %   Inputs:
         %       - A (mxmxn double): 3D matrix, square along the first two
-        %       dimensions, to check for skew-symmetry.
+        %         dimensions, to check for skew-symmetry.
         %   
         %   Outputs:
         %       - res (1xn logical): Vector of skew-symmetry check results,
-        %       one per square matrix.
+        %         one per square matrix.
         %
         %   Last revised: 5/06/24
         %   Last author: Michael Krause

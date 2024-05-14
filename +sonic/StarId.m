@@ -13,22 +13,22 @@ classdef StarId
             %   Inputs:
             %       - kvec (sonic.Kvector): a k-vector object
             %       - hip_cat (sonic.Hipparcos): the Hipparcos catalog
-            %        NOTE: it MUST be a new unfiltered Hipparcos catalog
+            %         NOTE: it MUST be a new unfiltered Hipparcos catalog
             %       - points2_meas (sonic.Points2): unit-normalized vectors
-            %       measured in the camera frame 
+            %         measured in the camera frame 
             %       - tol (1x1 double): angular tolerance, a match is
-            %       detected if the angle between measurement and catalog 
-            %       is less than tolerance
+            %         detected if the angle between measurement and catalog 
+            %         is less than tolerance
             %       - max_angle (1x1, double): the maximum angle between
-            %       stars. Usually constrained by the camera FOV.
+            %         stars. Usually constrained by the camera FOV.
             %       - min_matches (1x1, uint64): the minimum number of
-            %       pairs in matches to deem the solution correct. Minimum 
-            %       is 4. Default is 5. 
+            %         pairs in matches to deem the solution correct. Minimum 
+            %         is 4. Default is 5. 
             %   Outputs:
             %       - matches (2xn int): pairs of measurement-hipparcos_id.
-            %       In the i-th pair, element matches(1,i) is the number of
-            %       the measurement and matches(2,i) is the corresponding
-            %       index in the hipparcos catalog
+            %         In the i-th pair, element matches(1,i) is the number of
+            %         the measurement and matches(2,i) is the corresponding
+            %         index in the hipparcos catalog
             %       - att_ICRF2C (sonic.Attitude): attitude of the camera
             %
             %   Last revised: 05/01/24
@@ -108,22 +108,22 @@ classdef StarId
             %   Inputs:
             %       - kvec (1x1sonic.Kvector): a k-vector table
             %       - hip_cat_idx (:x1 uint64): indices of the hipparcos
-            %       catalog
+            %         catalog
             %       - points2_meas (sonic.Points2): unit-normalized vectors
-            %       measured in the camera frame 
+            %         measured in the camera frame 
             %       - pointsS2_cat (sonic.PointsS2): catalog line of sights
             %       - ijk (3x1 uint64): the indexes of the measurement 
-            %       triad we are checking
+            %         triad we are checking
             %       - tol (1x1 double): angular tolerance
             %       - max_angle (1x1, double): the maximum angle between
-            %       stars. Usually constrained by the camera FOV.
+            %         stars. Usually constrained by the camera FOV.
             %       - min_matches (1x1 uint64): minimum matches to stop 
-            %       and return
+            %         and return
             %   Outputs:
             %       - matches (2x: int): pairs of measurement-hipparcos_id.
-            %       In the i-th pair, element matches(1,i) is the number of
-            %       the measurement and matches(2,i) is the corresponding
-            %       hipparcos id
+            %         In the i-th pair, element matches(1,i) is the number of
+            %         the measurement and matches(2,i) is the corresponding
+            %         hipparcos id
             %       - att_ICRF2C (sonic.Attitude): attitude of the camera
             %
             %   Last revised: 04/15/24

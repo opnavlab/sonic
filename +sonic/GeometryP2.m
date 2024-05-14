@@ -15,11 +15,11 @@ classdef (Abstract) GeometryP2 < sonic.MeetJoinable & matlab.mixin.Heterogeneous
             %
             %   Inputs:
             %       - varargin (n sonic.GeometryP2): A number of subclasses of
-            %       GeometryP2.
+            %         GeometryP2.
             %   Outputs:
             %       - res (1x1 sonic.GeometryP2 or double): The result of the
-            %       join operation, which could be another GeometryP2 object or
-            %       simply a number.
+            %         join operation, which could be another GeometryP2 object or
+            %         simply a number.
             %
             %   Last revised: 3/29/24
             %   Last author: Michael Krause
@@ -50,11 +50,11 @@ classdef (Abstract) GeometryP2 < sonic.MeetJoinable & matlab.mixin.Heterogeneous
             %
             %   Inputs:
             %       - varargin (n sonic.GeometryP2): A number of subclasses of
-            %       GeometryP2.
+            %         GeometryP2.
             %   Outputs:
             %       - res (1x1 sonic.GeometryP2 or double): The result of the
-            %       meet operation, which could be another GeometryP2 object or
-            %       simply a number.
+            %         meet operation, which could be another GeometryP2 object or
+            %         simply a number.
             %
             %   Last revised: 3/29/24
             %   Last author: Michael Krause
@@ -90,9 +90,9 @@ classdef (Abstract) GeometryP2 < sonic.MeetJoinable & matlab.mixin.Heterogeneous
         %
         %   Inputs:
         %       - pt1 (1x1 sonic.Points2): A point in P2. If pt2 contains
-        %       multiple points, must contain only one point.
+        %         multiple points, must contain only one point.
         %       - pt2 (1x1 sonic.Points2): A point in P2. If pt1 contains
-        %       multiple points, must contain only one point.
+        %         multiple points, must contain only one point.
         %
         %   Outputs:
         %       - line (1x1 sonic.Lines2): A line or set of lines in P2
@@ -122,13 +122,13 @@ classdef (Abstract) GeometryP2 < sonic.MeetJoinable & matlab.mixin.Heterogeneous
         %
         %   Inputs:
         %       - pt (1x1 sonic.Points2): A point in P2. If line contains
-        %       multiple lines, must contain only one point.
+        %         multiple lines, must contain only one point.
         %       - line (1x1 sonic.Lines2): A line in P2. If pt contains
-        %       multiple points, must contain only one line.
+        %         multiple points, must contain only one line.
         %
         %   Outputs:
         %       - val (1x1 double): Result of the join operation. Zero if
-        %       the point lies along the line.
+        %         the point lies along the line.
         %
         %   Last revised: 5/06/24
         %   Last author: Michael Krause
@@ -157,9 +157,9 @@ classdef (Abstract) GeometryP2 < sonic.MeetJoinable & matlab.mixin.Heterogeneous
         %
         %   Inputs:
         %       - line1 (1x1 sonic.Lines2): A line in P2. If line2 contains
-        %       multiple lines, must contain only one line.
+        %         multiple lines, must contain only one line.
         %       - line2 (1x1 sonic.Lines2): A line in P2. If line1 contains
-        %       multiple lines, must contain only one line.
+        %         multiple lines, must contain only one line.
         %
         %   Outputs:
         %       - pt (1x1 sonic.Points2): Meet of two lines in P2
@@ -189,13 +189,13 @@ classdef (Abstract) GeometryP2 < sonic.MeetJoinable & matlab.mixin.Heterogeneous
         %
         %   Inputs:
         %       - pt (1x1 sonic.Points2): A point in P2. If line contains
-        %       multiple lines, must contain only one point.
+        %         multiple lines, must contain only one point.
         %       - line (1x1 sonic.Lines2): A line in P2. If pt contains
-        %       multiple points, must contain only one line.
+        %         multiple points, must contain only one line.
         %
         %   Outputs:
         %       - val (1x1 double): Result of the meet operation. Zero if
-        %       the point lies along the line.
+        %         the point lies along the line.
         %
         %   Last revised: 5/06/24
         %   Last author: Michael Krause
@@ -222,7 +222,7 @@ classdef (Abstract) GeometryP2 < sonic.MeetJoinable & matlab.mixin.Heterogeneous
         %       - conic (a sonic.Conic object): A non-degenerate conic.
         %   Outputs:
         %       - pts (2x1 sonic.Points2): two points of intersection of
-        %       line and conic
+        %         line and conic
         %
         %   Last revised: 04/22/2024
         %   Last author: Michela Mancini
@@ -244,7 +244,7 @@ classdef (Abstract) GeometryP2 < sonic.MeetJoinable & matlab.mixin.Heterogeneous
         %       - conic2 (a sonic.Conic object): A non-degenerate conic.
         %   Outputs:
         %       - pts (4x1 sonic.Points2): four points of intersection of
-        %       the two conics
+        %         the two conics
         %
         %   Last revised: 04/22/2024
         %   Last author: Michela Mancini
