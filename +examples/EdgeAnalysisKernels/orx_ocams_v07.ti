@@ -1,0 +1,4138 @@
+KPL/IK
+
+ORX OCAMS Instrument Kernel
+==============================================================================
+
+   This instrument kernel (I-kernel; IK) contains references to the mounting
+   alignment, internal and FOV geometry for the OSIRIS-REX Camera Suite
+   (OCAMS) instruments. The PolyCam-specific values given here apply only to
+   the Primary side of the camera. Should conditions in flight necessitate
+   switching to the Redundant side, this kernel will need to be updated.
+
+   Science Processing and Operations Center (SPOC) conventions for laying
+   out pixels in FITS files are also described in this IK.  As of early 2017,
+   all FITS files will conform to "Right-Tap" convention; refer to the
+   ``Vectors dInstrument/dNAXIS1 ...'' section below for more detail.
+
+
+Version and Date
+----------------------------------------------------------
+
+   Version 0.7 -- March 6, 2019 -- Boris Semenov, NAIF/JPL
+
+      Added filter-specific MapCam keyword sets for the PAN, B, V, W, 
+      and X filters.
+
+      Changed MapCam F/number (3.32 -> 3.295).
+
+   Version 0.6 -- January 24, 2017 -- Dathon Golish, UA,
+                                      Brian Carcich, Kinetx,
+                                      Boris Semenov, NAIF/JPL
+
+      Changed 64XXX_SPOC_FITS_NAXIS1 for all OCAMS cameras to accommodate
+      SPOC ECR 0077, which performs a horizontal flip of all OCAMS images.
+      This necessitates removing the negative sign from the NAXIS1 value
+      for MapCam and PolyCam, and adding a negative sign to NAXIS1 for
+      SamCam.
+
+      Added ASCII drawing consistent with flip and removed the
+      note about inconsistent descriptions in the FK from the ``Vectors
+      dInstrumentFrame/dNAXIS1 and dInstrumentFrame/NAXIS2 for FITS''
+      section
+
+      Updated the ASCII drawing in the ``OCAMS Field-of-View and CCD
+      Parameters'' section to eliminate instrument frames axes
+
+   Version 0.5 -- October 19, 2016 -- Dathon Golish, Bashar Rizk, UA
+                                        Boris Semenov, NAIF/JPL
+
+      Split PolyCam into many instruments to accommodate multiple focus
+            positions (i.e. focal lengths)
+
+      Updated camera parameters with values measured during ground testing
+
+      Updated contact information
+
+      Updated 'Naming Conventions' section
+
+      Updated OCAMS Optical Parameters
+         focal lengths
+         explicit list of foci
+
+      Updated OCAMS Field of View Parameters
+         includes full PolyCam list
+
+      Updated OCAMS PolyCam FOV Definition
+         includes FOV angles
+
+      Incorporated section defining image directions for OCAMS FITS-images
+         (which is the native output of the SPOC OCAMS pipeline)
+         suggested by B. Carcich and B. Semenov
+         entitled 'Vectors dInstrumentFrame/dNAXIS1 and
+                   dInstrumentFrame/NAXIS2 for FITS'
+
+      Incorporated section defining OCAMS Distortion Model for all 3 cameras
+         only PolyCam section populated as of 08/15/2016
+
+      Minor edits in response to review as of 09/14/2016
+
+      Minor edits in response to review as of 09/29/2016
+         line 171:  inf pos is 17371 (-64593)
+         lines 390, 402:  PolyCam focal length uncertainty = 5.00 mm
+         lines 447-1615:  PolyCam FOV_CENTER_PIXEL, SPOC_FITS_NAXIS1,2
+            FOCUS_POSITION & FOCUS_CAMERA_ID keywords added
+
+      More minor edits as of 10/05/2016
+         Moved FOV_CENTER_PIXEL, SPOC_FITS_NAXIS1,2 from "OCAMS Optical 
+            Parameters" to the sections where they belong
+         Removed FOCUS_CAMERA_ID as it seems redundant (maps ID in 
+            keyword to itself)
+         Changed ORX_OCAMS_POLYCAM_02739 to ORX_OCAMS_POLYCAM_02789
+            in comments to be consistent with [4]
+         Added functional range focus positions to the table in 
+            "OCAMS Optical Parameters"
+         Minor edits to comments in a few other sections.
+
+      More edits as of 10/14/2016
+         lines 160-165: adopted Brian Carcich's suggested simplification for
+            formula to compute PolyCamID from Motor Position
+         lines 476-1172: renamed FOCUS_POSITION keywords to MOTOR_POSITION
+         
+
+   Version 0.4 -- June 30, 2016 -- Brian Carcich, KinetX
+
+      Starting with orex_ocams_v03.ti renamed to orx_ocams_v04.ti
+
+      Added INX-6436x_SPOC_FITS_NAXIS* keywords.
+
+   Version 0.3 -- August 24, 2014 -- Boris Semenov, NAIF
+
+      Starting with orex_ocams_v02.ti renamed to orx_ocams_v03.ti
+
+      Removed TEXT_KERNEL_ID, INS-64*_PLATFORM_ID keywords.
+
+   Version 0.2 -- May 16, 2013 -- Boris Semenov, NAIF
+
+      Touch-up updates: wrapped comments to 80 chars, adjusted
+      indentation, spell-checked, replaced INS-82 with INS-64 in all
+      keywords, moved name/ID mapping keywords to FK.
+
+   Version 0.1 -- May 1, 2013 -- John Ivens, LPL/UofA
+
+      Information provided by the OCAMS team - Ellyne Kinney-Spano,
+      Bashar Rizk.
+
+      Initial Prototype Release for Review.
+
+
+References
+----------------------------------------------------------
+
+   1. ``OCAMS Level 3 Requirements''
+
+   2. OSIRIS-REX Spacecraft Frames Definition Kernel.
+
+   3. OSIRIS-REX Project Web Page describing the instruments.
+
+   4. sci_ocams_range_ola.csv, Oct 2016
+
+   5. E-mails ``RE: IK Codes for MapCam Filters'' from Dathon Golish,
+      UA, 02/11/19 -- 03/06/19
+
+
+Contact Information
+----------------------------------------------------------
+
+   Direct questions, comments or concerns about the contents of this kernel
+   to:
+
+      Dathon Golish, UA, dgolish@orex.lpl.arizona.edu
+          
+      Bashar Rizk, UA, bashar@lpl.arizona.edu
+
+      Boris Semenov, NAIF/JPL, Boris.Semenov@jpl.nasa.gov
+          
+
+Implementation Notes
+----------------------------------------------------------
+
+   This file is used by the SPICE system as follows: programs that make
+   use of this kernel must ``load'' the kernel, normally during program
+   initialization. The SPICE routine FURNSH loads a kernel file into
+   the pool as shown below.
+
+      CALL FURNSH ( 'frame_kernel_name; )    -- FORTRAN
+      furnsh_c ( "frame_kernel_name" );      -- C
+      cspice_furnsh, frame_kernel_name       -- IDL
+      cspice_furnsh( 'frame_kernel_name' )   -- MATLAB
+
+   Once the file has been loaded, the SPICE routine GETFOV (getfov_c in
+   C, cspice_getfov in IDL and MATLAB) can be used to retrieve FOV
+   parameters for a given instrument or structure.
+
+   This file was created and may be updated with a text editor or word
+   processor.
+
+
+Naming Conventions
+----------------------------------------------------------
+
+   All names referencing values in this I-kernel start with the
+   characters `INS' followed by the NAIF OSIRIS-REX spacecraft ID
+   number (-64) followed by a NAIF three digit ID code for the OCAMS
+   instruments -- MAPCAM (general) = 361, MAPCAM_(PAN|B|V|W|X) =
+   364-368 (for MapCam filters), SAMCAM = 362, POLYCAM (infinity) =
+   360, POLYCAM_nnnnn = 500-616 (where "nnnnn" is one of the multiple
+   focus positions given as five digit number.) Distinct name and ID
+   are needed for each of the PolyCam's focus positions because each
+   focus position is associated with different RANGE (m) and DEPTH OF
+   FIELD (m), as shown in the table in the section ``Optical Parameter
+   Calculations'' below.
+   
+   The NAIF instrument ID correlates directly to the motor position of
+   PolyCam's focus mechanism. The motor position is recorded in the
+   metadata of every image with the key "MTR_POS". Conversion from
+   motor position to NAIF ID is done via the following formula:
+   
+      PolyCamID = -64497 - FIX or INT (MTR_POS / 180 )
+                
+   where FIX or INT is integer division, i.e., truncation that discards
+   remainder as found in most programming languages. For example,
+   the motor position for imaging at infinity
+   is 17371. Plugging into the formula produces a NAIF ID of -64593.
+   
+   
+Optical Parameter Calculations
+----------------------------------------------------------
+
+   PolyCam's optical parameters (object range, depth of focus, focal
+   length, iFOV, hFOV, f/#) are calculated individually for each motor
+   position in the PolyCam Focus Table. The motor positions listed in
+   the table are those expected to be used during observations. There
+   are three motor positions in the table for every shutter rotation.
+   PolyCam can move to the other motor positions, but its depth of the
+   field is such that three positions per shutter rotation fully covers
+   the object distances.
+   
+   Motor position can be related to focus distance (in object space)
+   via a model developed from ground testing. Resolution testing
+   provided indirect measures of PolyCam's focus distance at five
+   different motor positions, spanning the usable range of the focus
+   mechanism's travel. These data are used to develop a focus mechanism
+   model that describes the focus distance as a function of motor
+   position. Motor position is first converted to lens position as:
+   
+      d_mm = (motorpos - motor_inf ) * k
+   
+   where motor_inf is the motor position for imaging at infinity and k
+   is a constant.
+   
+      motor_inf = 17371
+      k = 3.93725e-4
+   
+   Lens position is then converted to focus distance via:
+   
+      D_focus = -1 / (A*d_mm - B*d_mm^2 + C*d_mm^3)
+   
+   where A = 8.67e-7, B = 1.75e-8, and C = 2.64e-14.
+   
+   Focus distance is then converted to focal length via ZEMAX models of
+   PolyCam. The ZEMAX models have been tied to ground testing, which
+   measured the focal length of the camera at infinity.
+   
+      f = D - E* (D_focus)^F
+
+   where D = 628.9, E = 2684, and F = -0.9376.
+
+   Depth of field is calculated via the following formula:
+   
+      DoF = -f/c/F + sqrt(f^4/c^2/F^2 + 4r(r-f))
+   
+   where f is focal length, c is circle of confusion, F is f/#, r is
+   object range.
+
+   The diameter used in the f/# is the diameter of the primary mirror -
+   200 mm. The circle of confusion corresponds to two pixels - 0.017
+   mm.
+   
+   The other camera parameters (instantaneous FOV, half-FOV, and
+   f-number) in the IK are derived directly from the focal length.
+
+   The instantaneous FOV is the angle subtended by a single pixel.
+   
+      iFOV = s_pixel / f
+
+   where s_pixel = 0.0085, the size of a pixel in mm.
+
+   The active area of the detector is 1024x1024 pixels, so the half-FOV is:
+   
+      hFOV = iFOV * 1024 / 2
+
+   The f-number is calculated as:
+   
+      f/# = f / D
+   
+   where D = 185.3, the diameter of PolyCam in mm. Note that this is
+   different from the diameter used in the depth of field calculation
+   above. Here, the diameter does not include the region obscured by
+   the secondary mirror. The f/# given in this IK is then a radiometric
+   f/#.
+   
+   
+         Instrument name          ID        RANGE (m)    DEPTH OF FIELD (m)
+     -----------------------   --------   -----------    ------------------
+     ORX_OCAMS_MAPCAM           -64361        
+
+     ORX_OCAMS_MAPCAM_PAN       -64364
+     ORX_OCAMS_MAPCAM_B         -64365
+     ORX_OCAMS_MAPCAM_V         -64366
+     ORX_OCAMS_MAPCAM_W         -64367
+     ORX_OCAMS_MAPCAM_X         -64368
+
+     ORX_OCAMS_SAMCAM           -64362
+
+     ORX_OCAMS_POLYCAM          -64360     38522.3         70001.0
+
+     ORX_OCAMS_POLYCAM_00630    -64500       153.7             6.6
+     ORX_OCAMS_POLYCAM_00810    -64501       155.5             6.8
+     ORX_OCAMS_POLYCAM_00990    -64502       157.4             6.9
+     ORX_OCAMS_POLYCAM_01170    -64503       159.4             7.1
+     ORX_OCAMS_POLYCAM_01350    -64504       161.4             7.3
+     ORX_OCAMS_POLYCAM_01530    -64505       163.4             7.5
+     ORX_OCAMS_POLYCAM_01710    -64506       165.5             7.6
+     ORX_OCAMS_POLYCAM_01890    -64507       167.6             7.8
+     ORX_OCAMS_POLYCAM_02070    -64508       169.8             8.0
+     ORX_OCAMS_POLYCAM_02249    -64509       172.0             8.2
+     ORX_OCAMS_POLYCAM_02429    -64510       174.3             8.5
+     ORX_OCAMS_POLYCAM_02609    -64511       176.6             8.7
+     ORX_OCAMS_POLYCAM_02789    -64512       179.0             8.9
+     ORX_OCAMS_POLYCAM_02969    -64513       181.5             9.2
+     ORX_OCAMS_POLYCAM_03149    -64514       184.0             9.4
+     ORX_OCAMS_POLYCAM_03329    -64515       186.6             9.7
+     ORX_OCAMS_POLYCAM_03510    -64516       189.2            10.0
+     ORX_OCAMS_POLYCAM_03691    -64517       192.0            10.2
+     ORX_OCAMS_POLYCAM_03871    -64518       194.8            10.5
+     ORX_OCAMS_POLYCAM_04051    -64519       197.6            10.8
+     ORX_OCAMS_POLYCAM_04231    -64520       200.6            11.2
+     ORX_OCAMS_POLYCAM_04410    -64521       203.6            11.5
+     ORX_OCAMS_POLYCAM_04590    -64522       206.7            11.9
+     ORX_OCAMS_POLYCAM_04770    -64523       210.0            12.2
+     ORX_OCAMS_POLYCAM_04950    -64524       213.3            12.6
+     ORX_OCAMS_POLYCAM_05130    -64525       216.7            13.0
+     ORX_OCAMS_POLYCAM_05310    -64526       220.2            13.4
+     ORX_OCAMS_POLYCAM_05490    -64527       223.8            13.9
+     ORX_OCAMS_POLYCAM_05670    -64528       227.5            14.3
+     ORX_OCAMS_POLYCAM_05850    -64529       231.3            14.8
+     ORX_OCAMS_POLYCAM_06030    -64530       235.3            15.3
+     ORX_OCAMS_POLYCAM_06209    -64531       239.3            15.8
+     ORX_OCAMS_POLYCAM_06388    -64532       243.6            16.4
+     ORX_OCAMS_POLYCAM_06568    -64533       247.9            17.0
+     ORX_OCAMS_POLYCAM_06749    -64534       252.4            17.6
+     ORX_OCAMS_POLYCAM_06930    -64535       257.1            18.2
+     ORX_OCAMS_POLYCAM_07110    -64536       261.9            18.9
+     ORX_OCAMS_POLYCAM_07290    -64537       266.9            19.6
+     ORX_OCAMS_POLYCAM_07470    -64538       272.1            20.4
+     ORX_OCAMS_POLYCAM_07650    -64539       277.4            21.2
+     ORX_OCAMS_POLYCAM_07830    -64540       283.0            22.0
+     ORX_OCAMS_POLYCAM_08010    -64541       288.8            22.9
+     ORX_OCAMS_POLYCAM_08190    -64542       294.8            23.9
+     ORX_OCAMS_POLYCAM_08370    -64543       301.1            24.9
+     ORX_OCAMS_POLYCAM_08550    -64544       307.6            26.0
+     ORX_OCAMS_POLYCAM_08730    -64545       314.3            27.1
+     ORX_OCAMS_POLYCAM_08910    -64546       321.4            28.4
+     ORX_OCAMS_POLYCAM_09090    -64547       328.8            29.7
+     ORX_OCAMS_POLYCAM_09270    -64548       336.4            31.0
+     ORX_OCAMS_POLYCAM_09450    -64549       344.5            32.5
+     ORX_OCAMS_POLYCAM_09630    -64550       352.9            34.1
+     ORX_OCAMS_POLYCAM_09810    -64551       361.7            35.8
+     ORX_OCAMS_POLYCAM_09990    -64552       370.9            37.7
+     ORX_OCAMS_POLYCAM_10170    -64553       380.6            39.6
+     ORX_OCAMS_POLYCAM_10350    -64554       390.8            41.8
+     ORX_OCAMS_POLYCAM_10530    -64555       401.5            44.1
+     ORX_OCAMS_POLYCAM_10710    -64556       412.8            46.5
+     ORX_OCAMS_POLYCAM_10889    -64557       424.7            49.2
+     ORX_OCAMS_POLYCAM_11069    -64558       437.3            52.2
+     ORX_OCAMS_POLYCAM_11249    -64559       450.6            55.4
+     ORX_OCAMS_POLYCAM_11430    -64560       464.7            58.9
+     ORX_OCAMS_POLYCAM_11610    -64561       479.7            62.7
+     ORX_OCAMS_POLYCAM_11790    -64562       495.7            66.9
+     ORX_OCAMS_POLYCAM_11970    -64563       512.7            71.5
+     ORX_OCAMS_POLYCAM_12150    -64564       530.8            76.6
+     ORX_OCAMS_POLYCAM_12330    -64565       550.2            82.2
+     ORX_OCAMS_POLYCAM_12509    -64566       571.1            88.5
+     ORX_OCAMS_POLYCAM_12689    -64567       593.5            95.5
+     ORX_OCAMS_POLYCAM_12869    -64568       617.7           103.4
+     ORX_OCAMS_POLYCAM_13050    -64569       643.9           112.2
+     ORX_OCAMS_POLYCAM_13230    -64570       672.3           122.2
+     ORX_OCAMS_POLYCAM_13410    -64571       703.3           133.6
+     ORX_OCAMS_POLYCAM_13590    -64572       737.1           146.6
+     ORX_OCAMS_POLYCAM_13770    -64573       774.3           161.5
+     ORX_OCAMS_POLYCAM_13950    -64574       815.3           178.8
+     ORX_OCAMS_POLYCAM_14130    -64575       860.7           199.0
+     ORX_OCAMS_POLYCAM_14310    -64576       911.4           222.6
+     ORX_OCAMS_POLYCAM_14490    -64577       968.3           250.7
+     ORX_OCAMS_POLYCAM_14669    -64578      1032.5           284.3
+     ORX_OCAMS_POLYCAM_14849    -64579      1105.6           325.1
+     ORX_OCAMS_POLYCAM_15029    -64580      1189.7           375.0
+     ORX_OCAMS_POLYCAM_15210    -64581      1287.3           437.1
+     ORX_OCAMS_POLYCAM_15390    -64582      1401.9           515.5
+     ORX_OCAMS_POLYCAM_15570    -64583      1538.6           616.7
+     ORX_OCAMS_POLYCAM_15750    -64584      1704.3           749.9
+     ORX_OCAMS_POLYCAM_15930    -64585      1909.4           930.0
+     ORX_OCAMS_POLYCAM_16110    -64586      2169.7          1181.5
+     ORX_OCAMS_POLYCAM_16290    -64587      2511.1          1546.7
+     ORX_OCAMS_POLYCAM_16470    -64588      2978.4          2103.4
+     ORX_OCAMS_POLYCAM_16650    -64589      3657.1          3008.7
+     ORX_OCAMS_POLYCAM_16830    -64590      4732.5          4618.6
+     ORX_OCAMS_POLYCAM_17010    -64591      6695.7          7904.4
+     ORX_OCAMS_POLYCAM_17190    -64592     11420.0         16612.5
+     ORX_OCAMS_POLYCAM_17371    -64593     38522.3         70001.0
+     ORX_OCAMS_POLYCAM_17551    -64594    -28191.2        -49465.8
+     ORX_OCAMS_POLYCAM_17731    -64595    -10338.3        -14558.8
+     ORX_OCAMS_POLYCAM_17911    -64596     -6336.9         -7272.9
+     ORX_OCAMS_POLYCAM_18091    -64597     -4572.3         -4360.3
+     ORX_OCAMS_POLYCAM_18271    -64598     -3578.6         -2891.7
+     ORX_OCAMS_POLYCAM_18451    -64599     -2941.3         -2050.1
+     ORX_OCAMS_POLYCAM_18631    -64600     -2497.7         -1525.4
+     ORX_OCAMS_POLYCAM_18811    -64601     -2171.2         -1177.4
+     ORX_OCAMS_POLYCAM_18991    -64602     -1920.9          -935.3
+     ORX_OCAMS_POLYCAM_19171    -64603     -1722.8          -760.6
+     ORX_OCAMS_POLYCAM_19351    -64604     -1562.2          -630.4
+     ORX_OCAMS_POLYCAM_19530    -64605     -1429.4          -531.0
+     ORX_OCAMS_POLYCAM_19710    -64606     -1317.6          -453.4
+     ORX_OCAMS_POLYCAM_19890    -64607     -1222.4          -391.7
+     ORX_OCAMS_POLYCAM_20070    -64608     -1140.2          -341.8
+     ORX_OCAMS_POLYCAM_20250    -64609     -1068.6          -300.9
+     ORX_OCAMS_POLYCAM_20430    -64610     -1005.6          -267.0
+     ORX_OCAMS_POLYCAM_20610    -64611      -949.8          -238.5
+     ORX_OCAMS_POLYCAM_20790    -64612      -900.0          -214.5
+     ORX_OCAMS_POLYCAM_20970    -64613      -855.2          -193.9
+     ORX_OCAMS_POLYCAM_21150    -64614      -814.9          -176.2
+     ORX_OCAMS_POLYCAM_21330    -64615      -778.3          -160.8
+     ORX_OCAMS_POLYCAM_21510    -64616      -744.9          -147.4
+
+      
+   The remainder of the name is an underscore character followed by the
+   unique name of the data item. For example, the OCAMS MAPCAM
+   boresight direction in the OCAMS MAPCAM optics frame
+   (``ORX_OCAMS_MAPCAM'' -- see [2]) is specified by:
+
+      INS-64361_BORESIGHT
+
+   The upper bound on the length of the name of any data item is 32
+   characters.
+
+   If the same item is included in more than one file, or if the same
+   item appears more than once within a single file, the latest value
+   supersedes any earlier values.
+
+
+OCAMS description
+----------------------------------------------------------
+
+   From [3]:
+
+   ``OSIRIS-REX Camera Suite (OCAMS)
+
+   ..... OCAMS calibrations will be performed.''
+
+
+OCAMS Optical Parameters
+----------------------------------------------------------
+
+   The general optical parameters for the three cameras that constitute
+   the OCAMS detectors:
+
+      -  PolyCam Camera
+
+      -  MapCam Camera
+
+      -  SamCam Camera
+
+   are compiled into the following table:
+
+      ----------------------------- -----------  -----------  -----------
+               parameter              POLYCAM      MAPCAM       SAMCAM
+      ----------------------------- -----------  -----------  -----------
+      Effective Focal Length, mm       628.70      125.20        24.40
+          Estimated Uncertainty, mm      5.00        0.50         0.10
+      Spectral Range, nm               500-800     440-890      500-800
+      F/number                           3.39        3.295        6.10
+      -----------------------------  ----------  -----------  -----------
+
+   The MapCam filter-specific parameters (per [5]) are
+
+      ---------------------------- --------- ------- ------- ------- ------- 
+               parameter              pan      b'       v       w       x
+      ---------------------------- --------- ------- ------- ------- ------- 
+      Effective Focal Length, mm    125.20   125.37  125.11  125.13  125.42
+         Estimated Uncertainty, mm    0.15     0.15    0.15    0.15    0.15
+      Spectral Range, nm            489-815  439-500 521-578 671-731 815-893
+      F/number                        3.295    3.299   3.292   3.293   3.300
+      ---------------------------- --------- ------- ------- ------- ------- 
+
+   PolyCam numbers are given for the functional range of the focus
+   mechanism. The values at either operating extreme are:
+
+      ----------------------------  -------------  -------------
+                parameter           POLYCAM(200m)  POLYCAM(inf)
+      ----------------------------  -------------  -------------
+      Effective Focal Length, mm      610.27         628.77
+         Estimated Uncertainty, mm      5.00           5.00
+      Spectral Range, nm              500-800        500-800
+      F/number                          3.29           3.39
+      Focus position                    4231          17371
+      ----------------------------  -------------  -------------
+
+   These values are given in the keywords below in the same units as
+   the table above.
+
+   MapCam (MAPCAM):
+
+      \begindata
+
+      INS-64361_FOCAL_LENGTH      = (  125.20   )
+      INS-64361_FL_UNCERTAINTY    = (    0.50   )
+      INS-64361_WAVELENGTH_RANGE  = ( 440, 890  )
+      INS-64361_F/NUMBER          = (    3.295  )
+
+      \begintext
+
+   MapCam (MAPCAM, filter-specific):
+
+      \begindata
+
+      INS-64364_FOCAL_LENGTH      = (  125.20   )
+      INS-64364_FL_UNCERTAINTY    = (    0.15   )
+      INS-64364_WAVELENGTH_RANGE  = (  489, 815 )
+      INS-64364_F/NUMBER          = (    3.295  )
+
+      INS-64365_FOCAL_LENGTH      = (  125.37   )
+      INS-64365_FL_UNCERTAINTY    = (    0.15   )
+      INS-64365_WAVELENGTH_RANGE  = (  439, 500 )
+      INS-64365_F/NUMBER          = (    3.299  )
+
+      INS-64366_FOCAL_LENGTH      = (  125.11   )
+      INS-64366_FL_UNCERTAINTY    = (    0.15   )
+      INS-64366_WAVELENGTH_RANGE  = (  521, 578 )
+      INS-64366_F/NUMBER          = (    3.292  )
+
+      INS-64367_FOCAL_LENGTH      = (  125.13   )
+      INS-64367_FL_UNCERTAINTY    = (    0.15   )
+      INS-64367_WAVELENGTH_RANGE  = (  671, 731 )
+      INS-64367_F/NUMBER          = (    3.293  )
+
+      INS-64368_FOCAL_LENGTH      = (  125.42   )
+      INS-64368_FL_UNCERTAINTY    = (    0.15   )
+      INS-64368_WAVELENGTH_RANGE  = (  815, 893 )
+      INS-64368_F/NUMBER          = (    3.300  )
+
+      \begintext
+
+   SamCam (SAMCAM):
+
+      \begindata
+
+      INS-64362_FOCAL_LENGTH      = (   24.40   )
+      INS-64362_FL_UNCERTAINTY    = (    0.10   )
+      INS-64362_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64362_F/NUMBER          = (    6.10   )
+
+      \begintext
+
+   PolyCam (POLYCAM, infinity):
+
+      \begindata
+
+      INS-64360_FOCAL_LENGTH      = (  628.70   )
+      INS-64360_FL_UNCERTAINTY    = (    5.00   )
+      INS-64360_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64360_F/NUMBER          = (    3.39   )
+
+      \begintext
+   
+   PolyCam (POLYCAM, focus positions):
+
+      \begindata
+
+      INS-64500_FOCAL_LENGTH      = (  604.99   )
+      INS-64500_FL_UNCERTAINTY    = (    5.00   )
+      INS-64500_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64500_F/NUMBER          = (    3.26   )
+      INS-64500_MOTOR_POSITION    = (  630      )
+
+      INS-64501_FOCAL_LENGTH      = (  605.25   )
+      INS-64501_FL_UNCERTAINTY    = (    5.00   )
+      INS-64501_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64501_F/NUMBER          = (    3.27   )
+      INS-64501_MOTOR_POSITION    = (  810      )
+
+      INS-64502_FOCAL_LENGTH      = (  605.52   )
+      INS-64502_FL_UNCERTAINTY    = (    5.00   )
+      INS-64502_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64502_F/NUMBER          = (    3.27   )
+      INS-64502_MOTOR_POSITION    = (  990      )
+
+      INS-64503_FOCAL_LENGTH      = (  605.79   )
+      INS-64503_FL_UNCERTAINTY    = (    5.00   )
+      INS-64503_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64503_F/NUMBER          = (    3.27   )
+      INS-64503_MOTOR_POSITION    = (  1170     )
+
+      INS-64504_FOCAL_LENGTH      = (  606.06   )
+      INS-64504_FL_UNCERTAINTY    = (    5.00   )
+      INS-64504_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64504_F/NUMBER          = (    3.27   )
+      INS-64504_MOTOR_POSITION    = (  1350     )
+
+      INS-64505_FOCAL_LENGTH      = (  606.32   )
+      INS-64505_FL_UNCERTAINTY    = (    5.00   )
+      INS-64505_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64505_F/NUMBER          = (    3.27   )
+      INS-64505_MOTOR_POSITION    = (  1530     )
+
+      INS-64506_FOCAL_LENGTH      = (  606.59   )
+      INS-64506_FL_UNCERTAINTY    = (    5.00   )
+      INS-64506_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64506_F/NUMBER          = (    3.27   )
+      INS-64506_MOTOR_POSITION    = (  1710     )
+
+      INS-64507_FOCAL_LENGTH      = (  606.86   )
+      INS-64507_FL_UNCERTAINTY    = (    5.00   )
+      INS-64507_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64507_F/NUMBER          = (    3.27   )
+      INS-64507_MOTOR_POSITION    = (  1890     )
+
+      INS-64508_FOCAL_LENGTH      = (  607.12   )
+      INS-64508_FL_UNCERTAINTY    = (    5.00   )
+      INS-64508_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64508_F/NUMBER          = (    3.28   )
+      INS-64508_MOTOR_POSITION    = (  2070     )
+
+      INS-64509_FOCAL_LENGTH      = (  607.39   )
+      INS-64509_FL_UNCERTAINTY    = (    5.00   )
+      INS-64509_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64509_F/NUMBER          = (    3.28   )
+      INS-64509_MOTOR_POSITION    = (  2249     )
+
+      INS-64510_FOCAL_LENGTH      = (  607.65   )
+      INS-64510_FL_UNCERTAINTY    = (    5.00   )
+      INS-64510_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64510_F/NUMBER          = (    3.28   )
+      INS-64510_MOTOR_POSITION    = (  2429     )
+
+      INS-64511_FOCAL_LENGTH      = (  607.91   )
+      INS-64511_FL_UNCERTAINTY    = (    5.00   )
+      INS-64511_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64511_F/NUMBER          = (    3.28   )
+      INS-64511_MOTOR_POSITION    = (  2609     )
+
+      INS-64512_FOCAL_LENGTH      = (  608.18   )
+      INS-64512_FL_UNCERTAINTY    = (    5.00   )
+      INS-64512_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64512_F/NUMBER          = (    3.28   )
+      INS-64512_MOTOR_POSITION    = (  2789     )
+
+      INS-64513_FOCAL_LENGTH      = (  608.44   )
+      INS-64513_FL_UNCERTAINTY    = (    5.00   )
+      INS-64513_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64513_F/NUMBER          = (    3.28   )
+      INS-64513_MOTOR_POSITION    = (  2969     )
+
+      INS-64514_FOCAL_LENGTH      = (  608.70   )
+      INS-64514_FL_UNCERTAINTY    = (    5.00   )
+      INS-64514_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64514_F/NUMBER          = (    3.28   )
+      INS-64514_MOTOR_POSITION    = (  3149     )
+
+      INS-64515_FOCAL_LENGTH      = (  608.97   )
+      INS-64515_FL_UNCERTAINTY    = (    5.00   )
+      INS-64515_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64515_F/NUMBER          = (    3.29   )
+      INS-64515_MOTOR_POSITION    = (  3329     )
+
+      INS-64516_FOCAL_LENGTH      = (  609.23   )
+      INS-64516_FL_UNCERTAINTY    = (    5.00   )
+      INS-64516_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64516_F/NUMBER          = (    3.29   )
+      INS-64516_MOTOR_POSITION    = (  3510     )
+
+      INS-64517_FOCAL_LENGTH      = (  609.49   )
+      INS-64517_FL_UNCERTAINTY    = (    5.00   )
+      INS-64517_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64517_F/NUMBER          = (    3.29   )
+      INS-64517_MOTOR_POSITION    = (  3691     )
+
+      INS-64518_FOCAL_LENGTH      = (  609.75   )
+      INS-64518_FL_UNCERTAINTY    = (    5.00   )
+      INS-64518_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64518_F/NUMBER          = (    3.29   )
+      INS-64518_MOTOR_POSITION    = (  3871     )
+
+      INS-64519_FOCAL_LENGTH      = (  610.01   )
+      INS-64519_FL_UNCERTAINTY    = (    5.00   )
+      INS-64519_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64519_F/NUMBER          = (    3.29   )
+      INS-64519_MOTOR_POSITION    = (  4051     )
+
+      INS-64520_FOCAL_LENGTH      = (  610.27   )
+      INS-64520_FL_UNCERTAINTY    = (    5.00   )
+      INS-64520_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64520_F/NUMBER          = (    3.29   )
+      INS-64520_MOTOR_POSITION    = (  4231     )
+
+      INS-64521_FOCAL_LENGTH      = (  610.53   )
+      INS-64521_FL_UNCERTAINTY    = (    5.00   )
+      INS-64521_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64521_F/NUMBER          = (    3.29   )
+      INS-64521_MOTOR_POSITION    = (  4410     )
+
+      INS-64522_FOCAL_LENGTH      = (  610.79   )
+      INS-64522_FL_UNCERTAINTY    = (    5.00   )
+      INS-64522_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64522_F/NUMBER          = (    3.30   )
+      INS-64522_MOTOR_POSITION    = (  4590     )
+
+      INS-64523_FOCAL_LENGTH      = (  611.05   )
+      INS-64523_FL_UNCERTAINTY    = (    5.00   )
+      INS-64523_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64523_F/NUMBER          = (    3.30   )
+      INS-64523_MOTOR_POSITION    = (  4770     )
+
+      INS-64524_FOCAL_LENGTH      = (  611.31   )
+      INS-64524_FL_UNCERTAINTY    = (    5.00   )
+      INS-64524_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64524_F/NUMBER          = (    3.30   )
+      INS-64524_MOTOR_POSITION    = (  4950     )
+
+      INS-64525_FOCAL_LENGTH      = (  611.57   )
+      INS-64525_FL_UNCERTAINTY    = (    5.00   )
+      INS-64525_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64525_F/NUMBER          = (    3.30   )
+      INS-64525_MOTOR_POSITION    = (  5130     )
+
+      INS-64526_FOCAL_LENGTH      = (  611.83   )
+      INS-64526_FL_UNCERTAINTY    = (    5.00   )
+      INS-64526_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64526_F/NUMBER          = (    3.30   )
+      INS-64526_MOTOR_POSITION    = (  5310     )
+
+      INS-64527_FOCAL_LENGTH      = (  612.09   )
+      INS-64527_FL_UNCERTAINTY    = (    5.00   )
+      INS-64527_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64527_F/NUMBER          = (    3.30   )
+      INS-64527_MOTOR_POSITION    = (  5490     )
+
+      INS-64528_FOCAL_LENGTH      = (  612.35   )
+      INS-64528_FL_UNCERTAINTY    = (    5.00   )
+      INS-64528_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64528_F/NUMBER          = (    3.30   )
+      INS-64528_MOTOR_POSITION    = (  5670     )
+
+      INS-64529_FOCAL_LENGTH      = (  612.60   )
+      INS-64529_FL_UNCERTAINTY    = (    5.00   )
+      INS-64529_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64529_F/NUMBER          = (    3.31   )
+      INS-64529_MOTOR_POSITION    = (  5850     )
+
+      INS-64530_FOCAL_LENGTH      = (  612.86   )
+      INS-64530_FL_UNCERTAINTY    = (    5.00   )
+      INS-64530_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64530_F/NUMBER          = (    3.31   )
+      INS-64530_MOTOR_POSITION    = (  6030     )
+
+      INS-64531_FOCAL_LENGTH      = (  613.12   )
+      INS-64531_FL_UNCERTAINTY    = (    5.00   )
+      INS-64531_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64531_F/NUMBER          = (    3.31   )
+      INS-64531_MOTOR_POSITION    = (  6209     )
+
+      INS-64532_FOCAL_LENGTH      = (  613.37   )
+      INS-64532_FL_UNCERTAINTY    = (    5.00   )
+      INS-64532_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64532_F/NUMBER          = (    3.31   )
+      INS-64532_MOTOR_POSITION    = (  6388     )
+
+      INS-64533_FOCAL_LENGTH      = (  613.63   )
+      INS-64533_FL_UNCERTAINTY    = (    5.00   )
+      INS-64533_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64533_F/NUMBER          = (    3.31   )
+      INS-64533_MOTOR_POSITION    = (  6568     )
+
+      INS-64534_FOCAL_LENGTH      = (  613.88   )
+      INS-64534_FL_UNCERTAINTY    = (    5.00   )
+      INS-64534_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64534_F/NUMBER          = (    3.31   )
+      INS-64534_MOTOR_POSITION    = (  6749     )
+
+      INS-64535_FOCAL_LENGTH      = (  614.14   )
+      INS-64535_FL_UNCERTAINTY    = (    5.00   )
+      INS-64535_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64535_F/NUMBER          = (    3.31   )
+      INS-64535_MOTOR_POSITION    = (  6930     )
+
+      INS-64536_FOCAL_LENGTH      = (  614.39   )
+      INS-64536_FL_UNCERTAINTY    = (    5.00   )
+      INS-64536_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64536_F/NUMBER          = (    3.32   )
+      INS-64536_MOTOR_POSITION    = (  7110     )
+
+      INS-64537_FOCAL_LENGTH      = (  614.65   )
+      INS-64537_FL_UNCERTAINTY    = (    5.00   )
+      INS-64537_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64537_F/NUMBER          = (    3.32   )
+      INS-64537_MOTOR_POSITION    = (  7290     )
+
+      INS-64538_FOCAL_LENGTH      = (  614.90   )
+      INS-64538_FL_UNCERTAINTY    = (    5.00   )
+      INS-64538_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64538_F/NUMBER          = (    3.32   )
+      INS-64538_MOTOR_POSITION    = (  7470     )
+
+      INS-64539_FOCAL_LENGTH      = (  615.16   )
+      INS-64539_FL_UNCERTAINTY    = (    5.00   )
+      INS-64539_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64539_F/NUMBER          = (    3.32   )
+      INS-64539_MOTOR_POSITION    = (  7650     )
+
+      INS-64540_FOCAL_LENGTH      = (  615.41   )
+      INS-64540_FL_UNCERTAINTY    = (    5.00   )
+      INS-64540_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64540_F/NUMBER          = (    3.32   )
+      INS-64540_MOTOR_POSITION    = (  7830     )
+
+      INS-64541_FOCAL_LENGTH      = (  615.66   )
+      INS-64541_FL_UNCERTAINTY    = (    5.00   )
+      INS-64541_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64541_F/NUMBER          = (    3.32   )
+      INS-64541_MOTOR_POSITION    = (  8010     )
+
+      INS-64542_FOCAL_LENGTH      = (  615.92   )
+      INS-64542_FL_UNCERTAINTY    = (    5.00   )
+      INS-64542_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64542_F/NUMBER          = (    3.32   )
+      INS-64542_MOTOR_POSITION    = (  8190     )
+
+      INS-64543_FOCAL_LENGTH      = (  616.17   )
+      INS-64543_FL_UNCERTAINTY    = (    5.00   )
+      INS-64543_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64543_F/NUMBER          = (    3.33   )
+      INS-64543_MOTOR_POSITION    = (  8370     )
+
+      INS-64544_FOCAL_LENGTH      = (  616.42   )
+      INS-64544_FL_UNCERTAINTY    = (    5.00   )
+      INS-64544_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64544_F/NUMBER          = (    3.33   )
+      INS-64544_MOTOR_POSITION    = (  8550     )
+
+      INS-64545_FOCAL_LENGTH      = (  616.68   )
+      INS-64545_FL_UNCERTAINTY    = (    5.00   )
+      INS-64545_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64545_F/NUMBER          = (    3.33   )
+      INS-64545_MOTOR_POSITION    = (  8730     )
+
+      INS-64546_FOCAL_LENGTH      = (  616.93   )
+      INS-64546_FL_UNCERTAINTY    = (    5.00   )
+      INS-64546_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64546_F/NUMBER          = (    3.33   )
+      INS-64546_MOTOR_POSITION    = (  8910     )
+
+      INS-64547_FOCAL_LENGTH      = (  617.18   )
+      INS-64547_FL_UNCERTAINTY    = (    5.00   )
+      INS-64547_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64547_F/NUMBER          = (    3.33   )
+      INS-64547_MOTOR_POSITION    = (  9090     )
+
+      INS-64548_FOCAL_LENGTH      = (  617.43   )
+      INS-64548_FL_UNCERTAINTY    = (    5.00   )
+      INS-64548_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64548_F/NUMBER          = (    3.33   )
+      INS-64548_MOTOR_POSITION    = (  9270     )
+
+      INS-64549_FOCAL_LENGTH      = (  617.68   )
+      INS-64549_FL_UNCERTAINTY    = (    5.00   )
+      INS-64549_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64549_F/NUMBER          = (    3.33   )
+      INS-64549_MOTOR_POSITION    = (  9450     )
+
+      INS-64550_FOCAL_LENGTH      = (  617.93   )
+      INS-64550_FL_UNCERTAINTY    = (    5.00   )
+      INS-64550_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64550_F/NUMBER          = (    3.33   )
+      INS-64550_MOTOR_POSITION    = (  9630     )
+
+      INS-64551_FOCAL_LENGTH      = (  618.18   )
+      INS-64551_FL_UNCERTAINTY    = (    5.00   )
+      INS-64551_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64551_F/NUMBER          = (    3.34   )
+      INS-64551_MOTOR_POSITION    = (  9810     )
+
+      INS-64552_FOCAL_LENGTH      = (  618.43   )
+      INS-64552_FL_UNCERTAINTY    = (    5.00   )
+      INS-64552_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64552_F/NUMBER          = (    3.34   )
+      INS-64552_MOTOR_POSITION    = (  9990     )
+
+      INS-64553_FOCAL_LENGTH      = (  618.68   )
+      INS-64553_FL_UNCERTAINTY    = (    5.00   )
+      INS-64553_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64553_F/NUMBER          = (    3.34   )
+      INS-64553_MOTOR_POSITION    = (  10170 )
+
+      INS-64554_FOCAL_LENGTH      = (  618.93   )
+      INS-64554_FL_UNCERTAINTY    = (    5.00   )
+      INS-64554_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64554_F/NUMBER          = (    3.34   )
+      INS-64554_MOTOR_POSITION    = (  10350    )
+
+      INS-64555_FOCAL_LENGTH      = (  619.18   )
+      INS-64555_FL_UNCERTAINTY    = (    5.00   )
+      INS-64555_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64555_F/NUMBER          = (    3.34   )
+      INS-64555_MOTOR_POSITION    = (  10530    )
+
+      INS-64556_FOCAL_LENGTH      = (  619.43   )
+      INS-64556_FL_UNCERTAINTY    = (    5.00   )
+      INS-64556_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64556_F/NUMBER          = (    3.34   )
+      INS-64556_MOTOR_POSITION    = (  10710    )
+
+      INS-64557_FOCAL_LENGTH      = (  619.68   )
+      INS-64557_FL_UNCERTAINTY    = (    5.00   )
+      INS-64557_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64557_F/NUMBER          = (    3.34   )
+      INS-64557_MOTOR_POSITION    = (  10889    )
+
+      INS-64558_FOCAL_LENGTH      = (  619.93   )
+      INS-64558_FL_UNCERTAINTY    = (    5.00   )
+      INS-64558_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64558_F/NUMBER          = (    3.35   )
+      INS-64558_MOTOR_POSITION    = (  11069    )
+
+      INS-64559_FOCAL_LENGTH      = (  620.18   )
+      INS-64559_FL_UNCERTAINTY    = (    5.00   )
+      INS-64559_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64559_F/NUMBER          = (    3.35   )
+      INS-64559_MOTOR_POSITION    = (  11249    )
+
+      INS-64560_FOCAL_LENGTH      = (  620.43   )
+      INS-64560_FL_UNCERTAINTY    = (    5.00   )
+      INS-64560_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64560_F/NUMBER          = (    3.35   )
+      INS-64560_MOTOR_POSITION    = (  11430    )
+
+      INS-64561_FOCAL_LENGTH      = (  620.68   )
+      INS-64561_FL_UNCERTAINTY    = (    5.00   )
+      INS-64561_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64561_F/NUMBER          = (    3.35   )
+      INS-64561_MOTOR_POSITION    = (  11610    )
+
+      INS-64562_FOCAL_LENGTH      = (  620.92   )
+      INS-64562_FL_UNCERTAINTY    = (    5.00   )
+      INS-64562_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64562_F/NUMBER          = (    3.35   )
+      INS-64562_MOTOR_POSITION    = (  11790    )
+
+      INS-64563_FOCAL_LENGTH      = (  621.17   )
+      INS-64563_FL_UNCERTAINTY    = (    5.00   )
+      INS-64563_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64563_F/NUMBER          = (    3.35   )
+      INS-64563_MOTOR_POSITION    = (  11970    )
+
+      INS-64564_FOCAL_LENGTH      = (  621.42   )
+      INS-64564_FL_UNCERTAINTY    = (    5.00   )
+      INS-64564_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64564_F/NUMBER          = (    3.35   )
+      INS-64564_MOTOR_POSITION    = (  12150    )
+
+      INS-64565_FOCAL_LENGTH      = (  621.67   )
+      INS-64565_FL_UNCERTAINTY    = (    5.00   )
+      INS-64565_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64565_F/NUMBER          = (    3.35   )
+      INS-64565_MOTOR_POSITION    = (  12330    )
+
+      INS-64566_FOCAL_LENGTH      = (  621.92   )
+      INS-64566_FL_UNCERTAINTY    = (    5.00   )
+      INS-64566_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64566_F/NUMBER          = (    3.36   )
+      INS-64566_MOTOR_POSITION    = (  12509    )
+
+      INS-64567_FOCAL_LENGTH      = (  622.16   )
+      INS-64567_FL_UNCERTAINTY    = (    5.00   )
+      INS-64567_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64567_F/NUMBER          = (    3.36   )
+      INS-64567_MOTOR_POSITION    = (  12689    )
+
+      INS-64568_FOCAL_LENGTH      = (  622.41   )
+      INS-64568_FL_UNCERTAINTY    = (    5.00   )
+      INS-64568_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64568_F/NUMBER          = (    3.36   )
+      INS-64568_MOTOR_POSITION    = (  12869    )
+
+      INS-64569_FOCAL_LENGTH      = (  622.66   )
+      INS-64569_FL_UNCERTAINTY    = (    5.00   )
+      INS-64569_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64569_F/NUMBER          = (    3.36   )
+      INS-64569_MOTOR_POSITION    = (  13050    )
+
+      INS-64570_FOCAL_LENGTH      = (  622.91   )
+      INS-64570_FL_UNCERTAINTY    = (    5.00   )
+      INS-64570_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64570_F/NUMBER          = (    3.36   )
+      INS-64570_MOTOR_POSITION    = (  13230    )
+
+      INS-64571_FOCAL_LENGTH      = (  623.15   )
+      INS-64571_FL_UNCERTAINTY    = (    5.00   )
+      INS-64571_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64571_F/NUMBER          = (    3.36   )
+      INS-64571_MOTOR_POSITION    = (  13410    )
+
+      INS-64572_FOCAL_LENGTH      = (  623.40   )
+      INS-64572_FL_UNCERTAINTY    = (    5.00   )
+      INS-64572_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64572_F/NUMBER          = (    3.36   )
+      INS-64572_MOTOR_POSITION    = (  13590    )
+
+      INS-64573_FOCAL_LENGTH      = (  623.65   )
+      INS-64573_FL_UNCERTAINTY    = (    5.00   )
+      INS-64573_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64573_F/NUMBER          = (    3.37   )
+      INS-64573_MOTOR_POSITION    = (  13770    )
+
+      INS-64574_FOCAL_LENGTH      = (  623.90   )
+      INS-64574_FL_UNCERTAINTY    = (    5.00   )
+      INS-64574_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64574_F/NUMBER          = (    3.37   )
+      INS-64574_MOTOR_POSITION    = (  13950    )
+
+      INS-64575_FOCAL_LENGTH      = (  624.15   )
+      INS-64575_FL_UNCERTAINTY    = (    5.00   )
+      INS-64575_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64575_F/NUMBER          = (    3.37   )
+      INS-64575_MOTOR_POSITION    = (  14130    )
+
+      INS-64576_FOCAL_LENGTH      = (  624.39   )
+      INS-64576_FL_UNCERTAINTY    = (    5.00   )
+      INS-64576_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64576_F/NUMBER          = (    3.37   )
+      INS-64576_MOTOR_POSITION    = (  14310    )
+
+      INS-64577_FOCAL_LENGTH      = (  624.64   )
+      INS-64577_FL_UNCERTAINTY    = (    5.00   )
+      INS-64577_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64577_F/NUMBER          = (    3.37   )
+      INS-64577_MOTOR_POSITION    = (  14490    )
+
+      INS-64578_FOCAL_LENGTH      = (  624.89   )
+      INS-64578_FL_UNCERTAINTY    = (    5.00   )
+      INS-64578_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64578_F/NUMBER          = (    3.37   )
+      INS-64578_MOTOR_POSITION    = (  14669    )
+
+      INS-64579_FOCAL_LENGTH      = (  625.14   )
+      INS-64579_FL_UNCERTAINTY    = (    5.00   )
+      INS-64579_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64579_F/NUMBER          = (    3.37   )
+      INS-64579_MOTOR_POSITION    = (  14849    )
+
+      INS-64580_FOCAL_LENGTH      = (  625.39   )
+      INS-64580_FL_UNCERTAINTY    = (    5.00   )
+      INS-64580_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64580_F/NUMBER          = (    3.38   )
+      INS-64580_MOTOR_POSITION    = (  15029    )
+
+      INS-64581_FOCAL_LENGTH      = (  625.64   )
+      INS-64581_FL_UNCERTAINTY    = (    5.00   )
+      INS-64581_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64581_F/NUMBER          = (    3.38   )
+      INS-64581_MOTOR_POSITION    = (  15210    )
+
+      INS-64582_FOCAL_LENGTH      = (  625.89   )
+      INS-64582_FL_UNCERTAINTY    = (    5.00   )
+      INS-64582_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64582_F/NUMBER          = (    3.38   )
+      INS-64582_MOTOR_POSITION    = (  15390    )
+
+      INS-64583_FOCAL_LENGTH      = (  626.14   )
+      INS-64583_FL_UNCERTAINTY    = (    5.00   )
+      INS-64583_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64583_F/NUMBER          = (    3.38   )
+      INS-64583_MOTOR_POSITION    = (  15570    )
+
+      INS-64584_FOCAL_LENGTH      = (  626.39   )
+      INS-64584_FL_UNCERTAINTY    = (    5.00   )
+      INS-64584_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64584_F/NUMBER          = (    3.38   )
+      INS-64584_MOTOR_POSITION    = (  15750    )
+
+      INS-64585_FOCAL_LENGTH      = (  626.65   )
+      INS-64585_FL_UNCERTAINTY    = (    5.00   )
+      INS-64585_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64585_F/NUMBER          = (    3.38   )
+      INS-64585_MOTOR_POSITION    = (  15930    )
+
+      INS-64586_FOCAL_LENGTH      = (  626.90   )
+      INS-64586_FL_UNCERTAINTY    = (    5.00   )
+      INS-64586_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64586_F/NUMBER          = (    3.38   )
+      INS-64586_MOTOR_POSITION    = (  16110    )
+
+      INS-64587_FOCAL_LENGTH      = (  627.16   )
+      INS-64587_FL_UNCERTAINTY    = (    5.00   )
+      INS-64587_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64587_F/NUMBER          = (    3.38   )
+      INS-64587_MOTOR_POSITION    = (  16290    )
+
+      INS-64588_FOCAL_LENGTH      = (  627.42   )
+      INS-64588_FL_UNCERTAINTY    = (    5.00   )
+      INS-64588_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64588_F/NUMBER          = (    3.39   )
+      INS-64588_MOTOR_POSITION    = (  16470    )
+
+      INS-64589_FOCAL_LENGTH      = (  627.68   )
+      INS-64589_FL_UNCERTAINTY    = (    5.00   )
+      INS-64589_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64589_F/NUMBER          = (    3.39   )
+      INS-64589_MOTOR_POSITION    = (  16650    )
+
+      INS-64590_FOCAL_LENGTH      = (  627.94   )
+      INS-64590_FL_UNCERTAINTY    = (    5.00   )
+      INS-64590_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64590_F/NUMBER          = (    3.39   )
+      INS-64590_MOTOR_POSITION    = (  16830    )
+
+      INS-64591_FOCAL_LENGTH      = (  628.21   )
+      INS-64591_FL_UNCERTAINTY    = (    5.00   )
+      INS-64591_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64591_F/NUMBER          = (    3.39   )
+      INS-64591_MOTOR_POSITION    = (  17010    )
+
+      INS-64592_FOCAL_LENGTH      = (  628.48   )
+      INS-64592_FL_UNCERTAINTY    = (    5.00   )
+      INS-64592_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64592_F/NUMBER          = (    3.39   )
+      INS-64592_MOTOR_POSITION    = (  17190    )
+
+      INS-64593_FOCAL_LENGTH      = (  628.77   )
+      INS-64593_FL_UNCERTAINTY    = (    5.00   )
+      INS-64593_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64593_F/NUMBER          = (    3.39   )
+      INS-64593_MOTOR_POSITION    = (  17371    )
+
+      INS-64594_FOCAL_LENGTH      = (  629.08   )
+      INS-64594_FL_UNCERTAINTY    = (    5.00   )
+      INS-64594_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64594_F/NUMBER          = (    3.39   )
+      INS-64594_MOTOR_POSITION    = (  17551    )
+
+      INS-64595_FOCAL_LENGTH      = (  629.35   )
+      INS-64595_FL_UNCERTAINTY    = (    5.00   )
+      INS-64595_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64595_F/NUMBER          = (    3.40   )
+      INS-64595_MOTOR_POSITION    = (  17731    )
+
+      INS-64596_FOCAL_LENGTH      = (  629.62   )
+      INS-64596_FL_UNCERTAINTY    = (    5.00   )
+      INS-64596_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64596_F/NUMBER          = (    3.40   )
+      INS-64596_MOTOR_POSITION    = (  17911    )
+
+      INS-64597_FOCAL_LENGTH      = (  629.87   )
+      INS-64597_FL_UNCERTAINTY    = (    5.00   )
+      INS-64597_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64597_F/NUMBER          = (    3.40   )
+      INS-64597_MOTOR_POSITION    = (  18091    )
+
+      INS-64598_FOCAL_LENGTH      = (  630.13   )
+      INS-64598_FL_UNCERTAINTY    = (    5.00   )
+      INS-64598_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64598_F/NUMBER          = (    3.40   )
+      INS-64598_MOTOR_POSITION    = (  18271    )
+
+      INS-64599_FOCAL_LENGTH      = (  630.37   )
+      INS-64599_FL_UNCERTAINTY    = (    5.00   )
+      INS-64599_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64599_F/NUMBER          = (    3.40   )
+      INS-64599_MOTOR_POSITION    = (  18451    )
+
+      INS-64600_FOCAL_LENGTH      = (  630.62   )
+      INS-64600_FL_UNCERTAINTY    = (    5.00   )
+      INS-64600_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64600_F/NUMBER          = (    3.40   )
+      INS-64600_MOTOR_POSITION    = (  18631    )
+
+      INS-64601_FOCAL_LENGTH      = (  630.86   )
+      INS-64601_FL_UNCERTAINTY    = (    5.00   )
+      INS-64601_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64601_F/NUMBER          = (    3.40   )
+      INS-64601_MOTOR_POSITION    = (  18811    )
+
+      INS-64602_FOCAL_LENGTH      = (  631.10   )
+      INS-64602_FL_UNCERTAINTY    = (    5.00   )
+      INS-64602_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64602_F/NUMBER          = (    3.41   )
+      INS-64602_MOTOR_POSITION    = (  18991    )
+
+      INS-64603_FOCAL_LENGTH      = (  631.33   )
+      INS-64603_FL_UNCERTAINTY    = (    5.00   )
+      INS-64603_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64603_F/NUMBER          = (    3.41   )
+      INS-64603_MOTOR_POSITION    = (  19171    )
+
+      INS-64604_FOCAL_LENGTH      = (  631.57   )
+      INS-64604_FL_UNCERTAINTY    = (    5.00   )
+      INS-64604_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64604_F/NUMBER          = (    3.41   )
+      INS-64604_MOTOR_POSITION    = (  19351    )
+
+      INS-64605_FOCAL_LENGTH      = (  631.80   )
+      INS-64605_FL_UNCERTAINTY    = (    5.00   )
+      INS-64605_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64605_F/NUMBER          = (    3.41   )
+      INS-64605_MOTOR_POSITION    = (  19530    )
+
+      INS-64606_FOCAL_LENGTH      = (  632.03   )
+      INS-64606_FL_UNCERTAINTY    = (    5.00   )
+      INS-64606_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64606_F/NUMBER          = (    3.41   )
+      INS-64606_MOTOR_POSITION    = (  19710    )
+
+      INS-64607_FOCAL_LENGTH      = (  632.26   )
+      INS-64607_FL_UNCERTAINTY    = (    5.00   )
+      INS-64607_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64607_F/NUMBER          = (    3.41   )
+      INS-64607_MOTOR_POSITION    = (  19890    )
+
+      INS-64608_FOCAL_LENGTH      = (  632.48   )
+      INS-64608_FL_UNCERTAINTY    = (    5.00   )
+      INS-64608_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64608_F/NUMBER          = (    3.41   )
+      INS-64608_MOTOR_POSITION    = (  20070    )
+
+      INS-64609_FOCAL_LENGTH      = (  632.71   )
+      INS-64609_FL_UNCERTAINTY    = (    5.00   )
+      INS-64609_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64609_F/NUMBER          = (    3.41   )
+      INS-64609_MOTOR_POSITION    = (  20250    )
+
+      INS-64610_FOCAL_LENGTH      = (  632.93   )
+      INS-64610_FL_UNCERTAINTY    = (    5.00   )
+      INS-64610_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64610_F/NUMBER          = (    3.42   )
+      INS-64610_MOTOR_POSITION    = (  20430    )
+
+      INS-64611_FOCAL_LENGTH      = (  633.15   )
+      INS-64611_FL_UNCERTAINTY    = (    5.00   )
+      INS-64611_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64611_F/NUMBER          = (    3.42   )
+      INS-64611_MOTOR_POSITION    = (  20610    )
+
+      INS-64612_FOCAL_LENGTH      = (  633.37   )
+      INS-64612_FL_UNCERTAINTY    = (    5.00   )
+      INS-64612_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64612_F/NUMBER          = (    3.42   )
+      INS-64612_MOTOR_POSITION    = (  20790    )
+
+      INS-64613_FOCAL_LENGTH      = (  633.59   )
+      INS-64613_FL_UNCERTAINTY    = (    5.00   )
+      INS-64613_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64613_F/NUMBER          = (    3.42   )
+      INS-64613_MOTOR_POSITION    = (  20970    )
+
+      INS-64614_FOCAL_LENGTH      = (  633.81   )
+      INS-64614_FL_UNCERTAINTY    = (    5.00   )
+      INS-64614_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64614_F/NUMBER          = (    3.42   )
+      INS-64614_MOTOR_POSITION    = (  21150    )
+
+      INS-64615_FOCAL_LENGTH      = (  634.03   )
+      INS-64615_FL_UNCERTAINTY    = (    5.00   )
+      INS-64615_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64615_F/NUMBER          = (    3.42   )
+      INS-64615_MOTOR_POSITION    = (  21330    )
+
+      INS-64616_FOCAL_LENGTH      = (  634.24   )
+      INS-64616_FL_UNCERTAINTY    = (    5.00   )
+      INS-64616_WAVELENGTH_RANGE  = ( 500, 800  )
+      INS-64616_F/NUMBER          = (    3.42   )
+      INS-64616_MOTOR_POSITION    = (  21510    )
+
+      \begintext
+   
+
+OCAMS Field-of-View and CCD Parameters
+----------------------------------------------------------
+
+  A co-boresighting diagram is shown below: while PolyCam and MapCam
+  are co-boresighted, SamCam is angled by 9.4 degrees towards the SC -Y
+  and around the SC +X axis in order to image the TAGSAM head. The SC
+  axes on the diagram are shown in relation to as-viewed FITS images
+  displayed as directed by the keywords in the section ``<Vectors
+  dInstrumentFrame/dNAXIS1 and dInstrumentFrame/NAXIS2 for FITS>''
+  below.
+
+  
+  FOV Sizes (in degrees):
+  -----------------------
+
+                         9.4 deg |-----------------|
+
+           .---------------SamCam----------------------.                 ---
+           |                                           |                  |
+           |                                           |                  |
+           |                                           |                  |
+           |                                           |                  |
+           |                                           |                  |
+           |                              .-----------------.       ---   |
+           |                              |        ^+Xm-p   |        |    |
+           |                   +XSam      |PolyCam |+Xsc    |        |    |
+           |                     ^        |     \  |        |        |    |
+           |                     |        |      .-|-.      |  ---   |    |
+           |                     x-->     |      | x------> |   |    |    |
+           |                       +Ysam  |     [R]-[L] +Ysc|  ---   |    |
+           |                              |            +Ym-p| 0.794  |    |
+           |                              |                 |  deg   |    |
+           |                              |                 |        |    |
+           |                              '----MapCam-------'       ---   |
+           |                                           |            3.97  |
+           |                                           |            deg   |
+           |                                           |                  |
+           |                                           |                  |
+           |                                           |                  |
+           '-------------------------------------------'                --- 
+                                                                     20.44 deg
+                                                 |---| 0.794 deg
+                  
+                                          |-----------------| 3.97 deg
+
+           |-------------------------------------------| 20.44 deg
+
+Subscripts
+  sc   - Spacecraft
+  sam  - SamCam
+  map  - MapCam
+  poly - PolyCam
+  m-p  - MapCam-Polycam
+
+
+                         +Zsc, +Zm-p (=+Zmap=+Zpoly), and +Zsam are into
+                         the page
+                    
+
+   The FOVs of the OCAMS detectors have the following angular sizes:
+
+      ------------  ----------------  ----------------
+        Detector       Horizontal         Vertical
+      ------------  ----------------  ----------------
+      POLYCAM(inf)    0.794 degrees    0.794 degrees
+
+          MAPCAM      3.97  degrees    3.97  degrees
+
+          SAMCAM     20.44  degrees   20.44  degrees
+      ------------  ----------------  ----------------
+
+   The CCD geometry parameters are provided below:
+
+      ------------------------------  -----------  -----------  -----------
+                parameter            POLYCAM(inf)    MAPCAM       SAMCAM
+      ------------------------------  -----------  -----------  -----------
+       Detector Array Size             1024x1024    1024x1024    1024x1024
+       Pixel Size, microns              8.5x8.5      8.5x8.5      8.5x8.5
+       FOV Angular Size, degrees      0.794x0.794   3.97x3.97   20.44x20.44
+       IFOV, microradian/pixel           13.520       67.675      348.361
+      ------------------------------  -----------  -----------  -----------
+
+   The MapCam filter-specific FOV and IFOV sizes (per [5]) are
+
+      ---------------------------- --------- ------- ------- ------- ------- 
+               parameter              pan      b'       v       w       x
+      ---------------------------- --------- ------- ------- ------- ------- 
+       FOV Half Ang. Size, degrees   1.992    1.989   1.993   1.993   1.988
+       IFOV, microradian/pixel      67.89    67.80   67.94   67.93   67.77
+      ---------------------------- --------- ------- ------- ------- ------- 
+
+   With the keywords and their values:
+
+   MapCam (MAPCAM):
+
+      \begindata
+
+      INS-64361_PIXEL_SAMPLES     = (  1024  )
+      INS-64361_PIXEL_LINES       = (  1024  )
+      INS-64361_PIXEL_SIZE        = (   8.5  )
+      INS-64361_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64361_IFOV              = ( 67.675 )
+
+      \begintext
+
+   MapCam (MAPCAM, filter-specific):
+
+      \begindata
+
+      INS-64364_PIXEL_SAMPLES     = (  1024  )
+      INS-64364_PIXEL_LINES       = (  1024  )
+      INS-64364_PIXEL_SIZE        = (   8.5  )
+      INS-64364_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64364_IFOV              = ( 67.89 )
+
+      INS-64365_PIXEL_SAMPLES     = (  1024  )
+      INS-64365_PIXEL_LINES       = (  1024  )
+      INS-64365_PIXEL_SIZE        = (   8.5  )
+      INS-64365_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64365_IFOV              = ( 67.80 )
+
+      INS-64366_PIXEL_SAMPLES     = (  1024  )
+      INS-64366_PIXEL_LINES       = (  1024  )
+      INS-64366_PIXEL_SIZE        = (   8.5  )
+      INS-64366_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64366_IFOV              = ( 67.94 )
+
+      INS-64367_PIXEL_SAMPLES     = (  1024  )
+      INS-64367_PIXEL_LINES       = (  1024  )
+      INS-64367_PIXEL_SIZE        = (   8.5  )
+      INS-64367_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64367_IFOV              = ( 67.93 )
+
+      INS-64368_PIXEL_SAMPLES     = (  1024  )
+      INS-64368_PIXEL_LINES       = (  1024  )
+      INS-64368_PIXEL_SIZE        = (   8.5  )
+      INS-64368_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64368_IFOV              = ( 67.77 )
+
+      \begintext
+
+   SamCam (SAMCAM):
+
+      \begindata
+
+      INS-64362_PIXEL_SAMPLES     = (  1024   )
+      INS-64362_PIXEL_LINES       = (  1024   )
+      INS-64362_PIXEL_SIZE        = (   8.5   )
+      INS-64362_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64362_IFOV              = ( 348.361 )
+
+      \begintext
+
+   PolyCam (POLYCAM, infinity):
+
+      \begindata
+
+      INS-64360_PIXEL_SAMPLES     = (  1024  )
+      INS-64360_PIXEL_LINES       = (  1024  )
+      INS-64360_PIXEL_SIZE        = (   8.5  )
+      INS-64360_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64360_IFOV              = ( 13.520 )
+
+      \begintext
+   
+   PolyCam (POLYCAM, focus positions):
+
+      \begindata
+
+      INS-64500_PIXEL_SAMPLES     = (  1024  )
+      INS-64500_PIXEL_LINES       = (  1024  )
+      INS-64500_PIXEL_SIZE        = (   8.5  )
+      INS-64500_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64500_IFOV              = ( 14.050 )
+
+      INS-64501_PIXEL_SAMPLES     = (  1024  )
+      INS-64501_PIXEL_LINES       = (  1024  )
+      INS-64501_PIXEL_SIZE        = (   8.5  )
+      INS-64501_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64501_IFOV              = ( 14.044 )
+
+      INS-64502_PIXEL_SAMPLES     = (  1024  )
+      INS-64502_PIXEL_LINES       = (  1024  )
+      INS-64502_PIXEL_SIZE        = (   8.5  )
+      INS-64502_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64502_IFOV              = ( 14.037 )
+
+      INS-64503_PIXEL_SAMPLES     = (  1024  )
+      INS-64503_PIXEL_LINES       = (  1024  )
+      INS-64503_PIXEL_SIZE        = (   8.5  )
+      INS-64503_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64503_IFOV              = ( 14.031 )
+
+      INS-64504_PIXEL_SAMPLES     = (  1024  )
+      INS-64504_PIXEL_LINES       = (  1024  )
+      INS-64504_PIXEL_SIZE        = (   8.5  )
+      INS-64504_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64504_IFOV              = ( 14.025 )
+
+      INS-64505_PIXEL_SAMPLES     = (  1024  )
+      INS-64505_PIXEL_LINES       = (  1024  )
+      INS-64505_PIXEL_SIZE        = (   8.5  )
+      INS-64505_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64505_IFOV              = ( 14.019 )
+
+      INS-64506_PIXEL_SAMPLES     = (  1024  )
+      INS-64506_PIXEL_LINES       = (  1024  )
+      INS-64506_PIXEL_SIZE        = (   8.5  )
+      INS-64506_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64506_IFOV              = ( 14.013 )
+
+      INS-64507_PIXEL_SAMPLES     = (  1024  )
+      INS-64507_PIXEL_LINES       = (  1024  )
+      INS-64507_PIXEL_SIZE        = (   8.5  )
+      INS-64507_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64507_IFOV              = ( 14.007 )
+
+      INS-64508_PIXEL_SAMPLES     = (  1024  )
+      INS-64508_PIXEL_LINES       = (  1024  )
+      INS-64508_PIXEL_SIZE        = (   8.5  )
+      INS-64508_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64508_IFOV              = ( 14.001 )
+
+      INS-64509_PIXEL_SAMPLES     = (  1024  )
+      INS-64509_PIXEL_LINES       = (  1024  )
+      INS-64509_PIXEL_SIZE        = (   8.5  )
+      INS-64509_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64509_IFOV              = ( 13.994 )
+
+      INS-64510_PIXEL_SAMPLES     = (  1024  )
+      INS-64510_PIXEL_LINES       = (  1024  )
+      INS-64510_PIXEL_SIZE        = (   8.5  )
+      INS-64510_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64510_IFOV              = ( 13.988 )
+
+      INS-64511_PIXEL_SAMPLES     = (  1024  )
+      INS-64511_PIXEL_LINES       = (  1024  )
+      INS-64511_PIXEL_SIZE        = (   8.5  )
+      INS-64511_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64511_IFOV              = ( 13.982 )
+
+      INS-64512_PIXEL_SAMPLES     = (  1024  )
+      INS-64512_PIXEL_LINES       = (  1024  )
+      INS-64512_PIXEL_SIZE        = (   8.5  )
+      INS-64512_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64512_IFOV              = ( 13.976 )
+
+      INS-64513_PIXEL_SAMPLES     = (  1024  )
+      INS-64513_PIXEL_LINES       = (  1024  )
+      INS-64513_PIXEL_SIZE        = (   8.5  )
+      INS-64513_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64513_IFOV              = ( 13.970 )
+
+      INS-64514_PIXEL_SAMPLES     = (  1024  )
+      INS-64514_PIXEL_LINES       = (  1024  )
+      INS-64514_PIXEL_SIZE        = (   8.5  )
+      INS-64514_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64514_IFOV              = ( 13.964 )
+
+      INS-64515_PIXEL_SAMPLES     = (  1024  )
+      INS-64515_PIXEL_LINES       = (  1024  )
+      INS-64515_PIXEL_SIZE        = (   8.5  )
+      INS-64515_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64515_IFOV              = ( 13.958 )
+
+      INS-64516_PIXEL_SAMPLES     = (  1024  )
+      INS-64516_PIXEL_LINES       = (  1024  )
+      INS-64516_PIXEL_SIZE        = (   8.5  )
+      INS-64516_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64516_IFOV              = ( 13.952 )
+
+      INS-64517_PIXEL_SAMPLES     = (  1024  )
+      INS-64517_PIXEL_LINES       = (  1024  )
+      INS-64517_PIXEL_SIZE        = (   8.5  )
+      INS-64517_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64517_IFOV              = ( 13.946 )
+
+      INS-64518_PIXEL_SAMPLES     = (  1024  )
+      INS-64518_PIXEL_LINES       = (  1024  )
+      INS-64518_PIXEL_SIZE        = (   8.5  )
+      INS-64518_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64518_IFOV              = ( 13.940 )
+
+      INS-64519_PIXEL_SAMPLES     = (  1024  )
+      INS-64519_PIXEL_LINES       = (  1024  )
+      INS-64519_PIXEL_SIZE        = (   8.5  )
+      INS-64519_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64519_IFOV              = ( 13.934 )
+
+      INS-64520_PIXEL_SAMPLES     = (  1024  )
+      INS-64520_PIXEL_LINES       = (  1024  )
+      INS-64520_PIXEL_SIZE        = (   8.5  )
+      INS-64520_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64520_IFOV              = ( 13.928 )
+
+      INS-64521_PIXEL_SAMPLES     = (  1024  )
+      INS-64521_PIXEL_LINES       = (  1024  )
+      INS-64521_PIXEL_SIZE        = (   8.5  )
+      INS-64521_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64521_IFOV              = ( 13.922 )
+
+      INS-64522_PIXEL_SAMPLES     = (  1024  )
+      INS-64522_PIXEL_LINES       = (  1024  )
+      INS-64522_PIXEL_SIZE        = (   8.5  )
+      INS-64522_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64522_IFOV              = ( 13.916 )
+
+      INS-64523_PIXEL_SAMPLES     = (  1024  )
+      INS-64523_PIXEL_LINES       = (  1024  )
+      INS-64523_PIXEL_SIZE        = (   8.5  )
+      INS-64523_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64523_IFOV              = ( 13.910 )
+
+      INS-64524_PIXEL_SAMPLES     = (  1024  )
+      INS-64524_PIXEL_LINES       = (  1024  )
+      INS-64524_PIXEL_SIZE        = (   8.5  )
+      INS-64524_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64524_IFOV              = ( 13.905 )
+
+      INS-64525_PIXEL_SAMPLES     = (  1024  )
+      INS-64525_PIXEL_LINES       = (  1024  )
+      INS-64525_PIXEL_SIZE        = (   8.5  )
+      INS-64525_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64525_IFOV              = ( 13.899 )
+
+      INS-64526_PIXEL_SAMPLES     = (  1024  )
+      INS-64526_PIXEL_LINES       = (  1024  )
+      INS-64526_PIXEL_SIZE        = (   8.5  )
+      INS-64526_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64526_IFOV              = ( 13.893 )
+
+      INS-64527_PIXEL_SAMPLES     = (  1024  )
+      INS-64527_PIXEL_LINES       = (  1024  )
+      INS-64527_PIXEL_SIZE        = (   8.5  )
+      INS-64527_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64527_IFOV              = ( 13.887 )
+
+      INS-64528_PIXEL_SAMPLES     = (  1024  )
+      INS-64528_PIXEL_LINES       = (  1024  )
+      INS-64528_PIXEL_SIZE        = (   8.5  )
+      INS-64528_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64528_IFOV              = ( 13.881 )
+
+      INS-64529_PIXEL_SAMPLES     = (  1024  )
+      INS-64529_PIXEL_LINES       = (  1024  )
+      INS-64529_PIXEL_SIZE        = (   8.5  )
+      INS-64529_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64529_IFOV              = ( 13.875 )
+
+      INS-64530_PIXEL_SAMPLES     = (  1024  )
+      INS-64530_PIXEL_LINES       = (  1024  )
+      INS-64530_PIXEL_SIZE        = (   8.5  )
+      INS-64530_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64530_IFOV              = ( 13.869 )
+
+      INS-64531_PIXEL_SAMPLES     = (  1024  )
+      INS-64531_PIXEL_LINES       = (  1024  )
+      INS-64531_PIXEL_SIZE        = (   8.5  )
+      INS-64531_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64531_IFOV              = ( 13.864 )
+
+      INS-64532_PIXEL_SAMPLES     = (  1024  )
+      INS-64532_PIXEL_LINES       = (  1024  )
+      INS-64532_PIXEL_SIZE        = (   8.5  )
+      INS-64532_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64532_IFOV              = ( 13.858 )
+
+      INS-64533_PIXEL_SAMPLES     = (  1024  )
+      INS-64533_PIXEL_LINES       = (  1024  )
+      INS-64533_PIXEL_SIZE        = (   8.5  )
+      INS-64533_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64533_IFOV              = ( 13.852 )
+
+      INS-64534_PIXEL_SAMPLES     = (  1024  )
+      INS-64534_PIXEL_LINES       = (  1024  )
+      INS-64534_PIXEL_SIZE        = (   8.5  )
+      INS-64534_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64534_IFOV              = ( 13.846 )
+
+      INS-64535_PIXEL_SAMPLES     = (  1024  )
+      INS-64535_PIXEL_LINES       = (  1024  )
+      INS-64535_PIXEL_SIZE        = (   8.5  )
+      INS-64535_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64535_IFOV              = ( 13.840 )
+
+      INS-64536_PIXEL_SAMPLES     = (  1024  )
+      INS-64536_PIXEL_LINES       = (  1024  )
+      INS-64536_PIXEL_SIZE        = (   8.5  )
+      INS-64536_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64536_IFOV              = ( 13.835 )
+
+      INS-64537_PIXEL_SAMPLES     = (  1024  )
+      INS-64537_PIXEL_LINES       = (  1024  )
+      INS-64537_PIXEL_SIZE        = (   8.5  )
+      INS-64537_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64537_IFOV              = ( 13.829 )
+
+      INS-64538_PIXEL_SAMPLES     = (  1024  )
+      INS-64538_PIXEL_LINES       = (  1024  )
+      INS-64538_PIXEL_SIZE        = (   8.5  )
+      INS-64538_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64538_IFOV              = ( 13.823 )
+
+      INS-64539_PIXEL_SAMPLES     = (  1024  )
+      INS-64539_PIXEL_LINES       = (  1024  )
+      INS-64539_PIXEL_SIZE        = (   8.5  )
+      INS-64539_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64539_IFOV              = ( 13.818 )
+
+      INS-64540_PIXEL_SAMPLES     = (  1024  )
+      INS-64540_PIXEL_LINES       = (  1024  )
+      INS-64540_PIXEL_SIZE        = (   8.5  )
+      INS-64540_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64540_IFOV              = ( 13.812 )
+
+      INS-64541_PIXEL_SAMPLES     = (  1024  )
+      INS-64541_PIXEL_LINES       = (  1024  )
+      INS-64541_PIXEL_SIZE        = (   8.5  )
+      INS-64541_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64541_IFOV              = ( 13.806 )
+
+      INS-64542_PIXEL_SAMPLES     = (  1024  )
+      INS-64542_PIXEL_LINES       = (  1024  )
+      INS-64542_PIXEL_SIZE        = (   8.5  )
+      INS-64542_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64542_IFOV              = ( 13.801 )
+
+      INS-64543_PIXEL_SAMPLES     = (  1024  )
+      INS-64543_PIXEL_LINES       = (  1024  )
+      INS-64543_PIXEL_SIZE        = (   8.5  )
+      INS-64543_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64543_IFOV              = ( 13.795 )
+
+      INS-64544_PIXEL_SAMPLES     = (  1024  )
+      INS-64544_PIXEL_LINES       = (  1024  )
+      INS-64544_PIXEL_SIZE        = (   8.5  )
+      INS-64544_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64544_IFOV              = ( 13.789 )
+
+      INS-64545_PIXEL_SAMPLES     = (  1024  )
+      INS-64545_PIXEL_LINES       = (  1024  )
+      INS-64545_PIXEL_SIZE        = (   8.5  )
+      INS-64545_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64545_IFOV              = ( 13.784 )
+
+      INS-64546_PIXEL_SAMPLES     = (  1024  )
+      INS-64546_PIXEL_LINES       = (  1024  )
+      INS-64546_PIXEL_SIZE        = (   8.5  )
+      INS-64546_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64546_IFOV              = ( 13.778 )
+
+      INS-64547_PIXEL_SAMPLES     = (  1024  )
+      INS-64547_PIXEL_LINES       = (  1024  )
+      INS-64547_PIXEL_SIZE        = (   8.5  )
+      INS-64547_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64547_IFOV              = ( 13.772 )
+
+      INS-64548_PIXEL_SAMPLES     = (  1024  )
+      INS-64548_PIXEL_LINES       = (  1024  )
+      INS-64548_PIXEL_SIZE        = (   8.5  )
+      INS-64548_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64548_IFOV              = ( 13.767 )
+
+      INS-64549_PIXEL_SAMPLES     = (  1024  )
+      INS-64549_PIXEL_LINES       = (  1024  )
+      INS-64549_PIXEL_SIZE        = (   8.5  )
+      INS-64549_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64549_IFOV              = ( 13.761 )
+
+      INS-64550_PIXEL_SAMPLES     = (  1024  )
+      INS-64550_PIXEL_LINES       = (  1024  )
+      INS-64550_PIXEL_SIZE        = (   8.5  )
+      INS-64550_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64550_IFOV              = ( 13.756 )
+
+      INS-64551_PIXEL_SAMPLES     = (  1024  )
+      INS-64551_PIXEL_LINES       = (  1024  )
+      INS-64551_PIXEL_SIZE        = (   8.5  )
+      INS-64551_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64551_IFOV              = ( 13.750 )
+
+      INS-64552_PIXEL_SAMPLES     = (  1024  )
+      INS-64552_PIXEL_LINES       = (  1024  )
+      INS-64552_PIXEL_SIZE        = (   8.5  )
+      INS-64552_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64552_IFOV              = ( 13.744 )
+
+      INS-64553_PIXEL_SAMPLES     = (  1024  )
+      INS-64553_PIXEL_LINES       = (  1024  )
+      INS-64553_PIXEL_SIZE        = (   8.5  )
+      INS-64553_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64553_IFOV              = ( 13.739 )
+
+      INS-64554_PIXEL_SAMPLES     = (  1024  )
+      INS-64554_PIXEL_LINES       = (  1024  )
+      INS-64554_PIXEL_SIZE        = (   8.5  )
+      INS-64554_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64554_IFOV              = ( 13.733 )
+
+      INS-64555_PIXEL_SAMPLES     = (  1024  )
+      INS-64555_PIXEL_LINES       = (  1024  )
+      INS-64555_PIXEL_SIZE        = (   8.5  )
+      INS-64555_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64555_IFOV              = ( 13.728 )
+
+      INS-64556_PIXEL_SAMPLES     = (  1024  )
+      INS-64556_PIXEL_LINES       = (  1024  )
+      INS-64556_PIXEL_SIZE        = (   8.5  )
+      INS-64556_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64556_IFOV              = ( 13.722 )
+
+      INS-64557_PIXEL_SAMPLES     = (  1024  )
+      INS-64557_PIXEL_LINES       = (  1024  )
+      INS-64557_PIXEL_SIZE        = (   8.5  )
+      INS-64557_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64557_IFOV              = ( 13.717 )
+
+      INS-64558_PIXEL_SAMPLES     = (  1024  )
+      INS-64558_PIXEL_LINES       = (  1024  )
+      INS-64558_PIXEL_SIZE        = (   8.5  )
+      INS-64558_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64558_IFOV              = ( 13.711 )
+
+      INS-64559_PIXEL_SAMPLES     = (  1024  )
+      INS-64559_PIXEL_LINES       = (  1024  )
+      INS-64559_PIXEL_SIZE        = (   8.5  )
+      INS-64559_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64559_IFOV              = ( 13.706 )
+
+      INS-64560_PIXEL_SAMPLES     = (  1024  )
+      INS-64560_PIXEL_LINES       = (  1024  )
+      INS-64560_PIXEL_SIZE        = (   8.5  )
+      INS-64560_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64560_IFOV              = ( 13.700 )
+
+      INS-64561_PIXEL_SAMPLES     = (  1024  )
+      INS-64561_PIXEL_LINES       = (  1024  )
+      INS-64561_PIXEL_SIZE        = (   8.5  )
+      INS-64561_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64561_IFOV              = ( 13.695 )
+
+      INS-64562_PIXEL_SAMPLES     = (  1024  )
+      INS-64562_PIXEL_LINES       = (  1024  )
+      INS-64562_PIXEL_SIZE        = (   8.5  )
+      INS-64562_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64562_IFOV              = ( 13.689 )
+
+      INS-64563_PIXEL_SAMPLES     = (  1024  )
+      INS-64563_PIXEL_LINES       = (  1024  )
+      INS-64563_PIXEL_SIZE        = (   8.5  )
+      INS-64563_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64563_IFOV              = ( 13.684 )
+
+      INS-64564_PIXEL_SAMPLES     = (  1024  )
+      INS-64564_PIXEL_LINES       = (  1024  )
+      INS-64564_PIXEL_SIZE        = (   8.5  )
+      INS-64564_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64564_IFOV              = ( 13.678 )
+
+      INS-64565_PIXEL_SAMPLES     = (  1024  )
+      INS-64565_PIXEL_LINES       = (  1024  )
+      INS-64565_PIXEL_SIZE        = (   8.5  )
+      INS-64565_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64565_IFOV              = ( 13.673 )
+
+      INS-64566_PIXEL_SAMPLES     = (  1024  )
+      INS-64566_PIXEL_LINES       = (  1024  )
+      INS-64566_PIXEL_SIZE        = (   8.5  )
+      INS-64566_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64566_IFOV              = ( 13.667 )
+
+      INS-64567_PIXEL_SAMPLES     = (  1024  )
+      INS-64567_PIXEL_LINES       = (  1024  )
+      INS-64567_PIXEL_SIZE        = (   8.5  )
+      INS-64567_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64567_IFOV              = ( 13.662 )
+
+      INS-64568_PIXEL_SAMPLES     = (  1024  )
+      INS-64568_PIXEL_LINES       = (  1024  )
+      INS-64568_PIXEL_SIZE        = (   8.5  )
+      INS-64568_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64568_IFOV              = ( 13.657 )
+
+      INS-64569_PIXEL_SAMPLES     = (  1024  )
+      INS-64569_PIXEL_LINES       = (  1024  )
+      INS-64569_PIXEL_SIZE        = (   8.5  )
+      INS-64569_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64569_IFOV              = ( 13.651 )
+
+      INS-64570_PIXEL_SAMPLES     = (  1024  )
+      INS-64570_PIXEL_LINES       = (  1024  )
+      INS-64570_PIXEL_SIZE        = (   8.5  )
+      INS-64570_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64570_IFOV              = ( 13.646 )
+
+      INS-64571_PIXEL_SAMPLES     = (  1024  )
+      INS-64571_PIXEL_LINES       = (  1024  )
+      INS-64571_PIXEL_SIZE        = (   8.5  )
+      INS-64571_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64571_IFOV              = ( 13.640 )
+
+      INS-64572_PIXEL_SAMPLES     = (  1024  )
+      INS-64572_PIXEL_LINES       = (  1024  )
+      INS-64572_PIXEL_SIZE        = (   8.5  )
+      INS-64572_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64572_IFOV              = ( 13.635 )
+
+      INS-64573_PIXEL_SAMPLES     = (  1024  )
+      INS-64573_PIXEL_LINES       = (  1024  )
+      INS-64573_PIXEL_SIZE        = (   8.5  )
+      INS-64573_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64573_IFOV              = ( 13.629 )
+
+      INS-64574_PIXEL_SAMPLES     = (  1024  )
+      INS-64574_PIXEL_LINES       = (  1024  )
+      INS-64574_PIXEL_SIZE        = (   8.5  )
+      INS-64574_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64574_IFOV              = ( 13.624 )
+
+      INS-64575_PIXEL_SAMPLES     = (  1024  )
+      INS-64575_PIXEL_LINES       = (  1024  )
+      INS-64575_PIXEL_SIZE        = (   8.5  )
+      INS-64575_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64575_IFOV              = ( 13.619 )
+
+      INS-64576_PIXEL_SAMPLES     = (  1024  )
+      INS-64576_PIXEL_LINES       = (  1024  )
+      INS-64576_PIXEL_SIZE        = (   8.5  )
+      INS-64576_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64576_IFOV              = ( 13.613 )
+
+      INS-64577_PIXEL_SAMPLES     = (  1024  )
+      INS-64577_PIXEL_LINES       = (  1024  )
+      INS-64577_PIXEL_SIZE        = (   8.5  )
+      INS-64577_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64577_IFOV              = ( 13.608 )
+
+      INS-64578_PIXEL_SAMPLES     = (  1024  )
+      INS-64578_PIXEL_LINES       = (  1024  )
+      INS-64578_PIXEL_SIZE        = (   8.5  )
+      INS-64578_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64578_IFOV              = ( 13.602 )
+
+      INS-64579_PIXEL_SAMPLES     = (  1024  )
+      INS-64579_PIXEL_LINES       = (  1024  )
+      INS-64579_PIXEL_SIZE        = (   8.5  )
+      INS-64579_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64579_IFOV              = ( 13.597 )
+
+      INS-64580_PIXEL_SAMPLES     = (  1024  )
+      INS-64580_PIXEL_LINES       = (  1024  )
+      INS-64580_PIXEL_SIZE        = (   8.5  )
+      INS-64580_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64580_IFOV              = ( 13.592 )
+
+      INS-64581_PIXEL_SAMPLES     = (  1024  )
+      INS-64581_PIXEL_LINES       = (  1024  )
+      INS-64581_PIXEL_SIZE        = (   8.5  )
+      INS-64581_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64581_IFOV              = ( 13.586 )
+
+      INS-64582_PIXEL_SAMPLES     = (  1024  )
+      INS-64582_PIXEL_LINES       = (  1024  )
+      INS-64582_PIXEL_SIZE        = (   8.5  )
+      INS-64582_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64582_IFOV              = ( 13.581 )
+
+      INS-64583_PIXEL_SAMPLES     = (  1024  )
+      INS-64583_PIXEL_LINES       = (  1024  )
+      INS-64583_PIXEL_SIZE        = (   8.5  )
+      INS-64583_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64583_IFOV              = ( 13.575 )
+
+      INS-64584_PIXEL_SAMPLES     = (  1024  )
+      INS-64584_PIXEL_LINES       = (  1024  )
+      INS-64584_PIXEL_SIZE        = (   8.5  )
+      INS-64584_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64584_IFOV              = ( 13.570 )
+
+      INS-64585_PIXEL_SAMPLES     = (  1024  )
+      INS-64585_PIXEL_LINES       = (  1024  )
+      INS-64585_PIXEL_SIZE        = (   8.5  )
+      INS-64585_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64585_IFOV              = ( 13.564 )
+
+      INS-64586_PIXEL_SAMPLES     = (  1024  )
+      INS-64586_PIXEL_LINES       = (  1024  )
+      INS-64586_PIXEL_SIZE        = (   8.5  )
+      INS-64586_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64586_IFOV              = ( 13.559 )
+
+      INS-64587_PIXEL_SAMPLES     = (  1024  )
+      INS-64587_PIXEL_LINES       = (  1024  )
+      INS-64587_PIXEL_SIZE        = (   8.5  )
+      INS-64587_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64587_IFOV              = ( 13.553 )
+
+      INS-64588_PIXEL_SAMPLES     = (  1024  )
+      INS-64588_PIXEL_LINES       = (  1024  )
+      INS-64588_PIXEL_SIZE        = (   8.5  )
+      INS-64588_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64588_IFOV              = ( 13.548 )
+
+      INS-64589_PIXEL_SAMPLES     = (  1024  )
+      INS-64589_PIXEL_LINES       = (  1024  )
+      INS-64589_PIXEL_SIZE        = (   8.5  )
+      INS-64589_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64589_IFOV              = ( 13.542 )
+
+      INS-64590_PIXEL_SAMPLES     = (  1024  )
+      INS-64590_PIXEL_LINES       = (  1024  )
+      INS-64590_PIXEL_SIZE        = (   8.5  )
+      INS-64590_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64590_IFOV              = ( 13.536 )
+
+      INS-64591_PIXEL_SAMPLES     = (  1024  )
+      INS-64591_PIXEL_LINES       = (  1024  )
+      INS-64591_PIXEL_SIZE        = (   8.5  )
+      INS-64591_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64591_IFOV              = ( 13.531 )
+
+      INS-64592_PIXEL_SAMPLES     = (  1024  )
+      INS-64592_PIXEL_LINES       = (  1024  )
+      INS-64592_PIXEL_SIZE        = (   8.5  )
+      INS-64592_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64592_IFOV              = ( 13.525 )
+
+      INS-64593_PIXEL_SAMPLES     = (  1024  )
+      INS-64593_PIXEL_LINES       = (  1024  )
+      INS-64593_PIXEL_SIZE        = (   8.5  )
+      INS-64593_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64593_IFOV              = ( 13.519 )
+
+      INS-64594_PIXEL_SAMPLES     = (  1024  )
+      INS-64594_PIXEL_LINES       = (  1024  )
+      INS-64594_PIXEL_SIZE        = (   8.5  )
+      INS-64594_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64594_IFOV              = ( 13.512 )
+
+      INS-64595_PIXEL_SAMPLES     = (  1024  )
+      INS-64595_PIXEL_LINES       = (  1024  )
+      INS-64595_PIXEL_SIZE        = (   8.5  )
+      INS-64595_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64595_IFOV              = ( 13.506 )
+
+      INS-64596_PIXEL_SAMPLES     = (  1024  )
+      INS-64596_PIXEL_LINES       = (  1024  )
+      INS-64596_PIXEL_SIZE        = (   8.5  )
+      INS-64596_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64596_IFOV              = ( 13.500 )
+
+      INS-64597_PIXEL_SAMPLES     = (  1024  )
+      INS-64597_PIXEL_LINES       = (  1024  )
+      INS-64597_PIXEL_SIZE        = (   8.5  )
+      INS-64597_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64597_IFOV              = ( 13.495 )
+
+      INS-64598_PIXEL_SAMPLES     = (  1024  )
+      INS-64598_PIXEL_LINES       = (  1024  )
+      INS-64598_PIXEL_SIZE        = (   8.5  )
+      INS-64598_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64598_IFOV              = ( 13.489 )
+
+      INS-64599_PIXEL_SAMPLES     = (  1024  )
+      INS-64599_PIXEL_LINES       = (  1024  )
+      INS-64599_PIXEL_SIZE        = (   8.5  )
+      INS-64599_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64599_IFOV              = ( 13.484 )
+
+      INS-64600_PIXEL_SAMPLES     = (  1024  )
+      INS-64600_PIXEL_LINES       = (  1024  )
+      INS-64600_PIXEL_SIZE        = (   8.5  )
+      INS-64600_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64600_IFOV              = ( 13.479 )
+
+      INS-64601_PIXEL_SAMPLES     = (  1024  )
+      INS-64601_PIXEL_LINES       = (  1024  )
+      INS-64601_PIXEL_SIZE        = (   8.5  )
+      INS-64601_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64601_IFOV              = ( 13.474 )
+
+      INS-64602_PIXEL_SAMPLES     = (  1024  )
+      INS-64602_PIXEL_LINES       = (  1024  )
+      INS-64602_PIXEL_SIZE        = (   8.5  )
+      INS-64602_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64602_IFOV              = ( 13.469 )
+
+      INS-64603_PIXEL_SAMPLES     = (  1024  )
+      INS-64603_PIXEL_LINES       = (  1024  )
+      INS-64603_PIXEL_SIZE        = (   8.5  )
+      INS-64603_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64603_IFOV              = ( 13.464 )
+
+      INS-64604_PIXEL_SAMPLES     = (  1024  )
+      INS-64604_PIXEL_LINES       = (  1024  )
+      INS-64604_PIXEL_SIZE        = (   8.5  )
+      INS-64604_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64604_IFOV              = ( 13.459 )
+
+      INS-64605_PIXEL_SAMPLES     = (  1024  )
+      INS-64605_PIXEL_LINES       = (  1024  )
+      INS-64605_PIXEL_SIZE        = (   8.5  )
+      INS-64605_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64605_IFOV              = ( 13.454 )
+
+      INS-64606_PIXEL_SAMPLES     = (  1024  )
+      INS-64606_PIXEL_LINES       = (  1024  )
+      INS-64606_PIXEL_SIZE        = (   8.5  )
+      INS-64606_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64606_IFOV              = ( 13.449 )
+
+      INS-64607_PIXEL_SAMPLES     = (  1024  )
+      INS-64607_PIXEL_LINES       = (  1024  )
+      INS-64607_PIXEL_SIZE        = (   8.5  )
+      INS-64607_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64607_IFOV              = ( 13.444 )
+
+      INS-64608_PIXEL_SAMPLES     = (  1024  )
+      INS-64608_PIXEL_LINES       = (  1024  )
+      INS-64608_PIXEL_SIZE        = (   8.5  )
+      INS-64608_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64608_IFOV              = ( 13.439 )
+
+      INS-64609_PIXEL_SAMPLES     = (  1024  )
+      INS-64609_PIXEL_LINES       = (  1024  )
+      INS-64609_PIXEL_SIZE        = (   8.5  )
+      INS-64609_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64609_IFOV              = ( 13.434 )
+
+      INS-64610_PIXEL_SAMPLES     = (  1024  )
+      INS-64610_PIXEL_LINES       = (  1024  )
+      INS-64610_PIXEL_SIZE        = (   8.5  )
+      INS-64610_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64610_IFOV              = ( 13.430 )
+
+      INS-64611_PIXEL_SAMPLES     = (  1024  )
+      INS-64611_PIXEL_LINES       = (  1024  )
+      INS-64611_PIXEL_SIZE        = (   8.5  )
+      INS-64611_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64611_IFOV              = ( 13.425 )
+
+      INS-64612_PIXEL_SAMPLES     = (  1024  )
+      INS-64612_PIXEL_LINES       = (  1024  )
+      INS-64612_PIXEL_SIZE        = (   8.5  )
+      INS-64612_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64612_IFOV              = ( 13.420 )
+
+      INS-64613_PIXEL_SAMPLES     = (  1024  )
+      INS-64613_PIXEL_LINES       = (  1024  )
+      INS-64613_PIXEL_SIZE        = (   8.5  )
+      INS-64613_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64613_IFOV              = ( 13.416 )
+
+      INS-64614_PIXEL_SAMPLES     = (  1024  )
+      INS-64614_PIXEL_LINES       = (  1024  )
+      INS-64614_PIXEL_SIZE        = (   8.5  )
+      INS-64614_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64614_IFOV              = ( 13.411 )
+
+      INS-64615_PIXEL_SAMPLES     = (  1024  )
+      INS-64615_PIXEL_LINES       = (  1024  )
+      INS-64615_PIXEL_SIZE        = (   8.5  )
+      INS-64615_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64615_IFOV              = ( 13.406 )
+
+      INS-64616_PIXEL_SAMPLES     = (  1024  )
+      INS-64616_PIXEL_LINES       = (  1024  )
+      INS-64616_PIXEL_SIZE        = (   8.5  )
+      INS-64616_CCD_CENTER        = (  511.5, 511.5 )
+      INS-64616_IFOV              = ( 13.402 )
+
+      \begintext
+
+
+OCAMS Field-of-View Definitions
+----------------------------------------------------------
+
+   The INS[ID]_FOV_FRAME, INS[ID]_FOV_SHAPE, INS[ID]_BORESIGHT, and FOV
+   ANGLES specification keywords defined below are used to describe the
+   instrument field of view. Since PolyCam, MapCam, and SamCam have
+   square fields of view, the INS[ID]_FOV_SHAPE keyword will always be
+   'RECTANGLE', and GETFOV will return the four vectors in the
+   instrument frame that describe the edges of the FOV cone. The
+   boresights of all three cameras lie along the Z-axes of the 
+   corresponding camera frames.
+
+
+MapCam (MAPCAM) FOV Definition
+
+   MAPCAM has a square field of view with the half angle of 1.985
+   degrees. Looking up the Y-axis in the ORX_OCAMS_MAPCAM frame the
+   MAPCAM FOV pyramid looks like this:
+
+
+                                  ^ X
+                                  |  ins
+                                  |
+                                  |        /|
+                                  |      /  |
+                                  |    /    |
+                                  |  /    o |
+                                  |/ 1.985  |
+                                  o--------------->
+                                Y  \        |    Z
+                                 ins \      |     ins
+                                       \    |
+                                         \  |
+                                           \|
+
+
+   The MAPCAM FOV defined utilizing the ANGLES FOV specification is:
+
+      \begindata
+
+      INS-64361_FOV_FRAME         = 'ORX_OCAMS_MAPCAM'
+      INS-64361_FOV_SHAPE         = 'RECTANGLE'
+      INS-64361_BORESIGHT         = ( 0 0 1 )
+      INS-64361_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64361_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64361_FOV_REF_ANGLE     = ( 1.985 )
+      INS-64361_FOV_CROSS_ANGLE   = ( 1.985 )
+      INS-64361_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      \begintext
+
+   MapCam (MAPCAM, filter-specific FOVs, per [5]):
+
+      \begindata
+
+      INS-64364_FOV_FRAME         = 'ORX_OCAMS_MAPCAM'
+      INS-64364_FOV_SHAPE         = 'RECTANGLE'
+      INS-64364_BORESIGHT         = ( 0 0 1 )
+      INS-64364_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64364_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64364_FOV_REF_ANGLE     = ( 1.992 )
+      INS-64364_FOV_CROSS_ANGLE   = ( 1.992 )
+      INS-64364_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64365_FOV_FRAME         = 'ORX_OCAMS_MAPCAM'
+      INS-64365_FOV_SHAPE         = 'RECTANGLE'
+      INS-64365_BORESIGHT         = ( 0 0 1 )
+      INS-64365_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64365_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64365_FOV_REF_ANGLE     = ( 1.989 )
+      INS-64365_FOV_CROSS_ANGLE   = ( 1.989 )
+      INS-64365_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64366_FOV_FRAME         = 'ORX_OCAMS_MAPCAM'
+      INS-64366_FOV_SHAPE         = 'RECTANGLE'
+      INS-64366_BORESIGHT         = ( 0 0 1 )
+      INS-64366_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64366_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64366_FOV_REF_ANGLE     = ( 1.993 )
+      INS-64366_FOV_CROSS_ANGLE   = ( 1.993 )
+      INS-64366_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64367_FOV_FRAME         = 'ORX_OCAMS_MAPCAM'
+      INS-64367_FOV_SHAPE         = 'RECTANGLE'
+      INS-64367_BORESIGHT         = ( 0 0 1 )
+      INS-64367_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64367_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64367_FOV_REF_ANGLE     = ( 1.993 )
+      INS-64367_FOV_CROSS_ANGLE   = ( 1.993 )
+      INS-64367_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64368_FOV_FRAME         = 'ORX_OCAMS_MAPCAM'
+      INS-64368_FOV_SHAPE         = 'RECTANGLE'
+      INS-64368_BORESIGHT         = ( 0 0 1 )
+      INS-64368_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64368_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64368_FOV_REF_ANGLE     = ( 1.988 )
+      INS-64368_FOV_CROSS_ANGLE   = ( 1.988 )
+      INS-64368_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      \begintext
+
+
+SamCam (SAMCAM) FOV Definition
+
+   SAMCAM has a square field of view with the half angle of 10.22
+   degrees. Looking up the Y-axis in the ORX_OCAMS_SAMCAM frame the
+   SAMCAM FOV pyramid looks like this:
+
+                                  ^ X
+                                  |  ins
+                                  |
+                                  |        /|
+                                  |      /  |
+                                  |    /    |
+                                  |  /    o |
+                                  |/ 10.22  |
+                                  o--------------->
+                                Y  \        |    Z
+                                 ins \      |     ins
+                                       \    |
+                                         \  |
+                                           \|
+
+
+   The SAMCAM FOV defined utilizing the ANGLES FOV specification is:
+
+      \begindata
+
+      INS-64362_FOV_FRAME         = 'ORX_OCAMS_SAMCAM'
+      INS-64362_FOV_SHAPE         = 'RECTANGLE'
+      INS-64362_BORESIGHT         = ( 0 0 1 )
+      INS-64362_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64362_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64362_FOV_REF_ANGLE     = ( 10.22 )
+      INS-64362_FOV_CROSS_ANGLE   = ( 10.22 )
+      INS-64362_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      \begintext
+
+
+PolyCam (POLYCAM) FOV Definition
+
+   POLYCAM has a square field of view with the half angle of 0.397
+   degrees (at infinity setting; half angels for other settings are
+   slightly smaller or larger). Looking up the Y-axis in the
+   ORX_OCAMS_POLYCAM frame the POLYCAM FOV pyramid looks like this:
+
+                                  ^ X
+                                  |  ins
+                                  |
+                                  |        /|
+                                  |      /  |
+                                  |    /    |
+                                  |  /    o |
+                                  |/ 0.397  |
+                                  o--------------->
+                                Y  \        |    Z
+                                 ins \      |     ins
+                                       \    |
+                                         \  |
+                                           \|
+
+
+   The POLYCAM FOVs defined utilizing the ANGLES FOV specification are:
+ 
+   PolyCam (POLYCAM, infinity):
+
+      \begindata
+
+      INS-64360_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64360_FOV_SHAPE         = 'RECTANGLE'
+      INS-64360_BORESIGHT         = ( 0 0 1 )
+      INS-64360_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64360_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64360_FOV_REF_ANGLE     = ( 0.397 )
+      INS-64360_FOV_CROSS_ANGLE   = ( 0.397 )
+      INS-64360_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      \begintext
+   
+   PolyCam (POLYCAM, focus positions):
+
+      \begindata
+
+      INS-64500_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64500_FOV_SHAPE         = 'RECTANGLE'
+      INS-64500_BORESIGHT         = ( 0 0 1 )
+      INS-64500_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64500_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64500_FOV_REF_ANGLE     = ( 0.412 )
+      INS-64500_FOV_CROSS_ANGLE   = ( 0.412 )
+      INS-64500_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64501_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64501_FOV_SHAPE         = 'RECTANGLE'
+      INS-64501_BORESIGHT         = ( 0 0 1 )
+      INS-64501_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64501_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64501_FOV_REF_ANGLE     = ( 0.412 )
+      INS-64501_FOV_CROSS_ANGLE   = ( 0.412 )
+      INS-64501_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64502_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64502_FOV_SHAPE         = 'RECTANGLE'
+      INS-64502_BORESIGHT         = ( 0 0 1 )
+      INS-64502_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64502_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64502_FOV_REF_ANGLE     = ( 0.412 )
+      INS-64502_FOV_CROSS_ANGLE   = ( 0.412 )
+      INS-64502_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64503_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64503_FOV_SHAPE         = 'RECTANGLE'
+      INS-64503_BORESIGHT         = ( 0 0 1 )
+      INS-64503_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64503_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64503_FOV_REF_ANGLE     = ( 0.412 )
+      INS-64503_FOV_CROSS_ANGLE   = ( 0.412 )
+      INS-64503_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64504_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64504_FOV_SHAPE         = 'RECTANGLE'
+      INS-64504_BORESIGHT         = ( 0 0 1 )
+      INS-64504_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64504_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64504_FOV_REF_ANGLE     = ( 0.411 )
+      INS-64504_FOV_CROSS_ANGLE   = ( 0.411 )
+      INS-64504_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64505_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64505_FOV_SHAPE         = 'RECTANGLE'
+      INS-64505_BORESIGHT         = ( 0 0 1 )
+      INS-64505_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64505_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64505_FOV_REF_ANGLE     = ( 0.411 )
+      INS-64505_FOV_CROSS_ANGLE   = ( 0.411 )
+      INS-64505_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64506_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64506_FOV_SHAPE         = 'RECTANGLE'
+      INS-64506_BORESIGHT         = ( 0 0 1 )
+      INS-64506_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64506_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64506_FOV_REF_ANGLE     = ( 0.411 )
+      INS-64506_FOV_CROSS_ANGLE   = ( 0.411 )
+      INS-64506_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64507_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64507_FOV_SHAPE         = 'RECTANGLE'
+      INS-64507_BORESIGHT         = ( 0 0 1 )
+      INS-64507_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64507_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64507_FOV_REF_ANGLE     = ( 0.411 )
+      INS-64507_FOV_CROSS_ANGLE   = ( 0.411 )
+      INS-64507_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64508_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64508_FOV_SHAPE         = 'RECTANGLE'
+      INS-64508_BORESIGHT         = ( 0 0 1 )
+      INS-64508_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64508_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64508_FOV_REF_ANGLE     = ( 0.411 )
+      INS-64508_FOV_CROSS_ANGLE   = ( 0.411 )
+      INS-64508_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64509_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64509_FOV_SHAPE         = 'RECTANGLE'
+      INS-64509_BORESIGHT         = ( 0 0 1 )
+      INS-64509_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64509_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64509_FOV_REF_ANGLE     = ( 0.411 )
+      INS-64509_FOV_CROSS_ANGLE   = ( 0.411 )
+      INS-64509_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64510_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64510_FOV_SHAPE         = 'RECTANGLE'
+      INS-64510_BORESIGHT         = ( 0 0 1 )
+      INS-64510_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64510_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64510_FOV_REF_ANGLE     = ( 0.410 )
+      INS-64510_FOV_CROSS_ANGLE   = ( 0.410 )
+      INS-64510_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64511_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64511_FOV_SHAPE         = 'RECTANGLE'
+      INS-64511_BORESIGHT         = ( 0 0 1 )
+      INS-64511_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64511_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64511_FOV_REF_ANGLE     = ( 0.410 )
+      INS-64511_FOV_CROSS_ANGLE   = ( 0.410 )
+      INS-64511_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64512_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64512_FOV_SHAPE         = 'RECTANGLE'
+      INS-64512_BORESIGHT         = ( 0 0 1 )
+      INS-64512_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64512_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64512_FOV_REF_ANGLE     = ( 0.410 )
+      INS-64512_FOV_CROSS_ANGLE   = ( 0.410 )
+      INS-64512_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64513_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64513_FOV_SHAPE         = 'RECTANGLE'
+      INS-64513_BORESIGHT         = ( 0 0 1 )
+      INS-64513_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64513_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64513_FOV_REF_ANGLE     = ( 0.410 )
+      INS-64513_FOV_CROSS_ANGLE   = ( 0.410 )
+      INS-64513_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64514_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64514_FOV_SHAPE         = 'RECTANGLE'
+      INS-64514_BORESIGHT         = ( 0 0 1 )
+      INS-64514_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64514_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64514_FOV_REF_ANGLE     = ( 0.410 )
+      INS-64514_FOV_CROSS_ANGLE   = ( 0.410 )
+      INS-64514_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64515_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64515_FOV_SHAPE         = 'RECTANGLE'
+      INS-64515_BORESIGHT         = ( 0 0 1 )
+      INS-64515_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64515_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64515_FOV_REF_ANGLE     = ( 0.409 )
+      INS-64515_FOV_CROSS_ANGLE   = ( 0.409 )
+      INS-64515_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64516_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64516_FOV_SHAPE         = 'RECTANGLE'
+      INS-64516_BORESIGHT         = ( 0 0 1 )
+      INS-64516_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64516_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64516_FOV_REF_ANGLE     = ( 0.409 )
+      INS-64516_FOV_CROSS_ANGLE   = ( 0.409 )
+      INS-64516_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64517_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64517_FOV_SHAPE         = 'RECTANGLE'
+      INS-64517_BORESIGHT         = ( 0 0 1 )
+      INS-64517_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64517_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64517_FOV_REF_ANGLE     = ( 0.409 )
+      INS-64517_FOV_CROSS_ANGLE   = ( 0.409 )
+      INS-64517_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64518_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64518_FOV_SHAPE         = 'RECTANGLE'
+      INS-64518_BORESIGHT         = ( 0 0 1 )
+      INS-64518_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64518_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64518_FOV_REF_ANGLE     = ( 0.409 )
+      INS-64518_FOV_CROSS_ANGLE   = ( 0.409 )
+      INS-64518_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64519_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64519_FOV_SHAPE         = 'RECTANGLE'
+      INS-64519_BORESIGHT         = ( 0 0 1 )
+      INS-64519_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64519_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64519_FOV_REF_ANGLE     = ( 0.409 )
+      INS-64519_FOV_CROSS_ANGLE   = ( 0.409 )
+      INS-64519_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64520_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64520_FOV_SHAPE         = 'RECTANGLE'
+      INS-64520_BORESIGHT         = ( 0 0 1 )
+      INS-64520_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64520_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64520_FOV_REF_ANGLE     = ( 0.409 )
+      INS-64520_FOV_CROSS_ANGLE   = ( 0.409 )
+      INS-64520_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64521_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64521_FOV_SHAPE         = 'RECTANGLE'
+      INS-64521_BORESIGHT         = ( 0 0 1 )
+      INS-64521_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64521_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64521_FOV_REF_ANGLE     = ( 0.408 )
+      INS-64521_FOV_CROSS_ANGLE   = ( 0.408 )
+      INS-64521_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64522_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64522_FOV_SHAPE         = 'RECTANGLE'
+      INS-64522_BORESIGHT         = ( 0 0 1 )
+      INS-64522_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64522_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64522_FOV_REF_ANGLE     = ( 0.408 )
+      INS-64522_FOV_CROSS_ANGLE   = ( 0.408 )
+      INS-64522_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64523_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64523_FOV_SHAPE         = 'RECTANGLE'
+      INS-64523_BORESIGHT         = ( 0 0 1 )
+      INS-64523_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64523_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64523_FOV_REF_ANGLE     = ( 0.408 )
+      INS-64523_FOV_CROSS_ANGLE   = ( 0.408 )
+      INS-64523_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64524_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64524_FOV_SHAPE         = 'RECTANGLE'
+      INS-64524_BORESIGHT         = ( 0 0 1 )
+      INS-64524_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64524_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64524_FOV_REF_ANGLE     = ( 0.408 )
+      INS-64524_FOV_CROSS_ANGLE   = ( 0.408 )
+      INS-64524_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64525_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64525_FOV_SHAPE         = 'RECTANGLE'
+      INS-64525_BORESIGHT         = ( 0 0 1 )
+      INS-64525_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64525_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64525_FOV_REF_ANGLE     = ( 0.408 )
+      INS-64525_FOV_CROSS_ANGLE   = ( 0.408 )
+      INS-64525_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64526_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64526_FOV_SHAPE         = 'RECTANGLE'
+      INS-64526_BORESIGHT         = ( 0 0 1 )
+      INS-64526_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64526_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64526_FOV_REF_ANGLE     = ( 0.408 )
+      INS-64526_FOV_CROSS_ANGLE   = ( 0.408 )
+      INS-64526_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64527_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64527_FOV_SHAPE         = 'RECTANGLE'
+      INS-64527_BORESIGHT         = ( 0 0 1 )
+      INS-64527_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64527_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64527_FOV_REF_ANGLE     = ( 0.407 )
+      INS-64527_FOV_CROSS_ANGLE   = ( 0.407 )
+      INS-64527_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64528_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64528_FOV_SHAPE         = 'RECTANGLE'
+      INS-64528_BORESIGHT         = ( 0 0 1 )
+      INS-64528_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64528_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64528_FOV_REF_ANGLE     = ( 0.407 )
+      INS-64528_FOV_CROSS_ANGLE   = ( 0.407 )
+      INS-64528_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64529_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64529_FOV_SHAPE         = 'RECTANGLE'
+      INS-64529_BORESIGHT         = ( 0 0 1 )
+      INS-64529_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64529_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64529_FOV_REF_ANGLE     = ( 0.407 )
+      INS-64529_FOV_CROSS_ANGLE   = ( 0.407 )
+      INS-64529_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64530_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64530_FOV_SHAPE         = 'RECTANGLE'
+      INS-64530_BORESIGHT         = ( 0 0 1 )
+      INS-64530_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64530_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64530_FOV_REF_ANGLE     = ( 0.407 )
+      INS-64530_FOV_CROSS_ANGLE   = ( 0.407 )
+      INS-64530_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64531_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64531_FOV_SHAPE         = 'RECTANGLE'
+      INS-64531_BORESIGHT         = ( 0 0 1 )
+      INS-64531_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64531_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64531_FOV_REF_ANGLE     = ( 0.407 )
+      INS-64531_FOV_CROSS_ANGLE   = ( 0.407 )
+      INS-64531_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64532_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64532_FOV_SHAPE         = 'RECTANGLE'
+      INS-64532_BORESIGHT         = ( 0 0 1 )
+      INS-64532_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64532_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64532_FOV_REF_ANGLE     = ( 0.407 )
+      INS-64532_FOV_CROSS_ANGLE   = ( 0.407 )
+      INS-64532_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64533_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64533_FOV_SHAPE         = 'RECTANGLE'
+      INS-64533_BORESIGHT         = ( 0 0 1 )
+      INS-64533_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64533_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64533_FOV_REF_ANGLE     = ( 0.406 )
+      INS-64533_FOV_CROSS_ANGLE   = ( 0.406 )
+      INS-64533_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64534_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64534_FOV_SHAPE         = 'RECTANGLE'
+      INS-64534_BORESIGHT         = ( 0 0 1 )
+      INS-64534_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64534_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64534_FOV_REF_ANGLE     = ( 0.406 )
+      INS-64534_FOV_CROSS_ANGLE   = ( 0.406 )
+      INS-64534_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64535_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64535_FOV_SHAPE         = 'RECTANGLE'
+      INS-64535_BORESIGHT         = ( 0 0 1 )
+      INS-64535_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64535_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64535_FOV_REF_ANGLE     = ( 0.406 )
+      INS-64535_FOV_CROSS_ANGLE   = ( 0.406 )
+      INS-64535_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64536_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64536_FOV_SHAPE         = 'RECTANGLE'
+      INS-64536_BORESIGHT         = ( 0 0 1 )
+      INS-64536_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64536_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64536_FOV_REF_ANGLE     = ( 0.406 )
+      INS-64536_FOV_CROSS_ANGLE   = ( 0.406 )
+      INS-64536_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64537_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64537_FOV_SHAPE         = 'RECTANGLE'
+      INS-64537_BORESIGHT         = ( 0 0 1 )
+      INS-64537_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64537_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64537_FOV_REF_ANGLE     = ( 0.406 )
+      INS-64537_FOV_CROSS_ANGLE   = ( 0.406 )
+      INS-64537_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64538_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64538_FOV_SHAPE         = 'RECTANGLE'
+      INS-64538_BORESIGHT         = ( 0 0 1 )
+      INS-64538_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64538_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64538_FOV_REF_ANGLE     = ( 0.406 )
+      INS-64538_FOV_CROSS_ANGLE   = ( 0.406 )
+      INS-64538_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64539_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64539_FOV_SHAPE         = 'RECTANGLE'
+      INS-64539_BORESIGHT         = ( 0 0 1 )
+      INS-64539_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64539_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64539_FOV_REF_ANGLE     = ( 0.405 )
+      INS-64539_FOV_CROSS_ANGLE   = ( 0.405 )
+      INS-64539_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64540_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64540_FOV_SHAPE         = 'RECTANGLE'
+      INS-64540_BORESIGHT         = ( 0 0 1 )
+      INS-64540_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64540_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64540_FOV_REF_ANGLE     = ( 0.405 )
+      INS-64540_FOV_CROSS_ANGLE   = ( 0.405 )
+      INS-64540_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64541_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64541_FOV_SHAPE         = 'RECTANGLE'
+      INS-64541_BORESIGHT         = ( 0 0 1 )
+      INS-64541_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64541_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64541_FOV_REF_ANGLE     = ( 0.405 )
+      INS-64541_FOV_CROSS_ANGLE   = ( 0.405 )
+      INS-64541_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64542_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64542_FOV_SHAPE         = 'RECTANGLE'
+      INS-64542_BORESIGHT         = ( 0 0 1 )
+      INS-64542_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64542_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64542_FOV_REF_ANGLE     = ( 0.405 )
+      INS-64542_FOV_CROSS_ANGLE   = ( 0.405 )
+      INS-64542_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64543_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64543_FOV_SHAPE         = 'RECTANGLE'
+      INS-64543_BORESIGHT         = ( 0 0 1 )
+      INS-64543_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64543_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64543_FOV_REF_ANGLE     = ( 0.405 )
+      INS-64543_FOV_CROSS_ANGLE   = ( 0.405 )
+      INS-64543_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64544_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64544_FOV_SHAPE         = 'RECTANGLE'
+      INS-64544_BORESIGHT         = ( 0 0 1 )
+      INS-64544_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64544_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64544_FOV_REF_ANGLE     = ( 0.405 )
+      INS-64544_FOV_CROSS_ANGLE   = ( 0.405 )
+      INS-64544_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64545_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64545_FOV_SHAPE         = 'RECTANGLE'
+      INS-64545_BORESIGHT         = ( 0 0 1 )
+      INS-64545_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64545_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64545_FOV_REF_ANGLE     = ( 0.404 )
+      INS-64545_FOV_CROSS_ANGLE   = ( 0.404 )
+      INS-64545_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64546_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64546_FOV_SHAPE         = 'RECTANGLE'
+      INS-64546_BORESIGHT         = ( 0 0 1 )
+      INS-64546_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64546_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64546_FOV_REF_ANGLE     = ( 0.404 )
+      INS-64546_FOV_CROSS_ANGLE   = ( 0.404 )
+      INS-64546_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64547_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64547_FOV_SHAPE         = 'RECTANGLE'
+      INS-64547_BORESIGHT         = ( 0 0 1 )
+      INS-64547_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64547_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64547_FOV_REF_ANGLE     = ( 0.404 )
+      INS-64547_FOV_CROSS_ANGLE   = ( 0.404 )
+      INS-64547_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64548_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64548_FOV_SHAPE         = 'RECTANGLE'
+      INS-64548_BORESIGHT         = ( 0 0 1 )
+      INS-64548_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64548_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64548_FOV_REF_ANGLE     = ( 0.404 )
+      INS-64548_FOV_CROSS_ANGLE   = ( 0.404 )
+      INS-64548_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64549_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64549_FOV_SHAPE         = 'RECTANGLE'
+      INS-64549_BORESIGHT         = ( 0 0 1 )
+      INS-64549_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64549_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64549_FOV_REF_ANGLE     = ( 0.404 )
+      INS-64549_FOV_CROSS_ANGLE   = ( 0.404 )
+      INS-64549_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64550_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64550_FOV_SHAPE         = 'RECTANGLE'
+      INS-64550_BORESIGHT         = ( 0 0 1 )
+      INS-64550_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64550_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64550_FOV_REF_ANGLE     = ( 0.404 )
+      INS-64550_FOV_CROSS_ANGLE   = ( 0.404 )
+      INS-64550_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64551_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64551_FOV_SHAPE         = 'RECTANGLE'
+      INS-64551_BORESIGHT         = ( 0 0 1 )
+      INS-64551_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64551_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64551_FOV_REF_ANGLE     = ( 0.403 )
+      INS-64551_FOV_CROSS_ANGLE   = ( 0.403 )
+      INS-64551_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64552_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64552_FOV_SHAPE         = 'RECTANGLE'
+      INS-64552_BORESIGHT         = ( 0 0 1 )
+      INS-64552_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64552_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64552_FOV_REF_ANGLE     = ( 0.403 )
+      INS-64552_FOV_CROSS_ANGLE   = ( 0.403 )
+      INS-64552_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64553_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64553_FOV_SHAPE         = 'RECTANGLE'
+      INS-64553_BORESIGHT         = ( 0 0 1 )
+      INS-64553_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64553_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64553_FOV_REF_ANGLE     = ( 0.403 )
+      INS-64553_FOV_CROSS_ANGLE   = ( 0.403 )
+      INS-64553_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64554_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64554_FOV_SHAPE         = 'RECTANGLE'
+      INS-64554_BORESIGHT         = ( 0 0 1 )
+      INS-64554_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64554_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64554_FOV_REF_ANGLE     = ( 0.403 )
+      INS-64554_FOV_CROSS_ANGLE   = ( 0.403 )
+      INS-64554_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64555_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64555_FOV_SHAPE         = 'RECTANGLE'
+      INS-64555_BORESIGHT         = ( 0 0 1 )
+      INS-64555_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64555_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64555_FOV_REF_ANGLE     = ( 0.403 )
+      INS-64555_FOV_CROSS_ANGLE   = ( 0.403 )
+      INS-64555_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64556_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64556_FOV_SHAPE         = 'RECTANGLE'
+      INS-64556_BORESIGHT         = ( 0 0 1 )
+      INS-64556_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64556_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64556_FOV_REF_ANGLE     = ( 0.403 )
+      INS-64556_FOV_CROSS_ANGLE   = ( 0.403 )
+      INS-64556_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64557_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64557_FOV_SHAPE         = 'RECTANGLE'
+      INS-64557_BORESIGHT         = ( 0 0 1 )
+      INS-64557_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64557_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64557_FOV_REF_ANGLE     = ( 0.402 )
+      INS-64557_FOV_CROSS_ANGLE   = ( 0.402 )
+      INS-64557_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64558_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64558_FOV_SHAPE         = 'RECTANGLE'
+      INS-64558_BORESIGHT         = ( 0 0 1 )
+      INS-64558_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64558_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64558_FOV_REF_ANGLE     = ( 0.402 )
+      INS-64558_FOV_CROSS_ANGLE   = ( 0.402 )
+      INS-64558_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64559_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64559_FOV_SHAPE         = 'RECTANGLE'
+      INS-64559_BORESIGHT         = ( 0 0 1 )
+      INS-64559_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64559_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64559_FOV_REF_ANGLE     = ( 0.402 )
+      INS-64559_FOV_CROSS_ANGLE   = ( 0.402 )
+      INS-64559_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64560_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64560_FOV_SHAPE         = 'RECTANGLE'
+      INS-64560_BORESIGHT         = ( 0 0 1 )
+      INS-64560_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64560_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64560_FOV_REF_ANGLE     = ( 0.402 )
+      INS-64560_FOV_CROSS_ANGLE   = ( 0.402 )
+      INS-64560_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64561_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64561_FOV_SHAPE         = 'RECTANGLE'
+      INS-64561_BORESIGHT         = ( 0 0 1 )
+      INS-64561_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64561_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64561_FOV_REF_ANGLE     = ( 0.402 )
+      INS-64561_FOV_CROSS_ANGLE   = ( 0.402 )
+      INS-64561_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64562_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64562_FOV_SHAPE         = 'RECTANGLE'
+      INS-64562_BORESIGHT         = ( 0 0 1 )
+      INS-64562_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64562_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64562_FOV_REF_ANGLE     = ( 0.402 )
+      INS-64562_FOV_CROSS_ANGLE   = ( 0.402 )
+      INS-64562_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64563_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64563_FOV_SHAPE         = 'RECTANGLE'
+      INS-64563_BORESIGHT         = ( 0 0 1 )
+      INS-64563_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64563_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64563_FOV_REF_ANGLE     = ( 0.401 )
+      INS-64563_FOV_CROSS_ANGLE   = ( 0.401 )
+      INS-64563_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64564_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64564_FOV_SHAPE         = 'RECTANGLE'
+      INS-64564_BORESIGHT         = ( 0 0 1 )
+      INS-64564_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64564_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64564_FOV_REF_ANGLE     = ( 0.401 )
+      INS-64564_FOV_CROSS_ANGLE   = ( 0.401 )
+      INS-64564_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64565_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64565_FOV_SHAPE         = 'RECTANGLE'
+      INS-64565_BORESIGHT         = ( 0 0 1 )
+      INS-64565_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64565_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64565_FOV_REF_ANGLE     = ( 0.401 )
+      INS-64565_FOV_CROSS_ANGLE   = ( 0.401 )
+      INS-64565_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64566_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64566_FOV_SHAPE         = 'RECTANGLE'
+      INS-64566_BORESIGHT         = ( 0 0 1 )
+      INS-64566_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64566_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64566_FOV_REF_ANGLE     = ( 0.401 )
+      INS-64566_FOV_CROSS_ANGLE   = ( 0.401 )
+      INS-64566_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64567_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64567_FOV_SHAPE         = 'RECTANGLE'
+      INS-64567_BORESIGHT         = ( 0 0 1 )
+      INS-64567_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64567_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64567_FOV_REF_ANGLE     = ( 0.401 )
+      INS-64567_FOV_CROSS_ANGLE   = ( 0.401 )
+      INS-64567_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64568_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64568_FOV_SHAPE         = 'RECTANGLE'
+      INS-64568_BORESIGHT         = ( 0 0 1 )
+      INS-64568_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64568_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64568_FOV_REF_ANGLE     = ( 0.401 )
+      INS-64568_FOV_CROSS_ANGLE   = ( 0.401 )
+      INS-64568_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64569_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64569_FOV_SHAPE         = 'RECTANGLE'
+      INS-64569_BORESIGHT         = ( 0 0 1 )
+      INS-64569_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64569_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64569_FOV_REF_ANGLE     = ( 0.400 )
+      INS-64569_FOV_CROSS_ANGLE   = ( 0.400 )
+      INS-64569_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64570_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64570_FOV_SHAPE         = 'RECTANGLE'
+      INS-64570_BORESIGHT         = ( 0 0 1 )
+      INS-64570_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64570_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64570_FOV_REF_ANGLE     = ( 0.400 )
+      INS-64570_FOV_CROSS_ANGLE   = ( 0.400 )
+      INS-64570_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64571_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64571_FOV_SHAPE         = 'RECTANGLE'
+      INS-64571_BORESIGHT         = ( 0 0 1 )
+      INS-64571_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64571_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64571_FOV_REF_ANGLE     = ( 0.400 )
+      INS-64571_FOV_CROSS_ANGLE   = ( 0.400 )
+      INS-64571_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64572_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64572_FOV_SHAPE         = 'RECTANGLE'
+      INS-64572_BORESIGHT         = ( 0 0 1 )
+      INS-64572_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64572_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64572_FOV_REF_ANGLE     = ( 0.400 )
+      INS-64572_FOV_CROSS_ANGLE   = ( 0.400 )
+      INS-64572_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64573_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64573_FOV_SHAPE         = 'RECTANGLE'
+      INS-64573_BORESIGHT         = ( 0 0 1 )
+      INS-64573_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64573_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64573_FOV_REF_ANGLE     = ( 0.400 )
+      INS-64573_FOV_CROSS_ANGLE   = ( 0.400 )
+      INS-64573_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64574_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64574_FOV_SHAPE         = 'RECTANGLE'
+      INS-64574_BORESIGHT         = ( 0 0 1 )
+      INS-64574_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64574_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64574_FOV_REF_ANGLE     = ( 0.400 )
+      INS-64574_FOV_CROSS_ANGLE   = ( 0.400 )
+      INS-64574_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64575_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64575_FOV_SHAPE         = 'RECTANGLE'
+      INS-64575_BORESIGHT         = ( 0 0 1 )
+      INS-64575_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64575_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64575_FOV_REF_ANGLE     = ( 0.400 )
+      INS-64575_FOV_CROSS_ANGLE   = ( 0.400 )
+      INS-64575_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64576_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64576_FOV_SHAPE         = 'RECTANGLE'
+      INS-64576_BORESIGHT         = ( 0 0 1 )
+      INS-64576_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64576_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64576_FOV_REF_ANGLE     = ( 0.399 )
+      INS-64576_FOV_CROSS_ANGLE   = ( 0.399 )
+      INS-64576_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64577_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64577_FOV_SHAPE         = 'RECTANGLE'
+      INS-64577_BORESIGHT         = ( 0 0 1 )
+      INS-64577_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64577_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64577_FOV_REF_ANGLE     = ( 0.399 )
+      INS-64577_FOV_CROSS_ANGLE   = ( 0.399 )
+      INS-64577_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64578_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64578_FOV_SHAPE         = 'RECTANGLE'
+      INS-64578_BORESIGHT         = ( 0 0 1 )
+      INS-64578_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64578_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64578_FOV_REF_ANGLE     = ( 0.399 )
+      INS-64578_FOV_CROSS_ANGLE   = ( 0.399 )
+      INS-64578_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64579_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64579_FOV_SHAPE         = 'RECTANGLE'
+      INS-64579_BORESIGHT         = ( 0 0 1 )
+      INS-64579_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64579_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64579_FOV_REF_ANGLE     = ( 0.399 )
+      INS-64579_FOV_CROSS_ANGLE   = ( 0.399 )
+      INS-64579_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64580_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64580_FOV_SHAPE         = 'RECTANGLE'
+      INS-64580_BORESIGHT         = ( 0 0 1 )
+      INS-64580_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64580_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64580_FOV_REF_ANGLE     = ( 0.399 )
+      INS-64580_FOV_CROSS_ANGLE   = ( 0.399 )
+      INS-64580_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64581_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64581_FOV_SHAPE         = 'RECTANGLE'
+      INS-64581_BORESIGHT         = ( 0 0 1 )
+      INS-64581_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64581_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64581_FOV_REF_ANGLE     = ( 0.399 )
+      INS-64581_FOV_CROSS_ANGLE   = ( 0.399 )
+      INS-64581_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64582_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64582_FOV_SHAPE         = 'RECTANGLE'
+      INS-64582_BORESIGHT         = ( 0 0 1 )
+      INS-64582_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64582_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64582_FOV_REF_ANGLE     = ( 0.398 )
+      INS-64582_FOV_CROSS_ANGLE   = ( 0.398 )
+      INS-64582_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64583_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64583_FOV_SHAPE         = 'RECTANGLE'
+      INS-64583_BORESIGHT         = ( 0 0 1 )
+      INS-64583_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64583_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64583_FOV_REF_ANGLE     = ( 0.398 )
+      INS-64583_FOV_CROSS_ANGLE   = ( 0.398 )
+      INS-64583_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64584_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64584_FOV_SHAPE         = 'RECTANGLE'
+      INS-64584_BORESIGHT         = ( 0 0 1 )
+      INS-64584_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64584_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64584_FOV_REF_ANGLE     = ( 0.398 )
+      INS-64584_FOV_CROSS_ANGLE   = ( 0.398 )
+      INS-64584_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64585_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64585_FOV_SHAPE         = 'RECTANGLE'
+      INS-64585_BORESIGHT         = ( 0 0 1 )
+      INS-64585_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64585_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64585_FOV_REF_ANGLE     = ( 0.398 )
+      INS-64585_FOV_CROSS_ANGLE   = ( 0.398 )
+      INS-64585_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64586_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64586_FOV_SHAPE         = 'RECTANGLE'
+      INS-64586_BORESIGHT         = ( 0 0 1 )
+      INS-64586_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64586_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64586_FOV_REF_ANGLE     = ( 0.398 )
+      INS-64586_FOV_CROSS_ANGLE   = ( 0.398 )
+      INS-64586_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64587_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64587_FOV_SHAPE         = 'RECTANGLE'
+      INS-64587_BORESIGHT         = ( 0 0 1 )
+      INS-64587_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64587_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64587_FOV_REF_ANGLE     = ( 0.398 )
+      INS-64587_FOV_CROSS_ANGLE   = ( 0.398 )
+      INS-64587_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64588_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64588_FOV_SHAPE         = 'RECTANGLE'
+      INS-64588_BORESIGHT         = ( 0 0 1 )
+      INS-64588_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64588_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64588_FOV_REF_ANGLE     = ( 0.397 )
+      INS-64588_FOV_CROSS_ANGLE   = ( 0.397 )
+      INS-64588_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64589_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64589_FOV_SHAPE         = 'RECTANGLE'
+      INS-64589_BORESIGHT         = ( 0 0 1 )
+      INS-64589_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64589_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64589_FOV_REF_ANGLE     = ( 0.397 )
+      INS-64589_FOV_CROSS_ANGLE   = ( 0.397 )
+      INS-64589_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64590_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64590_FOV_SHAPE         = 'RECTANGLE'
+      INS-64590_BORESIGHT         = ( 0 0 1 )
+      INS-64590_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64590_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64590_FOV_REF_ANGLE     = ( 0.397 )
+      INS-64590_FOV_CROSS_ANGLE   = ( 0.397 )
+      INS-64590_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64591_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64591_FOV_SHAPE         = 'RECTANGLE'
+      INS-64591_BORESIGHT         = ( 0 0 1 )
+      INS-64591_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64591_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64591_FOV_REF_ANGLE     = ( 0.397 )
+      INS-64591_FOV_CROSS_ANGLE   = ( 0.397 )
+      INS-64591_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64592_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64592_FOV_SHAPE         = 'RECTANGLE'
+      INS-64592_BORESIGHT         = ( 0 0 1 )
+      INS-64592_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64592_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64592_FOV_REF_ANGLE     = ( 0.397 )
+      INS-64592_FOV_CROSS_ANGLE   = ( 0.397 )
+      INS-64592_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64593_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64593_FOV_SHAPE         = 'RECTANGLE'
+      INS-64593_BORESIGHT         = ( 0 0 1 )
+      INS-64593_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64593_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64593_FOV_REF_ANGLE     = ( 0.397 )
+      INS-64593_FOV_CROSS_ANGLE   = ( 0.397 )
+      INS-64593_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64594_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64594_FOV_SHAPE         = 'RECTANGLE'
+      INS-64594_BORESIGHT         = ( 0 0 1 )
+      INS-64594_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64594_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64594_FOV_REF_ANGLE     = ( 0.396 )
+      INS-64594_FOV_CROSS_ANGLE   = ( 0.396 )
+      INS-64594_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64595_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64595_FOV_SHAPE         = 'RECTANGLE'
+      INS-64595_BORESIGHT         = ( 0 0 1 )
+      INS-64595_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64595_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64595_FOV_REF_ANGLE     = ( 0.396 )
+      INS-64595_FOV_CROSS_ANGLE   = ( 0.396 )
+      INS-64595_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64596_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64596_FOV_SHAPE         = 'RECTANGLE'
+      INS-64596_BORESIGHT         = ( 0 0 1 )
+      INS-64596_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64596_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64596_FOV_REF_ANGLE     = ( 0.396 )
+      INS-64596_FOV_CROSS_ANGLE   = ( 0.396 )
+      INS-64596_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64597_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64597_FOV_SHAPE         = 'RECTANGLE'
+      INS-64597_BORESIGHT         = ( 0 0 1 )
+      INS-64597_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64597_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64597_FOV_REF_ANGLE     = ( 0.396 )
+      INS-64597_FOV_CROSS_ANGLE   = ( 0.396 )
+      INS-64597_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64598_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64598_FOV_SHAPE         = 'RECTANGLE'
+      INS-64598_BORESIGHT         = ( 0 0 1 )
+      INS-64598_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64598_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64598_FOV_REF_ANGLE     = ( 0.396 )
+      INS-64598_FOV_CROSS_ANGLE   = ( 0.396 )
+      INS-64598_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64599_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64599_FOV_SHAPE         = 'RECTANGLE'
+      INS-64599_BORESIGHT         = ( 0 0 1 )
+      INS-64599_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64599_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64599_FOV_REF_ANGLE     = ( 0.396 )
+      INS-64599_FOV_CROSS_ANGLE   = ( 0.396 )
+      INS-64599_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64600_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64600_FOV_SHAPE         = 'RECTANGLE'
+      INS-64600_BORESIGHT         = ( 0 0 1 )
+      INS-64600_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64600_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64600_FOV_REF_ANGLE     = ( 0.395 )
+      INS-64600_FOV_CROSS_ANGLE   = ( 0.395 )
+      INS-64600_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64601_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64601_FOV_SHAPE         = 'RECTANGLE'
+      INS-64601_BORESIGHT         = ( 0 0 1 )
+      INS-64601_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64601_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64601_FOV_REF_ANGLE     = ( 0.395 )
+      INS-64601_FOV_CROSS_ANGLE   = ( 0.395 )
+      INS-64601_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64602_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64602_FOV_SHAPE         = 'RECTANGLE'
+      INS-64602_BORESIGHT         = ( 0 0 1 )
+      INS-64602_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64602_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64602_FOV_REF_ANGLE     = ( 0.395 )
+      INS-64602_FOV_CROSS_ANGLE   = ( 0.395 )
+      INS-64602_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64603_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64603_FOV_SHAPE         = 'RECTANGLE'
+      INS-64603_BORESIGHT         = ( 0 0 1 )
+      INS-64603_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64603_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64603_FOV_REF_ANGLE     = ( 0.395 )
+      INS-64603_FOV_CROSS_ANGLE   = ( 0.395 )
+      INS-64603_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64604_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64604_FOV_SHAPE         = 'RECTANGLE'
+      INS-64604_BORESIGHT         = ( 0 0 1 )
+      INS-64604_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64604_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64604_FOV_REF_ANGLE     = ( 0.395 )
+      INS-64604_FOV_CROSS_ANGLE   = ( 0.395 )
+      INS-64604_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64605_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64605_FOV_SHAPE         = 'RECTANGLE'
+      INS-64605_BORESIGHT         = ( 0 0 1 )
+      INS-64605_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64605_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64605_FOV_REF_ANGLE     = ( 0.395 )
+      INS-64605_FOV_CROSS_ANGLE   = ( 0.395 )
+      INS-64605_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64606_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64606_FOV_SHAPE         = 'RECTANGLE'
+      INS-64606_BORESIGHT         = ( 0 0 1 )
+      INS-64606_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64606_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64606_FOV_REF_ANGLE     = ( 0.395 )
+      INS-64606_FOV_CROSS_ANGLE   = ( 0.395 )
+      INS-64606_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64607_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64607_FOV_SHAPE         = 'RECTANGLE'
+      INS-64607_BORESIGHT         = ( 0 0 1 )
+      INS-64607_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64607_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64607_FOV_REF_ANGLE     = ( 0.394 )
+      INS-64607_FOV_CROSS_ANGLE   = ( 0.394 )
+      INS-64607_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64608_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64608_FOV_SHAPE         = 'RECTANGLE'
+      INS-64608_BORESIGHT         = ( 0 0 1 )
+      INS-64608_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64608_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64608_FOV_REF_ANGLE     = ( 0.394 )
+      INS-64608_FOV_CROSS_ANGLE   = ( 0.394 )
+      INS-64608_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64609_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64609_FOV_SHAPE         = 'RECTANGLE'
+      INS-64609_BORESIGHT         = ( 0 0 1 )
+      INS-64609_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64609_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64609_FOV_REF_ANGLE     = ( 0.394 )
+      INS-64609_FOV_CROSS_ANGLE   = ( 0.394 )
+      INS-64609_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64610_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64610_FOV_SHAPE         = 'RECTANGLE'
+      INS-64610_BORESIGHT         = ( 0 0 1 )
+      INS-64610_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64610_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64610_FOV_REF_ANGLE     = ( 0.394 )
+      INS-64610_FOV_CROSS_ANGLE   = ( 0.394 )
+      INS-64610_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64611_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64611_FOV_SHAPE         = 'RECTANGLE'
+      INS-64611_BORESIGHT         = ( 0 0 1 )
+      INS-64611_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64611_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64611_FOV_REF_ANGLE     = ( 0.394 )
+      INS-64611_FOV_CROSS_ANGLE   = ( 0.394 )
+      INS-64611_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64612_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64612_FOV_SHAPE         = 'RECTANGLE'
+      INS-64612_BORESIGHT         = ( 0 0 1 )
+      INS-64612_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64612_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64612_FOV_REF_ANGLE     = ( 0.394 )
+      INS-64612_FOV_CROSS_ANGLE   = ( 0.394 )
+      INS-64612_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64613_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64613_FOV_SHAPE         = 'RECTANGLE'
+      INS-64613_BORESIGHT         = ( 0 0 1 )
+      INS-64613_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64613_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64613_FOV_REF_ANGLE     = ( 0.394 )
+      INS-64613_FOV_CROSS_ANGLE   = ( 0.394 )
+      INS-64613_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64614_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64614_FOV_SHAPE         = 'RECTANGLE'
+      INS-64614_BORESIGHT         = ( 0 0 1 )
+      INS-64614_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64614_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64614_FOV_REF_ANGLE     = ( 0.393 )
+      INS-64614_FOV_CROSS_ANGLE   = ( 0.393 )
+      INS-64614_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64615_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64615_FOV_SHAPE         = 'RECTANGLE'
+      INS-64615_BORESIGHT         = ( 0 0 1 )
+      INS-64615_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64615_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64615_FOV_REF_ANGLE     = ( 0.393 )
+      INS-64615_FOV_CROSS_ANGLE   = ( 0.393 )
+      INS-64615_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      INS-64616_FOV_FRAME         = 'ORX_OCAMS_POLYCAM'
+      INS-64616_FOV_SHAPE         = 'RECTANGLE'
+      INS-64616_BORESIGHT         = ( 0 0 1 )
+      INS-64616_FOV_CLASS_SPEC    = 'ANGLES'
+      INS-64616_FOV_REF_VECTOR    = ( 1 0 0 )
+      INS-64616_FOV_REF_ANGLE     = ( 0.393 )
+      INS-64616_FOV_CROSS_ANGLE   = ( 0.393 )
+      INS-64616_FOV_ANGLE_UNITS   = 'DEGREES'
+
+      \begintext
+
+
+Pixel Parameters
+----------------------------------------------------------
+
+   These parameters describe the pixel structure associated with the
+   instruments and their fields of views. In some cases this is a
+   generalization of the notion of pixel, in that instead of
+   representing pixels on a CCD they may represent a collection of
+   individual detectors.
+   
+   No distortion correction is included in these values.
+
+   The FOV_CENTER_PIXEL keyword is precisely the same as the CCD_CENTER
+   defined in the CCD geometry keywords above.  The offset from the center
+   of the first pixel is obtained by subtracting the corresponding
+   INS-64xxx_CCD_FIRST_PIXEL Kernel Pool Variable (KPV) values from the
+   FOV_CENTER_PIXEL values; if no corresponding CCD_FIRST_PIXEL KPV is
+   present, it is assumed that the center of the first pixel is (0,0),
+   and the FOV_CENTER_PIXEL keyword is the offset.
+
+   MapCam (MAPCAM)
+
+      \begindata
+
+      INS-64361_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+
+      \begintext
+
+   MapCam (MAPCAM, filter-specific):
+
+      \begindata
+
+      INS-64364_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64365_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64366_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64367_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64368_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+
+      \begintext
+
+   SamCam (SAMCAM)
+
+      \begindata
+
+      INS-64362_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+
+      \begintext
+
+   PolyCam (POLYCAM, infinity)
+
+      \begindata
+
+      INS-64360_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+
+      \begintext
+
+   PolyCam (POLYCAM, focus positions):
+
+      \begindata
+
+      INS-64500_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64501_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64502_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64503_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64504_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64505_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64506_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64507_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64508_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64509_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64510_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64511_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64512_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64513_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64514_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64515_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64516_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64517_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64518_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64519_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64520_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64521_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64522_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64523_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64524_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64525_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64526_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64527_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64528_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64529_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64530_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64531_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64532_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64533_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64534_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64535_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64536_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64537_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64538_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64539_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64540_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64541_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64542_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64543_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64544_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64545_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64546_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64547_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64548_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64549_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64550_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64551_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64552_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64553_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64554_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64555_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64556_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64557_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64558_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64559_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64560_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64561_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64562_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64563_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64564_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64565_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64566_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64567_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64568_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64569_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64570_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64571_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64572_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64573_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64574_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64575_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64576_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64577_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64578_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64579_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64580_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64581_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64582_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64583_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64584_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64585_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64586_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64587_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64588_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64589_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64590_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64591_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64592_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64593_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64594_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64595_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64596_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64597_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64598_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64599_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64600_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64601_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64602_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64603_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64604_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64605_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64606_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64607_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64608_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64609_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64610_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64611_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64612_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64613_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64614_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64615_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+      INS-64616_FOV_CENTER_PIXEL  = ( 511.5, 511.5 )
+
+      \begintext
+
+
+Vectors dInstrumentFrame/dNAXIS1 and dInstrumentFrame/NAXIS2 for FITS
+---------------------------------------------------------------------
+
+   These Kernel Pool Variables (KPVs) compose the unit vectors in the
+   directions dInstrumentFrame/dNAXIS1 and dInstrumentFrame/dNAXIS2.
+   These KPVs are used by the SPOC SpatialGen code to calculate values
+   for keywords in in OCAMS FITS headers, most notably the WCS keywords
+   CD1_1, CD1_2, CD2_1, CD2_2.
+
+   The InstrumentFrame names are defined in the KPVs INS-64xxx_FOV_FRAME
+   above.
+
+   The values in this IK are based on the OCAMS frames defined as
+   nominally aligned with the spacecraft frame (ORX_SPACECRAFT):  they
+   are identical to the spacecraft frame for PolyCam and MapCam; they
+   are slightly rotated (-9.4 degrees) around +Xsc for SamCam.
+
+   N.B. Some observations are apropos for this version of the OCAMS IK
+
+   1) These definitions are wholly dependent on the convention used by
+      SPOC to decommutate the telemetered packets and write pixel data
+      to FITS files.
+
+   1.1) This is complicated by the left-tap and right-tap hardware on
+        the OCAMS detectors which make the pixel measurements, and the
+        firmware that drives the taps.
+
+   1.1.1) At the time this is being written (January, 2017), the SPOC
+          code converts all modes of left- and right-tap operation to
+          a right-tap-only convention for Level 0 data i.e. as if the
+          columns in each row, and then rows, were read in the order
+          of increasing distance from the right tap.
+
+   1.2) The SPOC code writes Level 0 (L0) OCAMS FITS files such that
+        the pixel position along the FITS NAXIS1 direction increases
+        with increasing column distance from the left tap, and such that
+        the pixel position along the FITS NAXIS2 direction increases
+        with increasing row distance from the taps.
+
+   1.3) We currently assume that the higher-level (L1, L2, etc.) OCAMS
+        FITS files use the same convention.
+
+   2) For all OCAMS instruments the boresight is +Z, and the cross product
+      of dInstrumentFrame/dNAXIS1 (INS-6436x_SPOC_FITS_NAXIS1) with the
+      boresight (INS-64xxx_BORESIGHT) will result in dInstrumentFrame/dNAXIS2 
+      (INS-6436x_SPOC_FITS_NAXIS2).  The implication is that display of FITS
+      images using the left-to-right (NAXIS1) and bottom-to-top (NAXIS2)
+      convention will yield an image consistent with what the actual imaged
+      scene looked like.
+
+  This diagram shows the relationship between as-viewed FITS images
+  displayed as directed by the keywords below and the axes of the
+  corresponding reference frames:
+
+
+           +NAXIS2    
+      (0,0)--->  sam
+       |
+       |  [R]--------------SamCam----------------------.
+       v   |                                           |
+ +NAXIS1   |                                           |
+       sam |                                           |
+           |                                           |
+           |                                           |
+           |                              .-----------------.
+           |                              |        ^+Xm-p   |
+           |                   +Xsam      |PolyCam |+Xsc    |
+           |                     ^        |     \  |        |
+           |                     |        |      .-|-.      |
+           |                     x-->     |      | x------> |
+           |                       +Ysam  |     [R]-[L] +Ysc|
+           |                              |            +Ym-p|
+           |                              |                 |
+           |                           ^  |                 |
+           |                  +NAXIS2  | [R]---MapCam------[L]
+           |                        m-p|               |
+           |                         (0,0)--->         |
+           |                              +NAXIS1      |
+           |                                    m-p    |
+           |                                           |
+          [L]------------------------------------------'
+
+Subscripts
+  sc   - Spacecraft
+  sam  - SamCam
+  map  - MapCam
+  poly - PolyCam
+  m-p  - MapCam-Polycam
+
+                         +Zsc, +Zm-p (=+Zmap=+Zpoly), and +Zsam are into
+                         the page
+
+                         (0,0) pixel designations and +NAXIS1 and +NAXIS2
+                         directions (increasing samples and rows,
+                         respectively) are displayed for SamCam at the upper
+                         left, and for MapCam as well as for PolyCam at the
+                         lower left of the MapCam FOV.
+
+                         [R] and [L] indicate Right- and Left-Tap locations,
+                         respectively.  As of early 2017, all non-masked 
+                         pixels from OCAMS telemetry will be laid out in FITS
+                         files as if they had been read from the right tap,
+                         regardless of the actual hardware tap arrangement
+                         used to physically read those data.
+
+                         Camera and spacecraft coordinate systems appear
+                         right-handed when projected into the displayed
+                         +NAXIS1=right/+NAXIS2=up (sample/row) convention.
+
+
+   MapCam (MAPCAM)
+
+      \begindata
+
+      INS-64361_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64361_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      \begintext
+
+   MapCam (MAPCAM, filter-specific):
+
+      \begindata
+
+      INS-64364_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64364_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64365_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64365_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64366_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64366_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64367_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64367_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64368_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64368_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      \begintext
+
+   SamCam (SAMCAM)
+
+      \begindata
+
+      INS-64362_SPOC_FITS_NAXIS1  = ( -1.0,  0.0, 0.0 )
+      INS-64362_SPOC_FITS_NAXIS2  = (  0.0,  1.0, 0.0 )
+
+      \begintext
+
+   PolyCam (POLYCAM, infinity)
+
+      \begindata
+
+      INS-64360_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64360_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      \begintext
+
+   PolyCam (POLYCAM, focus positions):
+
+      \begindata
+
+      INS-64500_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64500_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64501_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64501_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64502_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64502_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64503_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64503_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64504_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64504_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64505_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64505_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64506_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64506_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64507_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64507_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64508_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64508_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64509_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64509_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64510_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64510_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64511_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64511_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64512_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64512_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64513_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64513_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64514_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64514_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64515_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64515_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64516_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64516_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64517_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64517_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64518_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64518_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64519_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64519_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64520_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64520_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64521_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64521_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64522_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64522_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64523_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64523_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64524_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64524_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64525_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64525_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64526_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64526_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64527_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64527_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64528_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64528_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64529_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64529_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64530_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64530_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64531_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64531_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64532_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64532_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64533_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64533_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64534_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64534_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64535_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64535_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64536_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64536_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64537_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64537_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64538_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64538_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64539_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64539_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64540_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64540_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64541_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64541_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64542_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64542_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64543_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64543_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64544_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64544_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64545_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64545_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64546_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64546_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64547_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64547_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64548_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64548_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64549_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64549_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64550_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64550_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64551_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64551_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64552_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64552_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64553_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64553_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64554_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64554_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64555_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64555_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64556_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64556_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64557_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64557_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64558_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64558_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64559_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64559_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64560_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64560_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64561_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64561_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64562_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64562_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64563_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64563_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64564_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64564_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64565_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64565_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64566_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64566_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64567_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64567_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64568_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64568_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64569_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64569_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64570_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64570_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64571_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64571_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64572_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64572_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64573_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64573_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64574_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64574_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64575_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64575_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64576_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64576_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64577_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64577_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64578_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64578_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64579_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64579_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64580_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64580_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64581_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64581_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64582_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64582_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64583_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64583_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64584_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64584_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64585_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64585_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64586_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64586_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64587_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64587_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64588_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64588_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64589_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64589_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64590_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64590_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64591_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64591_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64592_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64592_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64593_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64593_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64594_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64594_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64595_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64595_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64596_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64596_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64597_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64597_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64598_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64598_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64599_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64599_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64600_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64600_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64601_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64601_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64602_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64602_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64603_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64603_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64604_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64604_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64605_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64605_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64606_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64606_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64607_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64607_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64608_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64608_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64609_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64609_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64610_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64610_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64611_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64611_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64612_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64612_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64613_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64613_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64614_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64614_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64615_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64615_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      INS-64616_SPOC_FITS_NAXIS1  = (  0.0,  1.0, 0.0 )
+      INS-64616_SPOC_FITS_NAXIS2  = (  1.0,  0.0, 0.0 )
+
+      \begintext
+
+
+OCAMS Distortion Parameters
+---------------------------
+
+   PolyCam (POLYCAM)
+
+   In this model, the PolyCam distortion is described by 5 parameters
+   characterizing a third-order radial distortion around a location
+   (X0,Y0) within a few tens of pixels from the center of the image.
+   This radial distortion applies along a vector from (X0,Y0) to (X,Y)
+   where (X,Y) refers to the coordinate (in pixels) of an arbitrary
+   point within the focal plane/field of view. It (the radial
+   distortion) increases the distance r between the center of
+   distortion (X0,Y0) and a given point by Delta-R where r is given by
+
+      r = sqrt((X-Y0)^2 + (Y-Y0)^2) 
+
+   and 
+
+      Delta-R = p1*r + p2*r^2 + p3*r^3 
+
+   The planned distortion calibrations during the cruise and prox-ops
+   phases of OSIRIS-REx's mission to Bennu inform the derivation of X0,
+   Y0, p1, p2 & p3. These parameters can vary with focus position and
+   are derived with different values at different focus settings,
+   settings which span the nominal full focus range.
+
+   Current Values for each Parameter (based on Ground Calibration):
+
+     -------------------------  ---------  ---------  ---------
+           focus setting         INST ID      X0         Y0  
+     -------------------------  ---------  ---------  ---------
+      ORX_OCAMS_POLYCAM_04051    -64519      497.0      507.0 
+      ORX_OCAMS_POLYCAM_04231    -64520      498.0      502.0 
+      ORX_OCAMS_POLYCAM_04410    -64521      503.0      499.0 
+      ORX_OCAMS_POLYCAM_17010    -64591      505.0      507.0 
+      ORX_OCAMS_POLYCAM_17190    -64592      511.0      501.0 
+      ORX_OCAMS_POLYCAM_17371    -64593      521.0      498.0 
+          
+     -------------------------  ---------  ---------  ---------
+           focus setting            p1        p2         p3
+     -------------------------  ---------  ---------  ---------
+      ORX_OCAMS_POLYCAM_04051    1.013e-6   5.728e-5   1.844e-5
+      ORX_OCAMS_POLYCAM_04231    7.771e-7  -2.315e-7   2.850e-5
+      ORX_OCAMS_POLYCAM_04410    7.795e-7  -2.452e-7   3.198e-5
+      ORX_OCAMS_POLYCAM_17010    7.889e-7  -6.089e-7   3.329e-5
+      ORX_OCAMS_POLYCAM_17190    9.654e-7  -2.549e-5   3.944e-5
+      ORX_OCAMS_POLYCAM_17371    9.772e-7  -5.998e-5   4.819e-5
+
+   These values are preliminary and are for only 6 PolyCam focal
+   settings. They will be updated as the mission progresses.
+
+   MapCam (MAPCAM)
+
+   In-flight stellar calibrations were insufficient to update the
+   distortion parameters. The parameters will be updated after
+   Proximity Operations at Bennu.
+
+   SamCam (SAMCAM)
+
+   In-flight stellar calibrations were insufficient to update the
+   distortion parameters. The parameters will be updated after
+   Proximity Operations at Bennu.
+
+
+End of IK file.
