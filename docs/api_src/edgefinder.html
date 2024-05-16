@@ -1,19 +1,16 @@
-
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="en" data-content_root="../">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>EdgeFinder &#8212; SONIC  documentation</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="../_static/doctools.js"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=12dfc556" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Ellipsoid" href="ellipsoid.html" />
@@ -21,8 +18,9 @@
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
+
   
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+  
 
   </head><body>
   
@@ -34,16 +32,16 @@
 
           <div class="body" role="main">
             
-  <section id="module-+sonic">
-<span id="edgefinder"></span><h1>EdgeFinder<a class="headerlink" href="#module-+sonic" title="Permalink to this heading">¶</a></h1>
-<dl class="mat class">
+  <section id="edgefinder">
+<h1>EdgeFinder<a class="headerlink" href="#edgefinder" title="Link to this heading">¶</a></h1>
+<dl class="mat class" id="module-+sonic">
 <dt class="sig sig-object mat" id="sonic.EdgeFinder">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">sonic.</span></span><span class="sig-name descname"><span class="pre">EdgeFinder</span></span><a class="headerlink" href="#sonic.EdgeFinder" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">sonic.</span></span><span class="sig-name descname"><span class="pre">EdgeFinder</span></span><a class="headerlink" href="#sonic.EdgeFinder" title="Link to this definition">¶</a></dt>
 <dd><div class="members docutils container">
 <dl>
 <dt>Method Summary</dt><dd><dl class="mat staticmethod">
 <dt class="sig sig-object mat" id="sonic.EdgeFinder.getActiveBorder">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">getActiveBorder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">u_illum_obj</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.EdgeFinder.getActiveBorder" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">getActiveBorder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">u_illum_obj</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.EdgeFinder.getActiveBorder" title="Link to this definition">¶</a></dt>
 <dd><p>Determines which image borders are active, meaning which image
 borders have light coming in</p>
 <dl class="simple">
@@ -64,7 +62,7 @@ the clockwise order of [top, right, bottom, left]</p></li>
 
 <dl class="mat staticmethod">
 <dt class="sig sig-object mat" id="sonic.EdgeFinder.getSubPixel">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">getSubPixel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">im_obj</span></em>, <em class="sig-param"><span class="pre">pixelEdge</span></em>, <em class="sig-param"><span class="pre">BlurWidth</span></em>, <em class="sig-param"><span class="pre">kernel_type</span></em>, <em class="sig-param"><span class="pre">M</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.EdgeFinder.getSubPixel" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">getSubPixel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">im_obj</span></em>, <em class="sig-param"><span class="pre">pixelEdge</span></em>, <em class="sig-param"><span class="pre">BlurWidth</span></em>, <em class="sig-param"><span class="pre">kernel_type</span></em>, <em class="sig-param"><span class="pre">M</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.EdgeFinder.getSubPixel" title="Link to this definition">¶</a></dt>
 <dd><p>The getSubPixel function computes the subpixel edge
 location and orientation from an image, pixel-level edge map, and
 information about the image blur. This function is intended for
@@ -111,7 +109,7 @@ Edited: Ava Thrasher</p>
 
 <dl class="mat staticmethod">
 <dt class="sig sig-object mat" id="sonic.EdgeFinder.runScan">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">runScan</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">im_obj</span></em>, <em class="sig-param"><span class="pre">scan_lines</span></em>, <em class="sig-param"><span class="pre">min_consec</span></em>, <em class="sig-param"><span class="pre">run_start_thresh</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.EdgeFinder.runScan" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">runScan</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">im_obj</span></em>, <em class="sig-param"><span class="pre">scan_lines</span></em>, <em class="sig-param"><span class="pre">min_consec</span></em>, <em class="sig-param"><span class="pre">run_start_thresh</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.EdgeFinder.runScan" title="Link to this definition">¶</a></dt>
 <dd><p>Performs a scan across the provided image in the direction of
 sun illumination to find candidate edge points.</p>
 <blockquote>
@@ -144,7 +142,7 @@ Last author: Ava Thrasher</p>
 
 <dl class="mat staticmethod">
 <dt class="sig sig-object mat" id="sonic.EdgeFinder.sobel">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">sobel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">im_obj</span></em>, <em class="sig-param"><span class="pre">gradThresh</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.EdgeFinder.sobel" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">sobel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">im_obj</span></em>, <em class="sig-param"><span class="pre">gradThresh</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.EdgeFinder.sobel" title="Link to this definition">¶</a></dt>
 <dd><p>Computes edge locations based on local extrema in Gu or Gv gradients</p>
 <blockquote>
 <div><dl class="simple">
@@ -203,7 +201,7 @@ considered as a potential edge</p></li>
   </ul></li>
 </ul>
 </div>
-<div id="searchbox" style="display: none" role="search">
+<search id="searchbox" style="display: none" role="search">
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
@@ -211,7 +209,7 @@ considered as a potential edge</p></li>
       <input type="submit" value="Go" />
     </form>
     </div>
-</div>
+</search>
 <script>document.getElementById('searchbox').style.display = "block"</script>
 
 
@@ -226,11 +224,11 @@ considered as a potential edge</p></li>
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2024, SEAL.
+      &#169;2024, SEAL.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.0.2</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.3.7</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
       
       |
       <a href="../_sources/api_src/edgefinder.rst.txt"

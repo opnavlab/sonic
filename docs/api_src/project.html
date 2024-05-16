@@ -1,19 +1,16 @@
-
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="en" data-content_root="../">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Project &#8212; SONIC  documentation</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="../_static/doctools.js"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=12dfc556" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Quadric" href="quadric.html" />
@@ -21,8 +18,9 @@
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
+
   
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+  
 
   </head><body>
   
@@ -34,16 +32,16 @@
 
           <div class="body" role="main">
             
-  <section id="module-+sonic">
-<span id="project"></span><h1>Project<a class="headerlink" href="#module-+sonic" title="Permalink to this heading">¶</a></h1>
-<dl class="mat class">
+  <section id="project">
+<h1>Project<a class="headerlink" href="#project" title="Link to this heading">¶</a></h1>
+<dl class="mat class" id="module-+sonic">
 <dt class="sig sig-object mat" id="sonic.Project">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">sonic.</span></span><span class="sig-name descname"><span class="pre">Project</span></span><a class="headerlink" href="#sonic.Project" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">sonic.</span></span><span class="sig-name descname"><span class="pre">Project</span></span><a class="headerlink" href="#sonic.Project" title="Link to this definition">¶</a></dt>
 <dd><div class="members docutils container">
 <dl>
 <dt>Method Summary</dt><dd><dl class="mat staticmethod">
 <dt class="sig sig-object mat" id="sonic.Project.crop">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">crop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">to_crop</span></em>, <em class="sig-param"><span class="pre">hfov_RAD</span></em>, <em class="sig-param"><span class="pre">vfov_RAD</span></em>, <em class="sig-param"><span class="pre">dist_model</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Project.crop" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">crop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">to_crop</span></em>, <em class="sig-param"><span class="pre">hfov_RAD</span></em>, <em class="sig-param"><span class="pre">vfov_RAD</span></em>, <em class="sig-param"><span class="pre">dist_model</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Project.crop" title="Link to this definition">¶</a></dt>
 <dd><p>Crops a set of points lying in P2/R2 based on the specified
 horizontal and vertical FOV values. Optionally considers the
 effects of a distortion model when calculating the bounds to
@@ -78,7 +76,7 @@ Last author: Michael Krause</p>
 
 <dl class="mat staticmethod">
 <dt class="sig sig-object mat" id="sonic.Project.pinhole">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">pinhole</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">to_proj</span></em>, <em class="sig-param"><span class="pre">proj_behind_cam</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Project.pinhole" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">pinhole</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">to_proj</span></em>, <em class="sig-param"><span class="pre">proj_behind_cam</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Project.pinhole" title="Link to this definition">¶</a></dt>
 <dd><p>Performs a rectilinear projection of 3D points/lines/quadrics
 into a 2D image plane. Assumes a camera origin at z = 0, with
 an image plane lying at z = 1.</p>
@@ -111,7 +109,7 @@ Last author: Michael Krause</p>
 
 <dl class="mat staticmethod">
 <dt class="sig sig-object mat" id="sonic.Project.rotate">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">rotate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">to_rot</span></em>, <em class="sig-param"><span class="pre">rot_att</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Project.rotate" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">rotate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">to_rot</span></em>, <em class="sig-param"><span class="pre">rot_att</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Project.rotate" title="Link to this definition">¶</a></dt>
 <dd><p>Rotates an object relative to the observer. Currently only
 supports rotating points in P3, i.e., sonic.Points3 and
 sonic.PointsS2.</p>
@@ -134,7 +132,7 @@ Last author: Michael Krause</p>
 
 <dl class="mat staticmethod">
 <dt class="sig sig-object mat" id="sonic.Project.stereographic">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">stereographic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">to_proj</span></em>, <em class="sig-param"><span class="pre">proj_behind_cam</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Project.stereographic" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">stereographic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">to_proj</span></em>, <em class="sig-param"><span class="pre">proj_behind_cam</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Project.stereographic" title="Link to this definition">¶</a></dt>
 <dd><p>Performs a stereographic projection of 3D points/lines/quadrics
 into a 2D image plane. Assumes a camera origin at z = -1, with
 an image plane lying at z = 0.</p>
@@ -207,7 +205,7 @@ Last author: Michael Krause</p>
   </ul></li>
 </ul>
 </div>
-<div id="searchbox" style="display: none" role="search">
+<search id="searchbox" style="display: none" role="search">
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
@@ -215,7 +213,7 @@ Last author: Michael Krause</p>
       <input type="submit" value="Go" />
     </form>
     </div>
-</div>
+</search>
 <script>document.getElementById('searchbox').style.display = "block"</script>
 
 
@@ -230,11 +228,11 @@ Last author: Michael Krause</p>
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2024, SEAL.
+      &#169;2024, SEAL.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.0.2</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.3.7</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
       
       |
       <a href="../_sources/api_src/project.rst.txt"
