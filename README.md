@@ -14,10 +14,16 @@ industry projects, or anyone curious to learn more about OPNAV.
 Minimal preparation is needed to begin using SONIC. Simply clone the repository locally,
 and point your working directory to the SONIC path. 
 
-Note: As of 5/16/2024, SONIC has a few MATLAB toolbox dependencies which will
-require installation prior to full operation.
+A few MATLAB live tutorials are provided under [+examples](https://github.com/opnavlab/sonic/tree/main/%2Bexamples)
+for demonstrative purposes:
+- **ScanLinesTutorial**: Demonstrates the generic ability to extract image values along a specified scanline, which is useful for horizon-based OPNAV.
+- **SyntheticStarImgTutorial**: Demonstrates creating a synthetic image of the star Arcturus, and its surrounding starfield in SONIC. Being able to construct an expected image is an essential operation for OPNAV.
+- **TriangVestaReconTutorial**: Illustrates the use of the triangulation in SONIC to perform 3D structure reconstruction on the asteroid Vesta from features extracted in images. A few different approaches to triangulation are provided in SONIC, which can be used both for estimating the spacecraft state or reconstruction.
 
-A few tutorials are provided under +examples as demonstrative use-cases of SONIC.
+Note: As of 5/16/2024, SONIC has a few MATLAB toolbox dependencies which will
+require installation prior to full operation including:
+- Image Processing Toolbox
+- Computer Vision System Toolbox
 
 # Feedback
 If you have a suggestion, please use the GitHub Issues tab to let us know!
