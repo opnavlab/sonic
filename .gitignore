@@ -20,3 +20,6 @@ demos/
 __pycache__/
 _build/
 _sources/
+
+# SPICE kernels for now
++examples/EdgeAnalysisKernels
