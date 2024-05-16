@@ -357,6 +357,74 @@ classdef Image
             end
         end
 
-    end
+        function cleaned_img = removeSmearCCD(obj, t_exp, t_inout)
+        %% cleaned_img = removeSmearCCD(obj, t_exp, t_inout)
+        % Given the clock cycling time of a CCD focal array and an image 
+        % containing smear, this function will remove the smear and output
+        % the corrected image.
+        %   
+        %   Inputs:
+        %       - obj (1x1 sonic.Image): Sonic image object which contains
+        %         smear to be removed
+        %       - t_exp (1x1 double): Image exposure time  
+        %       - t_inout (1x1 OR 1x2 double): CCD readin/readout time 
+        %         per row. If input as a 1,1 the read in and out time are
+        %         assumed to be the same. If input as a 1,2 the first index
+        %         is the read in time and the second index is the read out
+        %         time.
+        %
+        %   Outputs:
+        %       - cleaned_img (1x1 sonic.Image): Image object with smear
+        %         removed
+        %
+        %   Last revised: 5/14/24
+        %   Last author: Ava Thrasher
+        arguments
+            obj     (1,1) sonic.Image
+            t_exp   (1,1) double
+            t_inout double 
+        end
 
+            % Ensure read in and out times are input correctly
+            one_check = all(size(t_inout) == [1,1]);
+            two_check = all(size(t_inout) == [1,2]);
+            if ~one_check && ~two_check
+                eid = 'sonic:Image:removeSmearCCD:invalidReadTime';
+                msg = 't_inout must be either a scalar (where read in and out time are assumed to be the same) or a 1x2 vector where the first index is read in time and the second index is read out time.';
+                error(eid,msg)
+            end
+
+            % Get size of the image
+            n = obj.rows;
+            
+            % Check if in and out times are close enough together to
+            % consider them the same
+            if two_check
+                t_diff = abs(t_inout(2) - t_inout(1));
+                if t_diff < eps
+                    t_inout = t_inout(1);
+                    one_check = true;
+                end
+            end
+
+            im_raw = obj.DNmat;
+            if one_check
+                eps_inout = t_inout/t_exp;
+                % analytic inversion of M
+                Minv = (1/(1-eps_inout)).*(eye(n) + eps_inout/(eps_inout - n*eps_inout - 1).*ones(size(n)));
+                im_clean = Minv*im_raw;
+                cleaned_img = sonic.Image(im_clean);
+            else
+                eps_in = t_inout(1)/t_exp;
+                eps_out = t_inout(2)/t_exp;
+                L = tril(ones(n),-1);
+                D = eps_in*L + eps_out*L';
+                M = eye(n) + D;
+                im_clean = M\im_raw;
+                cleaned_img = sonic.Image(im_clean);
+            end
+
+        end
+
+    end
 end
