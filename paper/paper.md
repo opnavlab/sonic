@@ -64,6 +64,9 @@ included, allowing the user to easily access and filter its entries. These
 individual functionalities in `SONIC` can be used to synthesize larger 
 capabilities. 
 
+Include a paragraph about the fact the SONIC is deliberately not inclusive of 
+complete workflows so that any assumptions about the users intentions are minimized.
+
 There are existing toolkits which separately address many of the required pieces 
 for OPNAV or provide solutions for a particular type of OPNAV. GABLE, the 
 Clifford Multivector Toolbox, and NASA’s Rigid Geometric Algebra all provide 
@@ -72,6 +75,7 @@ also many well-known image processing toolkits (i.e. OpenCV) and those specific
 to certain OPNAV problems, such as Tetra3 or Astrometry.net. `SONIC` aims to 
 capture the intersection of the mathematical principles, image processing, and 
 optics needed for the growing, multi-disciplinary field of OPNAV. 
+## add statement about GIANT
 
 
 # Mathematics
