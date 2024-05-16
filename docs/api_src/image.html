@@ -202,9 +202,32 @@ image in the same order that lines were provided</p></li>
 
 <dl class="mat method">
 <dt class="sig sig-object mat" id="sonic.Image.removeSmearCCD">
-<span class="sig-name descname"><span class="pre">removeSmearCCD</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">t_exp</span></em>, <em class="sig-param"><span class="pre">t_readrow</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Image.removeSmearCCD" title="Link to this definition">¶</a></dt>
-<dd><p>Does this still work for rectangular? No… enforce this is a
-square image, throw error if not.</p>
+<span class="sig-name descname"><span class="pre">removeSmearCCD</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">t_exp</span></em>, <em class="sig-param"><span class="pre">t_inout</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Image.removeSmearCCD" title="Link to this definition">¶</a></dt>
+<dd><p>Given the clock cycling time of a CCD focal array and an image
+containing smear, this function will remove the smear and output
+the corrected image.</p>
+<blockquote>
+<div><dl class="simple">
+<dt>Inputs:</dt><dd><ul class="simple">
+<li><p>obj (1x1 sonic.Image): Sonic image object which contains
+smear to be removed</p></li>
+<li><p>t_exp (1x1 double): Image exposure time</p></li>
+<li><p>t_inout (1x1 OR 1x2 double): CCD readin/readout time
+per row. If input as a 1,1 the read in and out time are
+assumed to be the same. If input as a 1,2 the first index
+is the read in time and the second index is the read out
+time.</p></li>
+</ul>
+</dd>
+<dt>Outputs:</dt><dd><ul class="simple">
+<li><p>cleaned_img (1x1 sonic.Image): Image object with smear
+removed</p></li>
+</ul>
+</dd>
+</dl>
+<p>Last revised: 5/14/24
+Last author: Ava Thrasher</p>
+</div></blockquote>
 </dd></dl>
 
 </dd>
