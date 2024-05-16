@@ -394,14 +394,8 @@ classdef Image
                 error(eid,msg)
             end
 
-            % Ensure that the image is square
+            % Get size of the image
             n = obj.rows;
-            m = obj.cols;
-            if n~=m
-                eid = 'sonic:Image:removeSmearCCD:invalidImageSize';
-                msg = 'Image must be square.';
-                error(eid,msg)
-            end
             
             % Check if in and out times are close enough together to
             % consider them the same
