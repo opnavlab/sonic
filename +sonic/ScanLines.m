@@ -40,8 +40,8 @@ classdef ScanLines
 
     methods (Static)
 
-        function obj = getParallelLines(img_obj, drho, u_illum_obj)
-        %% obj = getParallelLines(img_obj, drho, u_illum_obj)
+        function obj = getParallelLines(img_obj, drho, u_illum)
+        %% obj = getParallelLines(img_obj, drho, u_illum)
         %   Constructs a sonic.ScanLines object which contains all the
         %   lines which are parallel, intersect with the image, and are
         %   spaced by drho
@@ -51,8 +51,9 @@ classdef ScanLines
         %         parallel scan lines 
         %       - drho (1,1 double): Perpendicular distance between 
         %         parallel lines
-        %       - u_illum_obj (1,1 sonic.Points2): Illumination direction
+        %       - u_illum (2,1 double): Illumination direction
         %         in the image specified from the image top left corner
+        %         (image pixel origin)
         %
         %   Outputs
         %       - obj (1,1 sonic.ScanLines): ScanLines object containing
@@ -64,7 +65,7 @@ classdef ScanLines
             arguments
                 img_obj (1,1) sonic.Image
                 drho (1,1) double
-                u_illum_obj (1,1) sonic.Points2
+                u_illum (2,1) double
             end
             
             % Get size of image 
@@ -72,7 +73,6 @@ classdef ScanLines
             cols = img_obj.cols;
 
             % Get theta based on illumination direction
-            u_illum = u_illum_obj.r2;
             theta = atan2(u_illum(1),-u_illum(2));
 
             % Find dirFalg based on direction of illumination          

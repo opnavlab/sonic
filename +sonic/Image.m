@@ -275,7 +275,12 @@ classdef Image
                 rho = lines.perp_dist(i);
 
                 % Get line slope from angle 
-                u_slope = [sin(ang); -cos(ang)];
+                dirFlag = ispos(i);
+                if (dirFlag && ang>0) || (~dirFlag && ang<=0) 
+                    u_slope = [sin(ang); -cos(ang)];
+                elseif (~dirFlag && ang>0) || (dirFlag && ang<=0)
+                    u_slope = [-sin(ang); cos(ang)];
+                end
 
                 % Find line intersection with image borders
                 line_i = sonic.Lines2(ang,rho);
@@ -311,7 +316,7 @@ classdef Image
                 t = 0:1:d;
 
                 % Order sample points based on direction flag
-                dirFlag = ispos(i);
+                
                 if dirFlag
                     % If positive flag, ensure ascending u values
                     startStop = [u0.r2, ustop.r2];
