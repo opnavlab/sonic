@@ -12,7 +12,7 @@ academic researchers, space science professionals, or anyone curious to learn mo
 
 # Getting Started
 Minimal preparation is needed to begin using SONIC. Simply clone the repository locally,
-and point your working directory to the SONIC path. 
+and add the sonic directory to the search path that you're working in (i.e. using addpath). 
 
 A few MATLAB live tutorials are provided under [+examples](https://github.com/opnavlab/sonic/tree/main/%2Bexamples)
 for demonstrative purposes:
