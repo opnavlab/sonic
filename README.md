@@ -3,16 +3,16 @@
 This open-sourced, object oriented MATLAB package is a toolkit built on years of research in
 optical navigation (OPNAV), with a foundation in principled projective geometry. Many 
 capabilities needed for OPNAV are made transparent and configurable within the SONIC classes, 
-with minimal assumption of the analyst's intentions, such that full workflows can be 
-created and applied to mission specific or individual problems. 
+with minimal assumption of the analyst's intentions. This allows each user to construct their own 
+unique workflows for a specific research or analysis problems. 
 
 SONIC was created by the researchers and students of the [Space Exploration and Design 
-Laboratory](https://seal.ae.gatech.edu/) at the Georgia Institute of Technology for academics, 
-industry projects, or anyone curious to learn more about OPNAV.
+Laboratory](https://seal.ae.gatech.edu/) at the Georgia Institute of Technology for student, 
+academic researchers, space science professionals, or anyone curious to learn more about OPNAV.
 
 # Getting Started
 Minimal preparation is needed to begin using SONIC. Simply clone the repository locally,
-and point your working directory to the SONIC path. 
+and add the sonic directory to the search path that you're working in (i.e. using addpath). 
 
 A few MATLAB live tutorials are provided under [+examples](https://github.com/opnavlab/sonic/tree/main/%2Bexamples)
 for demonstrative purposes:
