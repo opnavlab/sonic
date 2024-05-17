@@ -26,7 +26,7 @@ require installation prior to full operation including:
 - Computer Vision System Toolbox
 
 # Feedback
-If you have a suggestion, please use the GitHub Issues tab to let us know!
+If you have a suggestion, please use the GitHub [Issues](https://github.com/opnavlab/sonic/issues) tab to let us know!
 
 # References
-Please see REFERENCES.md for a list of references used in the development of SONIC.
+Please see [REFERENCES.md](https://github.com/opnavlab/sonic/blob/main/REFERENCES.md) for a list of references used in the development of SONIC.
