@@ -13,8 +13,8 @@
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Examples with SONIC" href="examples.html" />
-    <link rel="prev" title="Welcome to SONIC’s documentation!" href="index.html" />
+    <link rel="next" title="SONIC Tutorials" href="examples.html" />
+    <link rel="prev" title="Software for Optical Navigation and Instrument Calibration (SONIC) Documentation" href="index.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -34,7 +34,23 @@
             
   <section id="installing-sonic">
 <h1>Installing SONIC<a class="headerlink" href="#installing-sonic" title="Link to this heading">¶</a></h1>
-<p>Put some info here on install SONIC!</p>
+<p>SONIC requires little set up to begin using. Please ensure you have MATLAB installed on your computer. As of 5/16/2024, please install the following toolkit dependencies:
+- Image Processing Toolbox
+- Computer Vision System Toolbox</p>
+<p>Once you are ready to begin using SONIC, clone the <a class="reference external" href="https://github.com/opnavlab/sonic">SONIC repository</a> to the local directory you wish to access it from. After cloning,
+you will see the sonic folder, which contains the package directory +sonic and the accompanying +examples.</p>
+<p>The +sonic directory contains the collection of classes that make up SONIC, while te +examples directory contains a few MATLAB
+live demonstrations of SONIC use-cases.</p>
+<p>To begin using SONIC, all that is left to do is open a new script, and add SONIC to the working path (i.e. using addpath). SONIC is an object oriented
+software package, so from here, you can follow the typical object-oriented programming (OOP) style. For example, you can instantiate objects using:
+obj = sonic.ClassNameHere(inputs)
+access their properties via:
+prop = obj.propertyNameHere
+and call class methods as:
+output = obj.methodNameHere(inputs)
+or static methods as
+output = sonic.ClassNameHere.methodNameHere(inputs)</p>
+<p>For more information on MATLAB OOP format, please visit their documentation <a class="reference external" href="https://www.mathworks.com/products/matlab/object-oriented-programming.html">here</a>.</p>
 </section>
 
 
@@ -56,7 +72,7 @@
 <h3>Navigation</h3>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Installing SONIC</a></li>
-<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples with SONIC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">SONIC Tutorials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
 </ul>
 
@@ -64,8 +80,8 @@
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="index.html" title="previous chapter">Welcome to SONIC’s documentation!</a></li>
-      <li>Next: <a href="examples.html" title="next chapter">Examples with SONIC</a></li>
+      <li>Previous: <a href="index.html" title="previous chapter">Software for Optical Navigation and Instrument Calibration (SONIC) Documentation</a></li>
+      <li>Next: <a href="examples.html" title="next chapter">SONIC Tutorials</a></li>
   </ul></li>
 </ul>
 </div>

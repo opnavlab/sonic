@@ -1,8 +1,7 @@
 
-Welcome to SONIC's documentation!
+Software for Optical Navigation and Instrument Calibration (SONIC) Documentation
 =================================
-
-We can put some more welcome text here!
+Please see below for instructions on installation, examples of using SONIC, and a listing of documentation for the classes of SONIC (api).
 
 .. toctree::
    :maxdepth: 1

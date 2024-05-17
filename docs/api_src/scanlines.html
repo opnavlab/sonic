@@ -81,7 +81,7 @@ Last author: Ava Thrasher</p>
 </dd>
 <dt>Method Summary</dt><dd><dl class="mat staticmethod">
 <dt class="sig sig-object mat" id="sonic.ScanLines.getParallelLines">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">getParallelLines</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">img_obj</span></em>, <em class="sig-param"><span class="pre">drho</span></em>, <em class="sig-param"><span class="pre">u_illum_obj</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.ScanLines.getParallelLines" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">getParallelLines</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">img_obj</span></em>, <em class="sig-param"><span class="pre">drho</span></em>, <em class="sig-param"><span class="pre">u_illum</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.ScanLines.getParallelLines" title="Link to this definition">¶</a></dt>
 <dd><p>Constructs a sonic.ScanLines object which contains all the
 lines which are parallel, intersect with the image, and are
 spaced by drho</p>
@@ -91,8 +91,9 @@ spaced by drho</p>
 parallel scan lines</p></li>
 <li><p>drho (1,1 double): Perpendicular distance between
 parallel lines</p></li>
-<li><p>u_illum_obj (1,1 sonic.Points2): Illumination direction
-in the image specified from the image top left corner</p></li>
+<li><p>u_illum (2,1 double): Illumination direction
+in the image specified from the image top left corner
+(image pixel origin)</p></li>
 </ul>
 </dd>
 <dt>Outputs</dt><dd><ul class="simple">
@@ -132,7 +133,7 @@ Last author: Ava Thrasher</p>
 <h3>Navigation</h3>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../install.html">Installing SONIC</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples with SONIC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">SONIC Tutorials</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../api.html">API</a></li>
 </ul>
 
