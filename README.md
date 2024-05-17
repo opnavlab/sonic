@@ -7,8 +7,8 @@ with minimal assumption of the analyst's intentions. This allows each user to co
 unique workflows for a specific research or analysis problems. 
 
 SONIC was created by the researchers and students of the [Space Exploration and Design 
-Laboratory](https://seal.ae.gatech.edu/) at the Georgia Institute of Technology for academics, 
-industry projects, or anyone curious to learn more about OPNAV.
+Laboratory](https://seal.ae.gatech.edu/) at the Georgia Institute of Technology for student, 
+academic researchers, space science professionals, or anyone curious to learn more about OPNAV.
 
 # Getting Started
 Minimal preparation is needed to begin using SONIC. Simply clone the repository locally,
