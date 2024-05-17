@@ -10,6 +10,8 @@ SONIC was created by the researchers and students of the [Space Exploration and 
 Laboratory](https://seal.ae.gatech.edu/) at the Georgia Institute of Technology for student, 
 academic researchers, space science professionals, or anyone curious to learn more about OPNAV.
 
+For **API documentation**, please visit [https://opnavlab.github.io/sonic/](https://opnavlab.github.io/sonic/).
+
 # Getting Started
 Minimal preparation is needed to begin using SONIC. Simply clone the repository locally,
 and add the sonic directory to the search path that you're working in (i.e. using addpath). 
