@@ -34,22 +34,24 @@
             
   <section id="installing-sonic">
 <h1>Installing SONIC<a class="headerlink" href="#installing-sonic" title="Link to this heading">¶</a></h1>
-<p>SONIC requires little set up to begin using. Please ensure you have MATLAB installed on your computer. As of 5/16/2024, please install the following toolkit dependencies:
-- Image Processing Toolbox
-- Computer Vision System Toolbox</p>
+<p>SONIC requires little set up to begin using. Please ensure you have MATLAB installed on your computer. As of 5/16/2024, please install the following toolkit dependencies:</p>
+<ul class="simple">
+<li><p>Image Processing Toolbox</p></li>
+<li><p>Computer Vision System Toolbox</p></li>
+</ul>
 <p>Once you are ready to begin using SONIC, clone the <a class="reference external" href="https://github.com/opnavlab/sonic">SONIC repository</a> to the local directory you wish to access it from. After cloning,
-you will see the sonic folder, which contains the package directory +sonic and the accompanying +examples.</p>
+you will see the sonic folder, which contains the package directory +sonic and the accompanying +examples folder.</p>
 <p>The +sonic directory contains the collection of classes that make up SONIC, while te +examples directory contains a few MATLAB
 live demonstrations of SONIC use-cases.</p>
 <p>To begin using SONIC, all that is left to do is open a new script, and add SONIC to the working path (i.e. using addpath). SONIC is an object oriented
-software package, so from here, you can follow the typical object-oriented programming (OOP) style. For example, you can instantiate objects using:
-obj = sonic.ClassNameHere(inputs)
-access their properties via:
-prop = obj.propertyNameHere
-and call class methods as:
-output = obj.methodNameHere(inputs)
-or static methods as
-output = sonic.ClassNameHere.methodNameHere(inputs)</p>
+software package, so from here, you can follow the typical object-oriented programming (OOP) style. For example, you can instantiate objects using:</p>
+<p>obj = sonic.ClassNameHere(inputs)</p>
+<p>access their properties via:</p>
+<p>prop = obj.propertyNameHere</p>
+<p>and call class methods as:</p>
+<p>output = obj.methodNameHere(inputs)</p>
+<p>or static methods as</p>
+<p>output = sonic.ClassNameHere.methodNameHere(inputs)</p>
 <p>For more information on MATLAB OOP format, please visit their documentation <a class="reference external" href="https://www.mathworks.com/products/matlab/object-oriented-programming.html">here</a>.</p>
 </section>
 
