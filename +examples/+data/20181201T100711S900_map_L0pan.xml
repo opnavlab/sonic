@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="https://pds.nasa.gov/pds4/pds/v1/PDS4_PDS_1700.sch" schematypens="http://purl.oclc.org/dsdl/schematron" ?>
+<?xml-model href="https://pds.nasa.gov/pds4/disp/v1/PDS4_DISP_1700.sch" schematypens="http://purl.oclc.org/dsdl/schematron" ?>
+<?xml-model href="https://pds.nasa.gov/pds4/geom/v1/PDS4_GEOM_1700_1401.sch" schematypens="http://purl.oclc.org/dsdl/schematron" ?>
+<?xml-model href="https://pds.nasa.gov/pds4/orex/v1/orex_ldd_OREX_1200.sch" schematypens="http://purl.oclc.org/dsdl/schematron" ?>
+<Product_Observational
+    xmlns="http://pds.nasa.gov/pds4/pds/v1"
+    xmlns:pds="http://pds.nasa.gov/pds4/pds/v1"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:disp="http://pds.nasa.gov/pds4/disp/v1"
+    xmlns:geom="http://pds.nasa.gov/pds4/geom/v1"
+    xmlns:orex="http://pds.nasa.gov/pds4/mission/orex/v1"
+    xsi:schemaLocation=
+    "http://pds.nasa.gov/pds4/pds/v1 https://pds.nasa.gov/pds4/pds/v1/PDS4_PDS_1700.xsd
+    http://pds.nasa.gov/pds4/disp/v1 https://pds.nasa.gov/pds4/disp/v1/PDS4_DISP_1700.xsd
+    http://pds.nasa.gov/pds4/geom/v1 https://pds.nasa.gov/pds4/geom/v1/PDS4_GEOM_1700_1401.xsd
+    http://pds.nasa.gov/pds4/mission/orex/v1 https://pds.nasa.gov/pds4/mission/orex/v1/PDS4_OREX_1200.xsd">
+    <Identification_Area>
+        <logical_identifier>urn:nasa:pds:orex.ocams:data_raw:20181201t100711s900_map_l0pan.fits</logical_identifier>
+        <version_id>1.0</version_id>
+        <title>OSIRIS-REx OCAMS Level 0 (Raw) Science Image Data Product 2018-12-01T10:07:11.900Z</title>
+        <information_model_version>1.7.0.0</information_model_version>
+        <product_class>Product_Observational</product_class>
+        <Modification_History>
+            <Modification_Detail>
+                <modification_date>2019-02-01</modification_date>
+                <version_id>1.0</version_id>
+                <description>Initial version.</description>
+            </Modification_Detail>
+        </Modification_History>
+    </Identification_Area>
+    <Observation_Area>
+        <Time_Coordinates>
+            <start_date_time>2018-12-01T10:07:11.900Z</start_date_time>
+            <stop_date_time>2018-12-01T10:07:11.900Z</stop_date_time>
+        </Time_Coordinates>
+        <Primary_Result_Summary>
+            <purpose>Navigation</purpose>
+            <processing_level>Raw</processing_level>
+        </Primary_Result_Summary>
+        <Investigation_Area>
+            <name>OSIRIS-REx</name>
+            <type>Mission</type>
+            <Internal_Reference>
+                <lid_reference>urn:nasa:pds:context:investigation:mission.orex</lid_reference>
+                <reference_type>data_to_investigation</reference_type>
+            </Internal_Reference>
+        </Investigation_Area>
+        <Observing_System>
+            <name>OSIRIS-REx Camera Suite (OCAMS)</name>
+            <Observing_System_Component>
+                <name>OSIRIS-REx</name>
+                <type>Spacecraft</type>
+                <description>Origins, Spectral Interpretation, Resource Identification, Security - Regolith Explorer Spacecraft</description>
+                <Internal_Reference>
+                    <lid_reference>urn:nasa:pds:context:instrument_host:spacecraft.orex</lid_reference>
+                    <reference_type>is_instrument_host</reference_type>
+                </Internal_Reference>
+            </Observing_System_Component>
+            <Observing_System_Component>
+                <name>OCAMS</name>
+                <type>Instrument</type>
+                <Internal_Reference>
+                    <lid_reference>urn:nasa:pds:context:instrument:ocams.orex</lid_reference>
+                    <reference_type>is_instrument</reference_type>
+                </Internal_Reference>
+            </Observing_System_Component>
+        </Observing_System>
+        <Target_Identification>
+            <name>(101955) BENNU</name>
+            <alternate_designation>1999 RQ36</alternate_designation>
+            <type>Asteroid</type>
+            <Internal_Reference>
+                <lid_reference>urn:nasa:pds:context:target:asteroid.101955_bennu</lid_reference>
+                <reference_type>data_to_target</reference_type>
+            </Internal_Reference>
+        </Target_Identification>
+        <Mission_Area>
+            <orex:ocm_instrument_attributes>
+                <orex:action_mode>1</orex:action_mode>
+                <orex:active>1</orex:active>
+                <orex:adc_clamp_enable>0</orex:adc_clamp_enable>
+                <orex:board_rev_num>1</orex:board_rev_num>
+                <orex:cal_lamp_sel>0</orex:cal_lamp_sel>
+                <orex:camera_id>0</orex:camera_id>
+                <orex:ccd_csr_reserved>0</orex:ccd_csr_reserved>
+                <orex:ccd_rev_num>3</orex:ccd_rev_num>
+                <orex:ccd_rst_l_pulse>1</orex:ccd_rst_l_pulse>
+                <orex:ccd_rst_r_pulse>1</orex:ccd_rst_r_pulse>
+                <orex:chan1_course_dac_reg_val>238</orex:chan1_course_dac_reg_val>
+                <orex:chan1_fine_dac_reg_val>255</orex:chan1_fine_dac_reg_val>
+                <orex:chan2_course_dac_reg_val>237</orex:chan2_course_dac_reg_val>
+                <orex:chan2_fine_dac_reg_val>255</orex:chan2_fine_dac_reg_val>
+                <orex:cs1h_ccd>60</orex:cs1h_ccd>
+                <orex:cs2h_ccd>14</orex:cs2h_ccd>
+                <orex:cs3h_ccd>96</orex:cs3h_ccd>
+                <orex:cs4h_ccd>120</orex:cs4h_ccd>
+                <orex:cur_detector_minus_24 unit="DN">848</orex:cur_detector_minus_24>
+                <orex:cur_detector_minus_24_x unit="mA">84.6310916431615</orex:cur_detector_minus_24_x>
+                <orex:cur_detector_plus_24 unit="DN">723</orex:cur_detector_plus_24>
+                <orex:cur_detector_plus_24_x unit="mA">44.039698776543</orex:cur_detector_plus_24_x>
+                <orex:cur_detector_plus_5 unit="DN">1062</orex:cur_detector_plus_5>
+                <orex:cur_detector_plus_5_x unit="mA">430.184126983025</orex:cur_detector_plus_5_x>
+                <orex:cur_htr unit="DN">50</orex:cur_htr>
+                <orex:cur_htr_x unit="mA">-0.936976659338759</orex:cur_htr_x>
+                <orex:cur_index unit="DN">5</orex:cur_index>
+                <orex:cur_index_x unit="mA">-0.4844895</orex:cur_index_x>
+                <orex:cur_lamp unit="DN">4</orex:cur_lamp>
+                <orex:cur_lamp_x unit="mA">-0.26422092</orex:cur_lamp_x>
+                <orex:cur_motor unit="DN">4</orex:cur_motor>
+                <orex:cur_motor_x unit="mA">0.124204</orex:cur_motor_x>
+                <orex:cx_pattern>248</orex:cx_pattern>
+                <orex:detector_mode>13</orex:detector_mode>
+                <orex:device_id>72</orex:device_id>
+                <orex:dpu_brd_temp unit="DN">1514</orex:dpu_brd_temp>
+                <orex:dpu_brd_temp_x unit="degC">15.682769072679699</orex:dpu_brd_temp_x>
+                <orex:egain>4.5</orex:egain>
+                <orex:encode_upper_pixel_bits>1</orex:encode_upper_pixel_bits>
+                <orex:filtname>PAN</orex:filtname>
+                <orex:fpga_rev_num>14</orex:fpga_rev_num>
+                <orex:ground unit="DN">0</orex:ground>
+                <orex:ground_x unit="V">0</orex:ground_x>
+                <orex:hcte_csr>8</orex:hcte_csr>
+                <orex:htr_brd_temp unit="DN">1520</orex:htr_brd_temp>
+                <orex:htr_brd_temp_x unit="degC">15.576870604795099</orex:htr_brd_temp_x>
+                <orex:htr_test_pt unit="DN">4</orex:htr_test_pt>
+                <orex:htr_test_pt_x unit="V">0.0048839999999999995</orex:htr_test_pt_x>
+                <orex:imgs_to_capture>1</orex:imgs_to_capture>
+                <orex:index_led_read>5</orex:index_led_read>
+                <orex:index_led_sel>0</orex:index_led_sel>
+                <orex:lut>0</orex:lut>
+                <orex:lvps_brd_temp unit="DN">1331</orex:lvps_brd_temp>
+                <orex:lvps_brd_temp_x unit="degC">20.35046399781</orex:lvps_brd_temp_x>
+                <orex:main_config>97</orex:main_config>
+                <orex:mapcam_ccd_heater>0</orex:mapcam_ccd_heater>
+                <orex:mapcam_ccd_temp unit="DN">765</orex:mapcam_ccd_temp>
+                <orex:mapcam_ccd_temp_x unit="degC">-22.2521150088013</orex:mapcam_ccd_temp_x>
+                <orex:mapcam_filt_house_heater>0</orex:mapcam_filt_house_heater>
+                <orex:mapcam_filt_motor_heater>0</orex:mapcam_filt_motor_heater>
+                <orex:mapcam_fwh_temp unit="DN">3166</orex:mapcam_fwh_temp>
+                <orex:mapcam_fwh_temp_x unit="degC">-24.3673170824409</orex:mapcam_fwh_temp_x>
+                <orex:mapcam_fwm_temp unit="DN">3142</orex:mapcam_fwm_temp>
+                <orex:mapcam_fwm_temp_x unit="degC">-23.5354395592103</orex:mapcam_fwm_temp_x>
+                <orex:mapcam_len_temp unit="DN">3360</orex:mapcam_len_temp>
+                <orex:mapcam_len_temp_x unit="degC">-32.268009354349196</orex:mapcam_len_temp_x>
+                <orex:mapcam_lens_heater>0</orex:mapcam_lens_heater>
+                <orex:mapcam_readout_elect_heater>0</orex:mapcam_readout_elect_heater>
+                <orex:mapcam_roe_temp unit="DN">3062</orex:mapcam_roe_temp>
+                <orex:mapcam_roe_temp_x unit="degC">-20.9187053849712</orex:mapcam_roe_temp_x>
+                <orex:min_cnt unit="min">7</orex:min_cnt>
+                <orex:motor_brd_temp unit="DN">1524</orex:motor_brd_temp>
+                <orex:motor_brd_temp_x unit="degC">15.481137617632099</orex:motor_brd_temp_x>
+                <orex:motor_pos>270</orex:motor_pos>
+                <orex:motor_select>0</orex:motor_select>
+                <orex:motor_zone>13</orex:motor_zone>
+                <orex:pga1_gain_amp unit="DN">97</orex:pga1_gain_amp>
+                <orex:pga2_gain_amp unit="DN">97</orex:pga2_gain_amp>
+                <orex:polycam_ccd_heater>0</orex:polycam_ccd_heater>
+                <orex:polycam_ccd_temp unit="DN">832</orex:polycam_ccd_temp>
+                <orex:polycam_ccd_temp_x unit="degC">-22.714213342240097</orex:polycam_ccd_temp_x>
+                <orex:polycam_focus_house_heater>0</orex:polycam_focus_house_heater>
+                <orex:polycam_focus_motor_heater>0</orex:polycam_focus_motor_heater>
+                <orex:polycam_foh_temp unit="DN">3141</orex:polycam_foh_temp>
+                <orex:polycam_foh_temp_x unit="degC">-23.5012907291461</orex:polycam_foh_temp_x>
+                <orex:polycam_fom_temp unit="DN">3121</orex:polycam_fom_temp>
+                <orex:polycam_fom_temp_x unit="degC">-22.8264835202916</orex:polycam_fom_temp_x>
+                <orex:polycam_mirror_1_temp unit="DN">3124</orex:polycam_mirror_1_temp>
+                <orex:polycam_mirror_1_temp_x unit="degC">-22.926733107253</orex:polycam_mirror_1_temp_x>
+                <orex:polycam_mirror_2_temp unit="DN">3726</orex:polycam_mirror_2_temp>
+                <orex:polycam_primary_heater>0</orex:polycam_primary_heater>
+                <orex:polycam_readout_elect_heater>0</orex:polycam_readout_elect_heater>
+                <orex:polycam_roe_temp unit="DN">3023</orex:polycam_roe_temp>
+                <orex:polycam_roe_temp_x unit="degC">-19.7174001931336</orex:polycam_roe_temp_x>
+                <orex:polycam_secondary_heater>0</orex:polycam_secondary_heater>
+                <orex:polycam_tbd_heater>0</orex:polycam_tbd_heater>
+                <orex:polycam_tbd_temp unit="DN">3726</orex:polycam_tbd_temp>
+                <orex:power_control>0</orex:power_control>
+                <orex:pwr_mon_vdd_l_override>0</orex:pwr_mon_vdd_l_override>
+                <orex:pwr_mon_vod_l_override>0</orex:pwr_mon_vod_l_override>
+                <orex:pwr_mon_wbb_l_override>0</orex:pwr_mon_wbb_l_override>
+                <orex:rdpxlmap>L13H08</orex:rdpxlmap>
+                <orex:readout_mode>1</orex:readout_mode>
+                <orex:samcam_ccd_heater>0</orex:samcam_ccd_heater>
+                <orex:samcam_ccd_temp unit="DN">833</orex:samcam_ccd_temp>
+                <orex:samcam_ccd_temp_x unit="degC">-19.745620259313</orex:samcam_ccd_temp_x>
+                <orex:samcam_filt_house_heater>0</orex:samcam_filt_house_heater>
+                <orex:samcam_filt_motor_heater>0</orex:samcam_filt_motor_heater>
+                <orex:samcam_fwh_temp unit="DN">3250</orex:samcam_fwh_temp>
+                <orex:samcam_fwh_temp_x unit="degC">-27.4925249755604</orex:samcam_fwh_temp_x>
+                <orex:samcam_fwm_temp unit="DN">3246</orex:samcam_fwm_temp>
+                <orex:samcam_fwm_temp_x unit="degC">-27.335100037818496</orex:samcam_fwm_temp_x>
+                <orex:samcam_len_temp unit="DN">3215</orex:samcam_len_temp>
+                <orex:samcam_len_temp_x unit="degC">-26.146119081036698</orex:samcam_len_temp_x>
+                <orex:samcam_lens_heater>0</orex:samcam_lens_heater>
+                <orex:samcam_readout_elect_heater>0</orex:samcam_readout_elect_heater>
+                <orex:samcam_roe_temp unit="DN">3151</orex:samcam_roe_temp>
+                <orex:samcam_roe_temp_x unit="degC">-23.844591933058798</orex:samcam_roe_temp_x>
+                <orex:sdram_csr>2</orex:sdram_csr>
+                <orex:seconds_raw unit="s">596930799</orex:seconds_raw>
+                <orex:standby>1</orex:standby>
+                <orex:storage_flush_block_flag>0</orex:storage_flush_block_flag>
+                <orex:storage_flush_cnt unit="ms">8217</orex:storage_flush_cnt>
+                <orex:subseconds_raw>7265</orex:subseconds_raw>
+                <orex:tck_pattern>60</orex:tck_pattern>
+                <orex:vcte_csr>16</orex:vcte_csr>
+                <orex:vfreq_csr>4</orex:vfreq_csr>
+                <orex:volt_4_5_therm_mon_1 unit="DN">1551</orex:volt_4_5_therm_mon_1>
+                <orex:volt_4_5_therm_mon_1_x unit="V">4.5450550530000005</orex:volt_4_5_therm_mon_1_x>
+                <orex:volt_4_5_therm_mon_2 unit="DN">1551</orex:volt_4_5_therm_mon_2>
+                <orex:volt_4_5_therm_mon_2_x unit="V">4.5450550530000005</orex:volt_4_5_therm_mon_2_x>
+                <orex:volt_mon_minus_12 unit="DN">1781</orex:volt_mon_minus_12>
+                <orex:volt_mon_minus_12_x unit="V">-12.115658567999999</orex:volt_mon_minus_12_x>
+                <orex:volt_mon_minus_24 unit="DN">1641</orex:volt_mon_minus_24>
+                <orex:volt_mon_minus_24_x unit="V">-24.04394841</orex:volt_mon_minus_24_x>
+                <orex:volt_mon_plus_12 unit="DN">2146</orex:volt_mon_plus_12>
+                <orex:volt_mon_plus_12_x unit="V">11.97837112</orex:volt_mon_plus_12_x>
+                <orex:volt_mon_plus_24 unit="DN">1785</orex:volt_mon_plus_24>
+                <orex:volt_mon_plus_24_x unit="V">23.97435285</orex:volt_mon_plus_24_x>
+                <orex:volt_mon_plus_5 unit="DN">2024</orex:volt_mon_plus_5>
+                <orex:volt_mon_plus_5_x unit="V">4.942612048</orex:volt_mon_plus_5_x>
+                <orex:volt_mon_sc unit="DN">3714</orex:volt_mon_sc>
+                <orex:volt_mon_sc_x unit="V">31.98273378</orex:volt_mon_sc_x>
+                <orex:vref_mon_plus_5 unit="DN">2048</orex:vref_mon_plus_5>
+                <orex:vref_mon_plus_5_x unit="V">5.001220096</orex:vref_mon_plus_5_x>
+                <orex:wrpxlmap>R13H08</orex:wrpxlmap>
+            </orex:ocm_instrument_attributes>
+            <orex:time>
+                <orex:date_of_observation>2018-12-01T10:07:11.900Z</orex:date_of_observation>
+                <orex:delta_obs unit="s">0.0007470375</orex:delta_obs>
+                <orex:exposec unit="s">0.001494075</orex:exposec>
+                <orex:exposure unit="ms">1.494075</orex:exposure>
+                <orex:ground_receipt_time>2018-12-01T13:34:37.228Z</orex:ground_receipt_time>
+                <orex:int_time unit="ms">1</orex:int_time>
+                <orex:mid_obs>2018-12-01T10:07:11.900Z</orex:mid_obs>
+                <orex:mid_obs_et unit="s">596930901.083084</orex:mid_obs_et>
+                <orex:sclk_string>3/0596930799.47612</orex:sclk_string>
+            </orex:time>
+            <orex:common_instrument_attributes>
+                <orex:image_id>4184</orex:image_id>
+            </orex:common_instrument_attributes>
+            <orex:ocm_image_properties>
+                <orex:image_type_code>LIGHT</orex:image_type_code>
+            </orex:ocm_image_properties>
+            <orex:data_quality>
+                <orex:ckqual>RECONSTRUCT</orex:ckqual>
+                <orex:meta_ker>spoc-digest-2018-12-03T20_07_49.528Z.mk</orex:meta_ker>
+                <orex:misspxla>0</orex:misspxla>
+                <orex:misspxls>0</orex:misspxls>
+                <orex:quality_flag>0</orex:quality_flag>
+                <orex:total_checksum>PASS</orex:total_checksum>
+            </orex:data_quality>
+            <orex:instrument_telemetry_identification>
+                <orex:apid>78</orex:apid>
+            </orex:instrument_telemetry_identification>
+            <orex:spatial>
+                <orex:bennana unit="deg">100.66372565013</orex:bennana>
+                <orex:bennu_dec unit="deg">1.27587062867468</orex:bennu_dec>
+                <orex:bennu_naxis1_offset unit="pixel">-10.943764745626</orex:bennu_naxis1_offset>
+                <orex:bennu_naxis2_offset unit="pixel">-0.52522698752631</orex:bennu_naxis2_offset>
+                <orex:bennu_ra unit="deg">341.297344614998</orex:bennu_ra>
+                <orex:bennu_radec_quality>BEST:  SPK</orex:bennu_radec_quality>
+                <orex:bennu_radec_target>BENNU</orex:bennu_radec_target>
+                <orex:boresight_lat>12.0452048991211</orex:boresight_lat>
+                <orex:boresight_lon>-144.290061645308</orex:boresight_lon>
+                <orex:cd1_1 unit="deg">0.000905552827907964</orex:cd1_1>
+                <orex:cd1_2 unit="deg">-0.00377026754277099</orex:cd1_2>
+                <orex:cd2_1 unit="deg">-0.00377026754277099</orex:cd2_1>
+                <orex:cd2_2 unit="deg">-0.000905552827907964</orex:cd2_2>
+                <orex:ctype1>RA---TAN</orex:ctype1>
+                <orex:ctype2>DEC--TAN</orex:ctype2>
+                <orex:cunit1 unit="deg">deg</orex:cunit1>
+                <orex:cunit2 unit="deg">deg</orex:cunit2>
+                <orex:equinox>2000</orex:equinox>
+                <orex:object>BENNU</orex:object>
+                <orex:radesys>ICRS</orex:radesys>
+                <orex:sc2sun_phi_deg unit="deg">-54.0175856520605</orex:sc2sun_phi_deg>
+                <orex:sc2sun_range_km unit="km">142510310.559025</orex:sc2sun_range_km>
+                <orex:sc2sun_theta_deg unit="deg">359.906532492605</orex:sc2sun_theta_deg>
+                <orex:sc2sun_uvx>0.587536133249079</orex:sc2sun_uvx>
+                <orex:sc2sun_uvy>-0.000958457796712018</orex:sc2sun_uvy>
+                <orex:sc2sun_uvz>-0.809197363740993</orex:sc2sun_uvz>
+                <orex:sunbeamr unit="km">142510334.957297</orex:sunbeamr>
+                <orex:sunbeams>SUCCESS</orex:sunbeams>
+                <orex:sunbeamt>BENNU</orex:sunbeamt>
+                <orex:sunbeamx unit="km">-134737148.294815</orex:sunbeamx>
+                <orex:sunbeamy unit="km">-40659647.1686463</orex:sunbeamy>
+                <orex:sunbeamz unit="km">-22402891.1335817</orex:sunbeamz>
+            </orex:spatial>
+            <orex:data_processing_information>
+                <orex:control_file>control.csv</orex:control_file>
+                <orex:creator>SPOC-ec498bf264f8f7e998c01d8bb1105a504a53ee06</orex:creator>
+                <orex:data_source>FLIGHT</orex:data_source>
+                <orex:dispornt>bottom-left</orex:dispornt>
+                <orex:file_creation>2019-08-07T15:48:27.581Z</orex:file_creation>
+                <orex:max_pixel_value>2320</orex:max_pixel_value>
+                <orex:min_pixel_value>88</orex:min_pixel_value>
+                <orex:spoc_version>ec498bf264f8f7e998c01d8bb1105a504a53ee06</orex:spoc_version>
+                <orex:units>DN</orex:units>
+            </orex:data_processing_information>
+            <orex:mission_information>
+                <orex:mission_phase_identifier>app</orex:mission_phase_identifier>
+                <orex:mission_phase_name>Approach</orex:mission_phase_name>
+            </orex:mission_information>
+        </Mission_Area>
+        <Discipline_Area>
+            <disp:Display_Settings>
+                <Local_Internal_Reference>
+                    <local_identifier_reference>Active Area</local_identifier_reference>
+                    <local_reference_type>display_settings_to_array</local_reference_type>
+                </Local_Internal_Reference>
+                <disp:Display_Direction>
+                    <disp:horizontal_display_axis>Sample</disp:horizontal_display_axis>
+                    <disp:horizontal_display_direction>Left to Right</disp:horizontal_display_direction>
+                    <disp:vertical_display_axis>Line</disp:vertical_display_axis>
+                    <disp:vertical_display_direction>Bottom to Top</disp:vertical_display_direction>
+                </disp:Display_Direction>
+            </disp:Display_Settings>
+            <disp:Display_Settings>
+                <Local_Internal_Reference>
+                    <local_identifier_reference>Active Array and Extended Pixel Regions</local_identifier_reference>
+                    <local_reference_type>display_settings_to_array</local_reference_type>
+                </Local_Internal_Reference>
+                <disp:Display_Direction>
+                    <disp:horizontal_display_axis>Sample</disp:horizontal_display_axis>
+                    <disp:horizontal_display_direction>Left to Right</disp:horizontal_display_direction>
+                    <disp:vertical_display_axis>Line</disp:vertical_display_axis>
+                    <disp:vertical_display_direction>Bottom to Top</disp:vertical_display_direction>
+                </disp:Display_Direction>
+            </disp:Display_Settings>
+            <geom:Geometry>
+                <geom:SPICE_Kernel_Files>
+                    <geom:SPICE_Kernel_Identification>
+                        <geom:kernel_type>MK</geom:kernel_type>
+                        <geom:spice_kernel_file_name>spoc-digest-2018-12-03T20_07_49.528Z.mk</geom:spice_kernel_file_name>
+                        <geom:kernel_provenance>Reconstructed</geom:kernel_provenance>
+                    </geom:SPICE_Kernel_Identification>
+                </geom:SPICE_Kernel_Files>
+                <geom:Image_Display_Geometry>
+                    <geom:Display_Direction>
+                        <geom:horizontal_display_axis>Sample</geom:horizontal_display_axis>
+                        <geom:horizontal_display_direction>Left to Right</geom:horizontal_display_direction>
+                        <geom:vertical_display_axis>Line</geom:vertical_display_axis>
+                        <geom:vertical_display_direction>Bottom to Top</geom:vertical_display_direction>
+                    </geom:Display_Direction>
+                    <geom:Object_Orientation_RA_Dec>
+                        <geom:Reference_Pixel>
+                            <geom:vertical_coordinate_pixel unit="pixel">512.5</geom:vertical_coordinate_pixel>
+                            <geom:horizontal_coordinate_pixel unit="pixel">512.5</geom:horizontal_coordinate_pixel>
+                        </geom:Reference_Pixel>
+                        <geom:right_ascension_angle unit="deg">341.305276490202</geom:right_ascension_angle>
+                        <geom:declination_angle unit="deg">1.23413410647874</geom:declination_angle>
+                        <geom:celestial_north_clock_angle unit="deg">256.494372326072</geom:celestial_north_clock_angle>
+                        <geom:Reference_Frame_Identification>
+                            <geom:name>J2000</geom:name>
+                        </geom:Reference_Frame_Identification>
+                    </geom:Object_Orientation_RA_Dec>
+                    <geom:Quaternion_Plus_To_From>
+                        <geom:qcos>0.484011934082076</geom:qcos>
+                        <geom:qsin1>-0.337498466625431</geom:qsin1>
+                        <geom:qsin2>0.611845716121451</geom:qsin2>
+                        <geom:qsin3>-0.526756160244416</geom:qsin3>
+                        <geom:Rotate_From>
+                            <geom:name>J2000</geom:name>
+                        </geom:Rotate_From>
+                        <geom:Rotate_To>
+                            <geom:name>Spacecraft</geom:name>
+                        </geom:Rotate_To>
+                    </geom:Quaternion_Plus_To_From>
+                    <geom:Quaternion_Plus_To_From>
+                        <geom:qcos>0.481961363586543</geom:qcos>
+                        <geom:qsin1>-0.338030220742287</geom:qsin1>
+                        <geom:qsin2>0.612345123974736</geom:qsin2>
+                        <geom:qsin3>-0.527714186865473</geom:qsin3>
+                        <geom:Rotate_From>
+                            <geom:name>J2000</geom:name>
+                        </geom:Rotate_From>
+                        <geom:Rotate_To>
+                            <geom:name>Instrument</geom:name>
+                        </geom:Rotate_To>
+                    </geom:Quaternion_Plus_To_From>
+                </geom:Image_Display_Geometry>
+                <geom:Geometry_Orbiter>
+                    <geom:geometry_reference_time_utc>2018-12-01T10:07:11.900Z</geom:geometry_reference_time_utc>
+                    <geom:geometry_reference_time_tdb unit="s">596930901.083084</geom:geometry_reference_time_tdb>
+                </geom:Geometry_Orbiter>
+            </geom:Geometry>
+        </Discipline_Area>
+    </Observation_Area>
+    <File_Area_Observational>
+        <File>
+            <file_name>20181201T100711S900_map_L0pan.fits</file_name>
+            <creation_date_time>2019-08-07T15:48:29.093Z</creation_date_time>
+            <file_size unit="byte">4443840</file_size>
+        </File>
+        <Header>
+            <offset unit="byte">0</offset>
+            <object_length unit="byte">17280</object_length>
+            <parsing_standard_id>FITS 3.0</parsing_standard_id>
+        </Header>
+        <Array_2D_Image>
+            <local_identifier>Active Area</local_identifier>
+            <offset unit="byte">17280</offset>
+            <axes>2</axes>
+            <axis_index_order>Last Index Fastest</axis_index_order>
+            <description>OCAMS image 1024 by 1024 pixel active array.</description>
+            <Element_Array>
+                <data_type>UnsignedMSB2</data_type>
+                <unit>DN</unit>
+                <scaling_factor>1</scaling_factor>
+                <value_offset>32768</value_offset>
+            </Element_Array>
+            <Axis_Array>
+                <axis_name>Line</axis_name>
+                <elements>1024</elements>
+                <sequence_number>1</sequence_number>
+            </Axis_Array>
+            <Axis_Array>
+                <axis_name>Sample</axis_name>
+                <elements>1024</elements>
+                <sequence_number>2</sequence_number>
+            </Axis_Array>
+        </Array_2D_Image>
+        <Header>
+            <offset unit="byte">2116800</offset>
+            <object_length unit="byte">2880</object_length>
+            <parsing_standard_id>FITS 3.0</parsing_standard_id>
+        </Header>
+        <Array_2D_Image>
+            <local_identifier>Active Array and Extended Pixel Regions</local_identifier>
+            <offset unit="byte">2119680</offset>
+            <axes>2</axes>
+            <axis_index_order>Last Index Fastest</axis_index_order>
+            <description>OCAMS 1044 sample by 1112 line extended pixel array. The extended pixel array contains the detector overscan and dark pixels.</description>
+            <Element_Array>
+                <data_type>UnsignedMSB2</data_type>
+                <unit>DN</unit>
+                <scaling_factor>1</scaling_factor>
+                <value_offset>32768</value_offset>
+            </Element_Array>
+            <Axis_Array>
+                <axis_name>Line</axis_name>
+                <elements>1044</elements>
+                <sequence_number>1</sequence_number>
+            </Axis_Array>
+            <Axis_Array>
+                <axis_name>Sample</axis_name>
+                <elements>1112</elements>
+                <sequence_number>2</sequence_number>
+            </Axis_Array>
+        </Array_2D_Image>
+    </File_Area_Observational>
+</Product_Observational>
