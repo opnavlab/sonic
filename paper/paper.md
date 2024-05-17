@@ -38,30 +38,30 @@ fundamental camera models, projective geometry, and image processing abilities.
 
 # Statement of need
 
-`SONIC` is a MATLAB toolkit for OPNAV, designed with an object-oriented structure 
-to simplify the development of commonly used and novel algorithms alike. This 
-toolkit was developed by the researchers and students at the Space Exploration 
+`SONIC` is an object-oriented MATLAB toolkit for OPNAV, designed to simplify the 
+development of commonly used and novel algorithms alike. It was developed by the 
+researchers and students at the Space Exploration 
 and Analysis Laboratory and is informed by extensive research in the field. 
-`SONIC` provides an organized and transparent toolkit to make this research 
+`SONIC` provides an organized and transparent set of utilities to make this research 
 readily available to projects looking to include OPNAV in their mission design 
 and analysis.  There are many features included in `SONIC` to facilitate this. A 
-strong basis for geometry and mathematics is the primary foundation for `SONIC` [@Hartley2003]. 
+strong basis of geometry and mathematics is the primary foundation for `SONIC` [@Hartley2003]. 
 Geometric objects such as points, lines, planes, conics, and quadrics are 
-represented in convenient ways that allow quick analysis for their meets, joins, 
-and projections. Image processing directly useful for OPNAV such as image scans, 
-edge detection, estimating background noise, and centroiding are included, and 
+represented in convenient ways that enable quick analysis of their meets, joins, 
+and projections. Image processing routines directly useful for OPNAV such as image scans, 
+edge detection, estimating background noise, and centroiding are included, and are
 easily configurable depending on the desired use. `SONIC` also intuitively 
 handles representation of camera models and can account for image distortion and 
 aberration. In addition, a direct interface with the Hipparcos star catalog is 
 included, allowing the user to easily access and filter its entries. 
 
 These individual functionalities in `SONIC` can be used to synthesize larger 
-capabilities. `SONIC` is deliberately designed as a toolbox, and is not inclusive of 
+capabilities. `SONIC` was deliberately created as a toolbox, and is not inclusive of 
 complete workflows. This design allows for a multitude of useful tools that do 
 not make assumptions about the users intentions.
 
-There are existing toolkits which separately address many of the required pieces 
-for OPNAV or provide solutions for a particular type of OPNAV. GABLE, the 
+There are existing software packages which separately address many of the required pieces 
+for OPNAV or a particular type of OPNAV. GABLE, the 
 Clifford Multivector Toolbox, and NASA’s Rigid Geometric Algebra [@RGA2023] all provide 
 solutions for projective geometry (essential mathematics for OPNAV). There are 
 also many well-known image processing toolkits (i.e. OpenCV) and those specific 
@@ -70,8 +70,8 @@ capture the intersection of these mathematical principles, image processing, and
 optics needed for the growing, multi-disciplinary field of OPNAV.  Of particular note is
 the Goddard Image Analysis and Navigation Toolkit (GIANT), which is a well-known optical 
 navigation API [@GIANT]. The basis of GIANT  is scene-oriented, allowing the user to manipulate
-objects' positions and orientations within a scene. The `SONIC` design seeks to compliment
-this and provide a different approach to the OPNAV problem from a camera-oriented and 
+objects' positions and orientations within a scene. The `SONIC` design seeks to complement
+this and contribute a different approach to the OPNAV problem from a camera-oriented and 
 projective geometry point of view, while adding a few different solutions to the problems of
 star identification, triangulation [@Henry2023], and more.
 
