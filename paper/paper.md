@@ -1,53 +1,28 @@
 ---
-
 title: 'SONIC: Software for Optical Navigation and Instrument Calibration'
-
 tags:
-
   - optical navigation
-
   - camera calibration
-
   - projective geometry
-
   - MATLAB
-
 authors:
-
   - name: Ava C. Thrasher
-
     affiliation: 1
-
   - name: Michael Krause
-
     affiliation: 1
-
   - name: Sébastien Henry
-
-    affiliation: 1
-    
+    affiliation: 1   
   - name: Michela Mancini
-
     affiliation: 1
-
   - name: Priyal Soni
-
     affiliation: 1
-
   - name: John A. Christian
-
-    affiliation: 1 # (Multiple affiliations must be quoted)
-
+    affiliation: 1 
 affiliations:
-
  - name: Georgia Institute of Technology, USA
-
    index: 1
-
 date: TBD 2024
-
-bibliography: paper.bib
-
+bibliography: paper/paper.bib
 ---
 
 # Summary
