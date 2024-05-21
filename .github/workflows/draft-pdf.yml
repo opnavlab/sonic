@@ -18,7 +18,7 @@ jobs:
 
       - name: Compile PDF
         run: 
-          pandoc paper/paper.md -o paper/paper.pdf --bibliography=paper/paper.bib --filter pandoc-citeproc
+          pandoc paper/paper.md -o paper/paper.pdf --bibliography=paper/paper.bib --filter pandoc-citeproc &&
           pandoc paper/paper.md -o paper/paper_JOSS.md --lua-filter=.github/normalize-metadata.lua
 
       - name: Compile Final PDF
