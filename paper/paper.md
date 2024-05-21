@@ -22,7 +22,7 @@ affiliations:
  - name: Georgia Institute of Technology, USA
    index: 1
 date: TBD 2024
-bibliography: paper/paper.bib
+bibliography: paper.bib
 ---
 
 # Summary
