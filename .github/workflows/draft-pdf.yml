@@ -14,7 +14,8 @@ jobs:
 
       - name: Install dependencies
         run: 
-          sudo apt-get update && sudo apt-get install -y pandoc texlive texlive-xetex
+          sudo apt-get update && sudo apt-get install -y pandoc texlive texlive-xetex &&
+          sudo apt-get install pandoc-citeproc
 
       - name: Compile PDF
         run: 
