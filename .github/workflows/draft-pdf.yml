@@ -1,27 +1,34 @@
-name: Draft PDF
+name: Compile JOSS Paper
 on: 
   push:
     branches:
-      -main
+      - main
 
 jobs:
-  paper:
+  build:
     runs-on: ubuntu-latest
-    name: Paper Draft
+
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Open Journals PDF Generator
-        uses: openjournals/openjournals-draft-action@v.1.0    
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: 
+          sudo apt-get update
+          sudo apt-get install -y pandoc texlive-xetex
+
+      - name: Compile PDF
+        run: 
+          pandoc paper.md -o paper.pdf --bibliography=paper.bib --filter pandoc-citeproc
+          pandoc paper.md -o paper_JOSS.md --lua-filter=.github/normalize-metadata.lua
+
+      - name: Compile Final PDF
+        run:
+          pandoc paper_JOSS.md -o paper.pdf --pdf-engine=xelatex
+          
+      - name: Upload PDF artifact
+        uses: actions/upload-artifact@v2
         with:
-          journal: joss
-          # This should be the path to the paper within your repo.
-          paper-path: paper/paper.md
-      - name: Upload
-        uses: actions/upload-artifact@v3
-        with:
-          name: paper
-          # This is the output path where Pandoc will write the compiled
-          # PDF. Note, this should be the same directory as the input
-          # paper.md
-          path: paper/paper.pdf
+          name: joss-paper-pdf
+          path: paper.pdf
+
