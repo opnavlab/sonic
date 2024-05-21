@@ -18,12 +18,12 @@ jobs:
 
       - name: Compile PDF
         run: 
-          pandoc paper/paper.md -o paper.pdf --bibliography=paper/paper.bib --filter pandoc-citeproc
-          pandoc paper.md -o paper_JOSS.md --lua-filter=.github/normalize-metadata.lua
+          pandoc paper/paper.md -o paper/paper.pdf --bibliography=paper/paper.bib --filter pandoc-citeproc
+          pandoc paper/paper.md -o paper/paper_JOSS.md --lua-filter=.github/normalize-metadata.lua
 
       - name: Compile Final PDF
         run:
-          pandoc paper_JOSS.md -o paper.pdf --pdf-engine=xelatex
+          pandoc paper/paper_JOSS.md -o paper/paper.pdf --pdf-engine=xelatex
           
       - name: Upload PDF artifact
         uses: actions/upload-artifact@v2
