@@ -213,8 +213,8 @@ classdef EdgeFinder
             
             % Output results to sonic.Points2 object
             if EdgesFound == 0
-                subPixelEdge = sonic.Points2([]);
-                subPixelNormals = sonic.Points2([]);
+                subPixelEdge = sonic.Points2.empty();
+                subPixelNormals = sonic.Points2.empty();
             else
                 subPixelEdge = sonic.Points2([u_temp(1:EdgesFound), v_temp(1:EdgesFound)]');
                 subPixelNormals = sonic.Points2([nu_temp(1:EdgesFound), nv_temp(1:EdgesFound)]');
