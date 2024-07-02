@@ -28,6 +28,8 @@ for demonstrative purposes:
 - **SyntheticStarImgTutorial**: Demonstrates creating a synthetic image of the star Arcturus, and its surrounding starfield in SONIC. Being able to construct an expected image is an essential operation for OPNAV.
 - **TriangVestaReconTutorial**: Illustrates the use of the triangulation in SONIC to perform 3D structure reconstruction on the asteroid Vesta from features extracted in images. A few different approaches to triangulation are provided in SONIC, which can be used both for estimating the spacecraft state or reconstruction.
 
+To verify your installation of SONIC, please run these examples locally and compare the outputs to the pre-run demos in the SONIC API documentation, linked below.
+
 Note: As of 5/16/2024, SONIC has a few MATLAB toolbox dependencies which will
 require installation prior to full operation including:
 - Image Processing Toolbox version 24.1
