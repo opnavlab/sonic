@@ -30,7 +30,7 @@ for demonstrative purposes:
 
 Note: As of 5/16/2024, SONIC has a few MATLAB toolbox dependencies which will
 require installation prior to full operation including:
-- Image Processing Toolbox v 24.1
+- Image Processing Toolbox version 24.1
 - Computer Vision System Toolbox version 24.1
 
 # Feedback
