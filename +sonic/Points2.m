@@ -1,3 +1,5 @@
+% This software is made available under the MIT license. See SONIC/LICENSE
+% for details.
 classdef Points2 < sonic.GeometryP2
 
     % This can contain a multitude of points. 

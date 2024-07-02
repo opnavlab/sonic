@@ -1,3 +1,5 @@
+% This software is made available under the MIT license. See SONIC/LICENSE
+% for details.
 classdef Kvector
     % Last Revised: 5/1/2024
     % Last author: Sebastien Henry

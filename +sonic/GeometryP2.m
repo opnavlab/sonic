@@ -1,3 +1,5 @@
+% This software is made available under the MIT license. See SONIC/LICENSE
+% for details.
 classdef (Abstract) GeometryP2 < sonic.MeetJoinable & matlab.mixin.Heterogeneous
 
     % For now, only dealing with flats (points, lines, planes):

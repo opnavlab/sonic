@@ -1,3 +1,5 @@
+% This software is made available under the MIT license. See SONIC/LICENSE
+% for details.
 classdef ScanLines
     properties
         lines (:, 1) sonic.Lines2 = sonic.Lines2.empty()

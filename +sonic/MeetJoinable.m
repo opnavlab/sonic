@@ -1,3 +1,5 @@
+% This software is made available under the MIT license. See SONIC/LICENSE
+% for details.
 classdef (Abstract) MeetJoinable
 
     % Abstract parent class for all objects that can perform meet and join

@@ -1,3 +1,5 @@
+% This software is made available under the MIT license. See SONIC/LICENSE
+% for details.
 classdef Units
        
     % If we want to be really slick, we could come up with a more standard

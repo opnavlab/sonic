@@ -1,3 +1,5 @@
+% This software is made available under the MIT license. See SONIC/LICENSE
+% for details.
 classdef Tolerances
     properties (Constant)
         % HomNorm (Points2.m, Points3.m) 

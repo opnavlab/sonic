@@ -1,3 +1,5 @@
+% This software is made available under the MIT license. See SONIC/LICENSE
+% for details.
 classdef PointsS2
     % Points lying on the 3D unit sphere (i.e., they only have two degrees
     % of freedom)
