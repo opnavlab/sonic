@@ -60,6 +60,7 @@ classdef Aberration
                 u_adj_i = coeff*(u_i + beta - (1 - gamma)/gamma*BcBcU);
     
                 % store adjusted observation
+                u_adj_i = u_adj_i./norm(u_adj_i);
                 u_adj(:,i) = u_adj_i;
     
             end
