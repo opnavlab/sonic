@@ -30,7 +30,7 @@ for demonstrative purposes:
 
 To verify your installation of SONIC, please run these examples locally and compare the outputs to the pre-run demos in the SONIC API documentation, linked below.
 
-Note: As of 5/16/2024, SONIC has a few MATLAB toolbox dependencies which will
+Note: SONIC has a few MATLAB toolbox dependencies which will
 require installation prior to full operation including:
 - Image Processing Toolbox version 24.1
 - Computer Vision System Toolbox version 24.1
