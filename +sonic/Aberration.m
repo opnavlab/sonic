@@ -41,6 +41,7 @@ classdef Aberration
 
             c_KMS = sonic.Constants.c_KMS;
             beta = v_KMS/c_KMS;
+            beta_hat = beta./norm(beta);
             [~,num] = size(u_obs);
             
             % Calculate the Lorentz factor
@@ -55,12 +56,11 @@ classdef Aberration
     
                 % Calculate u adjusted
                 coeff = 1/(1 + beta'*u_i);
-                BcU = cross(beta, u_i);
-                BcBcU = cross(beta, BcU);
+                BcU = cross(beta_hat, u_i);
+                BcBcU = cross(beta_hat, BcU);
                 u_adj_i = coeff*(u_i + beta - (1 - gamma)/gamma*BcBcU);
     
                 % store adjusted observation
-                u_adj_i = u_adj_i./norm(u_adj_i);
                 u_adj(:,i) = u_adj_i;
     
             end
