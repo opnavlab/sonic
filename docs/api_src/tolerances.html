@@ -1,0 +1,289 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Tolerances &#8212; SONIC  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Triangulation" href="triangulation.html" />
+    <link rel="prev" title="StarId" href="starid.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-+sonic">
+<span id="tolerances"></span><h1>Tolerances<a class="headerlink" href="#module-+sonic" title="Permalink to this heading">¶</a></h1>
+<dl class="mat class">
+<dt class="sig sig-object mat" id="sonic.Tolerances">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">sonic.</span></span><span class="sig-name descname"><span class="pre">Tolerances</span></span><a class="headerlink" href="#sonic.Tolerances" title="Permalink to this definition">¶</a></dt>
+<dd><div class="members docutils container">
+<dl>
+<dt>Property Summary</dt><dd><dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.Tolerances.CompZero">
+<span class="sig-name descname"><span class="pre">CompZero</span></span><a class="headerlink" href="#sonic.Tolerances.CompZero" title="Permalink to this definition">¶</a></dt>
+<dd><p>CompZero (Math.m)
+Used for testing if a given component (real or imaginary) of a
+complex number is zero.</p>
+</dd></dl>
+
+<dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.Tolerances.CondTol">
+<span class="sig-name descname"><span class="pre">CondTol</span></span><a class="headerlink" href="#sonic.Tolerances.CondTol" title="Permalink to this definition">¶</a></dt>
+<dd><p>CondTol (Conic.m and Quadric.m)
+used to check if the conic/quadric locus is degenerate</p>
+</dd></dl>
+
+<dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.Tolerances.ConicCircle">
+<span class="sig-name descname"><span class="pre">ConicCircle</span></span><a class="headerlink" href="#sonic.Tolerances.ConicCircle" title="Permalink to this definition">¶</a></dt>
+<dd><p>ConicCircle (Conic.m)
+Used as a threshold for checking if a given conic is a circle.</p>
+</dd></dl>
+
+<dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.Tolerances.ConicDisc">
+<span class="sig-name descname"><span class="pre">ConicDisc</span></span><a class="headerlink" href="#sonic.Tolerances.ConicDisc" title="Permalink to this definition">¶</a></dt>
+<dd><p>ConicDisc (Conic.m)
+Used as a threshold for various checks involving the discriminant
+of a conic.</p>
+</dd></dl>
+
+<dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.Tolerances.ConicLocusDetOne">
+<span class="sig-name descname"><span class="pre">ConicLocusDetOne</span></span><a class="headerlink" href="#sonic.Tolerances.ConicLocusDetOne" title="Permalink to this definition">¶</a></dt>
+<dd><p>ConicLocusDetOne (Conic.m)
+Used as a threshold for checking if the locus of a conic has a
+determinant of one.</p>
+</dd></dl>
+
+<dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.Tolerances.DCMDetOne">
+<span class="sig-name descname"><span class="pre">DCMDetOne</span></span><a class="headerlink" href="#sonic.Tolerances.DCMDetOne" title="Permalink to this definition">¶</a></dt>
+<dd><p>DCMDetOne (Attitude.m)
+Used as a threshold to check if the determinant of a potential
+DCM is one.</p>
+</dd></dl>
+
+<dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.Tolerances.DCMOrthogCheck">
+<span class="sig-name descname"><span class="pre">DCMOrthogCheck</span></span><a class="headerlink" href="#sonic.Tolerances.DCMOrthogCheck" title="Permalink to this definition">¶</a></dt>
+<dd><p>DCMOrthogCheck (Attitude.m)
+Used as a threshold to check if a potential DCM is orthogonal via
+comparing the trace of (T*T’ - I) to zero.</p>
+</dd></dl>
+
+<dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.Tolerances.HomNorm">
+<span class="sig-name descname"><span class="pre">HomNorm</span></span><a class="headerlink" href="#sonic.Tolerances.HomNorm" title="Permalink to this definition">¶</a></dt>
+<dd><p>HomNorm (Points2.m, Points3.m)
+In both cases, used for testing if the norm of the homogenous
+coordinate of a point is “zero”.</p>
+</dd></dl>
+
+<dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.Tolerances.InfPlaneDistRatio">
+<span class="sig-name descname"><span class="pre">InfPlaneDistRatio</span></span><a class="headerlink" href="#sonic.Tolerances.InfPlaneDistRatio" title="Permalink to this definition">¶</a></dt>
+<dd><p>InfPlaneDistRatio (Plane3.m)
+Used for testing the ratio between the normal vector of a plane
+and the distance. If sufficiently small, then the plane is at
+infinity.</p>
+</dd></dl>
+
+<dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.Tolerances.IsOnConic">
+<span class="sig-name descname"><span class="pre">IsOnConic</span></span><a class="headerlink" href="#sonic.Tolerances.IsOnConic" title="Permalink to this definition">¶</a></dt>
+<dd><p>IsOnConic (GeometryP2.m)
+Used for testing if a point lies on the conic</p>
+</dd></dl>
+
+<dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.Tolerances.LineNorm">
+<span class="sig-name descname"><span class="pre">LineNorm</span></span><a class="headerlink" href="#sonic.Tolerances.LineNorm" title="Permalink to this definition">¶</a></dt>
+<dd><p>LineNorm (Lines2.m)
+Used for testing if the norm of the first two homogenous
+coordinates of a line are “zero”.</p>
+</dd></dl>
+
+<dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.Tolerances.MaxIters">
+<span class="sig-name descname"><span class="pre">MaxIters</span></span><a class="headerlink" href="#sonic.Tolerances.MaxIters" title="Permalink to this definition">¶</a></dt>
+<dd><p>MaxIters (BrownConrady.m)
+used to cap the amount of iteration when undistorting points</p>
+</dd></dl>
+
+<dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.Tolerances.PGRelation">
+<span class="sig-name descname"><span class="pre">PGRelation</span></span><a class="headerlink" href="#sonic.Tolerances.PGRelation" title="Permalink to this definition">¶</a></dt>
+<dd><p>PGRelation (Lines3.m)
+Used for testing if the Plucker-Grassman relation is satisfied
+for a given line.</p>
+</dd></dl>
+
+<dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.Tolerances.QuatNormOne">
+<span class="sig-name descname"><span class="pre">QuatNormOne</span></span><a class="headerlink" href="#sonic.Tolerances.QuatNormOne" title="Permalink to this definition">¶</a></dt>
+<dd><p>QuatNormOne (Attitude.m)
+Used as a threshold for checking if the norm of a potential
+quaternion is one.</p>
+</dd></dl>
+
+<dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.Tolerances.SlopeAdjust">
+<span class="sig-name descname"><span class="pre">SlopeAdjust</span></span><a class="headerlink" href="#sonic.Tolerances.SlopeAdjust" title="Permalink to this definition">¶</a></dt>
+<dd><p>SlopeAdjust (Kvector.m)
+adjustment of the kvector slope due to floating point precision</p>
+</dd></dl>
+
+<dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.Tolerances.SmallAngle">
+<span class="sig-name descname"><span class="pre">SmallAngle</span></span><a class="headerlink" href="#sonic.Tolerances.SmallAngle" title="Permalink to this definition">¶</a></dt>
+<dd><p>SmallAngle (Attitude.m, ScanLines.m)
+Used for determining if an angle is sufficiently small to be
+treated as a small angle, and approximated accordingly.</p>
+</dd></dl>
+
+<dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.Tolerances.SmallNumber">
+<span class="sig-name descname"><span class="pre">SmallNumber</span></span><a class="headerlink" href="#sonic.Tolerances.SmallNumber" title="Permalink to this definition">¶</a></dt>
+<dd><p>SmallNumber (GeometryP2.m and Conic.m)
+Used for testing if division by zero occurs</p>
+</dd></dl>
+
+<dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.Tolerances.SphereTol">
+<span class="sig-name descname"><span class="pre">SphereTol</span></span><a class="headerlink" href="#sonic.Tolerances.SphereTol" title="Permalink to this definition">¶</a></dt>
+<dd><p>SphereTol (Quadric.m)
+used to check if the ellipsoid is a sphere</p>
+</dd></dl>
+
+<dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.Tolerances.UndistortTolBC">
+<span class="sig-name descname"><span class="pre">UndistortTolBC</span></span><a class="headerlink" href="#sonic.Tolerances.UndistortTolBC" title="Permalink to this definition">¶</a></dt>
+<dd><p>undistortTolBC (BrownConrady.m)
+used to test convergence when undistorting points</p>
+</dd></dl>
+
+<dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.Tolerances.UnitVecNorm1">
+<span class="sig-name descname"><span class="pre">UnitVecNorm1</span></span><a class="headerlink" href="#sonic.Tolerances.UnitVecNorm1" title="Permalink to this definition">¶</a></dt>
+<dd><p>UnitVecNorm1 (PointsS2.m)
+Used for testing if unit vectors have magnitude 1.</p>
+</dd></dl>
+
+<dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.Tolerances.bilinInterpThresh">
+<span class="sig-name descname"><span class="pre">bilinInterpThresh</span></span><a class="headerlink" href="#sonic.Tolerances.bilinInterpThresh" title="Permalink to this definition">¶</a></dt>
+<dd><p>bilinInterpThresh (Image.m)
+used in bilinear interpolation to see if interploation is linear</p>
+</dd></dl>
+
+<dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.Tolerances.psiConicTol">
+<span class="sig-name descname"><span class="pre">psiConicTol</span></span><a class="headerlink" href="#sonic.Tolerances.psiConicTol" title="Permalink to this definition">¶</a></dt>
+<dd><p>psiConicTol (Conic.m)
+Used for testing how close psi is to zero.</p>
+</dd></dl>
+
+</dd>
+</dl>
+</div>
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">SONIC</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installing SONIC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples with SONIC</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../api.html">API</a><ul>
+      <li>Previous: <a href="starid.html" title="previous chapter">StarId</a></li>
+      <li>Next: <a href="triangulation.html" title="next chapter">Triangulation</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2024, SEAL.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.0.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/api_src/tolerances.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

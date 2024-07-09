@@ -1,0 +1,582 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Attitude &#8212; SONIC  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="BrownConrady" href="brownconrady.html" />
+    <link rel="prev" title="Aberration" href="aberration.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-+sonic">
+<span id="attitude"></span><h1>Attitude<a class="headerlink" href="#module-+sonic" title="Permalink to this heading">¶</a></h1>
+<dl class="mat class">
+<dt class="sig sig-object mat" id="sonic.Attitude">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">sonic.</span></span><span class="sig-name descname"><span class="pre">Attitude</span></span><a class="headerlink" href="#sonic.Attitude" title="Permalink to this definition">¶</a></dt>
+<dd><div class="members docutils container">
+<dl>
+<dt>Constructor Summary</dt><dd><dl class="mat method">
+<dt class="sig sig-object mat" id="sonic.Attitude.Attitude">
+<span class="sig-name descname"><span class="pre">Attitude</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">raw_att</span></em>, <em class="sig-param"><span class="pre">quat_flag</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Attitude.Attitude" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructs an Attitude object, which parameterizes different
+representations of the same attitude. Note that this class
+adopts the passive representation of Attitude.</p>
+<dl>
+<dt>Inputs:</dt><dd><ul>
+<li><p>raw_att: A valid parameterization of attitude. Valid
+input representations are:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>(3 double): Rotation vector</p></li>
+<li><p>(4 double): Quaternion</p></li>
+<li><p>(3x3 double): Direction Cosine Matrix (DCM)</p></li>
+</ul>
+</div></blockquote>
+<p>The type of attitude parameterization is inferred from the
+number of elements in the supplied parameterization.</p>
+</li>
+<li><p>quat_flag (char/string): If inputting a quaternion, this
+is REQUIRED. Specify ‘vs’ or ‘sv’ to indicate the
+convention of the quaternion as scalar-last or
+scalar-first, respectively.</p></li>
+</ul>
+</dd>
+<dt>Outputs:</dt><dd><ul class="simple">
+<li><p>obj (sonic.Attitude): Attitude object, encoding a
+particular attitude which can be viewed in multiple
+parameterizations.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Last revised: 2/15/24
+Last author: Michael Krause</p>
+</dd></dl>
+
+</dd>
+<dt>Property Summary</dt><dd><dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.Attitude.dcm">
+<span class="sig-name descname"><span class="pre">dcm</span></span><a class="headerlink" href="#sonic.Attitude.dcm" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.Attitude.quat_s">
+<span class="sig-name descname"><span class="pre">quat_s</span></span><a class="headerlink" href="#sonic.Attitude.quat_s" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.Attitude.quat_v">
+<span class="sig-name descname"><span class="pre">quat_v</span></span><a class="headerlink" href="#sonic.Attitude.quat_v" title="Permalink to this definition">¶</a></dt>
+<dd><p>Quaternion representation of attitude (this is what we will store
+all attitudes as, fundamentally)</p>
+</dd></dl>
+
+<dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.Attitude.rotation_vec">
+<span class="sig-name descname"><span class="pre">rotation_vec</span></span><a class="headerlink" href="#sonic.Attitude.rotation_vec" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd>
+<dt>Method Summary</dt><dd><dl class="mat staticmethod">
+<dt class="sig sig-object mat" id="sonic.Attitude.DCMtoAxAng">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">DCMtoAxAng</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">T</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Attitude.DCMtoAxAng" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts a direction cosine matrix (DCM) to an Euler axis/angle
+pair (angle in radians).</p>
+<dl class="simple">
+<dt>Inputs:</dt><dd><ul class="simple">
+<li><p>T (3x3 double): Valid DCM</p></li>
+</ul>
+</dd>
+<dt>Outputs:</dt><dd><ul class="simple">
+<li><p>ax (3x1 double): Euler rotation axis</p></li>
+<li><p>ang_RAD (1x1 double): Euler rotation angle, in radians</p></li>
+</ul>
+</dd>
+</dl>
+<p>Last revised: 2/15/24
+Last author: Michael Krause</p>
+</dd></dl>
+
+<dl class="mat staticmethod">
+<dt class="sig sig-object mat" id="sonic.Attitude.DCMtoQuat">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">DCMtoQuat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">T</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Attitude.DCMtoQuat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts a DCM to a quaternion.</p>
+<dl class="simple">
+<dt>Inputs:</dt><dd><ul class="simple">
+<li><p>T (3x3 double): Valid DCM</p></li>
+</ul>
+</dd>
+<dt>Outputs:</dt><dd><ul class="simple">
+<li><p>qv (3x1 double): Vector component of the quaternion.</p></li>
+<li><p>qs (1x1 double): Scalar component of the quaternion.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Last revised: 2/15/24
+Last author: Michael Krause</p>
+</dd></dl>
+
+<dl class="mat staticmethod">
+<dt class="sig sig-object mat" id="sonic.Attitude.DCMtoRotationVec">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">DCMtoRotationVec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">T</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Attitude.DCMtoRotationVec" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts a direction cosine matrix (DCM) to an Euler rotation
+vector.</p>
+<dl class="simple">
+<dt>Inputs:</dt><dd><ul class="simple">
+<li><p>T (3x3 double): Valid DCM</p></li>
+</ul>
+</dd>
+<dt>Outputs:</dt><dd><ul class="simple">
+<li><p>rotation_vec (3x1 double): Euler rotation vector.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Last revised: 2/15/24
+Last author: Michael Krause</p>
+</dd></dl>
+
+<dl class="mat staticmethod">
+<dt class="sig sig-object mat" id="sonic.Attitude.angleBetween">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">angleBetween</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">att1</span></em>, <em class="sig-param"><span class="pre">att2</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Attitude.angleBetween" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the angle between two attitude objects</p>
+<blockquote>
+<div><dl class="simple">
+<dt>Inputs:</dt><dd><ul class="simple">
+<li><p>att1 (1x1 sonic.Attitude): attitude object 1</p></li>
+<li><p>att2 (1x1 sonic.Attitude): attitude object 2</p></li>
+</ul>
+</dd>
+<dt>Outputs:</dt><dd><ul class="simple">
+<li><p>angle (1x1 double): angle between the two attitudes</p></li>
+</ul>
+</dd>
+</dl>
+<p>Last revised: 4/15/24
+Last author: Sebastien Henry</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="mat staticmethod">
+<dt class="sig sig-object mat" id="sonic.Attitude.axAngToDCM">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">axAngToDCM</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">ax</span></em>, <em class="sig-param"><span class="pre">ang_RAD</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Attitude.axAngToDCM" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts an Euler axis/angle pair to a direction cosine
+matrix (DCM).</p>
+<dl class="simple">
+<dt>Inputs:</dt><dd><ul class="simple">
+<li><p>ax (3x1 double): Valid Euler rotation axis</p></li>
+<li><dl class="simple">
+<dt>ang_RAD (1x1 double): Valid Euler rotation angle, in</dt><dd><p>radians.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+<dt>Outputs:</dt><dd><ul class="simple">
+<li><p>T (3x3 double): DCM representation of attitude.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Last revised: 2/15/24
+Last author: Michael Krause</p>
+</dd></dl>
+
+<dl class="mat staticmethod">
+<dt class="sig sig-object mat" id="sonic.Attitude.axAngToQuat">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">axAngToQuat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">ax</span></em>, <em class="sig-param"><span class="pre">ang_RAD</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Attitude.axAngToQuat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts an Euler axis/angle to a quaternion.</p>
+<dl class="simple">
+<dt>Inputs:</dt><dd><ul class="simple">
+<li><p>ax: (3x1 double): Valid Euler rotation axis</p></li>
+<li><p>ang_RAD: (1x1 double): Valid Euler rotation angle, in
+radians.</p></li>
+</ul>
+</dd>
+<dt>Outputs:</dt><dd><ul class="simple">
+<li><p>qv (3x1 double): Vector component of the quaternion.</p></li>
+<li><p>qs (1x1 double): Scalar component of the quaternion.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Last revised: 2/15/24
+Last author: Michael Krause</p>
+</dd></dl>
+
+<dl class="mat staticmethod">
+<dt class="sig sig-object mat" id="sonic.Attitude.axAngToRotationVec">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">axAngToRotationVec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">ax</span></em>, <em class="sig-param"><span class="pre">ang</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Attitude.axAngToRotationVec" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts an Euler axis/angle pair (angle in radians) to an
+Euler rotation vector.</p>
+<dl class="simple">
+<dt>Inputs:</dt><dd><ul class="simple">
+<li><p>ax: (3x1 double): Valid Euler rotation axis</p></li>
+<li><p>ang_RAD: (1x1 double): Valid Euler rotation angle, in
+radians.</p></li>
+</ul>
+</dd>
+<dt>Outputs:</dt><dd><ul class="simple">
+<li><p>rotation_vec: (3x1 double): Euler rotation vector.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Last revised: 2/15/24
+Last author: Michael Krause</p>
+</dd></dl>
+
+<dl class="mat method">
+<dt class="sig sig-object mat" id="sonic.Attitude.comp">
+<span class="sig-name descname"><span class="pre">comp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">obj2</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Attitude.comp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Composes attitudes together. This may be thought of in terms of
+DCMs as:</p>
+<blockquote>
+<div><p>new_att.dcm = obj.dcm*t_obj.dcm;</p>
+</div></blockquote>
+<dl class="simple">
+<dt>Inputs:</dt><dd><ul class="simple">
+<li><p>obj (1x1 sonic.Attitude): Attitude object</p></li>
+<li><p>obj2 (1x1 sonic.Attitude): Another attitude object to
+compose with the calling object</p></li>
+</ul>
+</dd>
+<dt>Outputs:</dt><dd><ul class="simple">
+<li><p>new_att (1x1 sonic.Attitude): The resultant composed
+attitude object</p></li>
+</ul>
+</dd>
+</dl>
+<p>Last revised: 3/15/24
+Last author: Michael Krause</p>
+</dd></dl>
+
+<dl class="mat staticmethod">
+<dt class="sig sig-object mat" id="sonic.Attitude.interpolate">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">interpolate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">att1</span></em>, <em class="sig-param"><span class="pre">att2</span></em>, <em class="sig-param"><span class="pre">t</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Attitude.interpolate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given two Attitude objects and a parameter for the fraction of
+arclength between the attitudes, interpolates the desired
+intermediate attitude. Internally, uses a quaternion-based
+spherical linear interpolation (SLERP) routine.</p>
+<dl class="simple">
+<dt>Inputs:</dt><dd><ul class="simple">
+<li><p>att1 (1x1 sonic.Attitude): an Attitude object</p></li>
+<li><p>att2 (1x1 sonic.Attitude): an Attitude object</p></li>
+<li><p>t (1x1 double): a fraction of the spherical arclength
+between <cite>att1</cite> and <cite>att2</cite> at which to interpolate the
+attitude.</p></li>
+</ul>
+</dd>
+<dt>Outputs:</dt><dd><ul class="simple">
+<li><p>interp_att (1x1 sonic.Attitude): a new Attitude object
+representing the desired interpolated attitude.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Last revised: 4/18/24
+Last author: Michael Krause</p>
+</dd></dl>
+
+<dl class="mat staticmethod">
+<dt class="sig sig-object mat" id="sonic.Attitude.quatToAxAng">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">quatToAxAng</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">qv</span></em>, <em class="sig-param"><span class="pre">qs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Attitude.quatToAxAng" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts a quaternion (expressed as separate vector/scalar
+parts) to an Euler axis/angle pair (angle in radians).</p>
+<dl class="simple">
+<dt>Inputs:</dt><dd><ul class="simple">
+<li><p>qv (3x1 double): Vector component of the quaternion.</p></li>
+<li><p>qs (1x1 double): Scalar component of the quaternion.</p></li>
+</ul>
+</dd>
+<dt>Outputs:</dt><dd><ul class="simple">
+<li><p>ax (3x1 double): Euler rotation axis</p></li>
+<li><p>ang_RAD (1x1 double): Euler rotation angle, in radians</p></li>
+</ul>
+</dd>
+</dl>
+<p>Last revised: 2/15/24
+Last author: Michael Krause</p>
+</dd></dl>
+
+<dl class="mat staticmethod">
+<dt class="sig sig-object mat" id="sonic.Attitude.quatToDCM">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">quatToDCM</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">qv</span></em>, <em class="sig-param"><span class="pre">qs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Attitude.quatToDCM" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts a quaternion (expressed as separate vector/scalar
+parts) to a direction cosine matrix (DCM).</p>
+<dl class="simple">
+<dt>Inputs:</dt><dd><ul class="simple">
+<li><p>qv (3x1 double): Vector component of the quaternion.</p></li>
+<li><p>qs (1x1 double): Scalar component of the quaternion.</p></li>
+</ul>
+</dd>
+<dt>Outputs:</dt><dd><ul class="simple">
+<li><p>T (3x3 double): DCM representation of attitude.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Last revised: 2/15/24
+Last author: Michael Krause</p>
+</dd></dl>
+
+<dl class="mat staticmethod">
+<dt class="sig sig-object mat" id="sonic.Attitude.quatToRotationVec">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">quatToRotationVec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">qv</span></em>, <em class="sig-param"><span class="pre">qs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Attitude.quatToRotationVec" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts a quaternion (expressed as separate vector/scalar
+parts) to an Euler rotation vector.</p>
+<dl class="simple">
+<dt>Inputs:</dt><dd><ul class="simple">
+<li><p>qv (3x1 double): Vector component of the quaternion.</p></li>
+<li><p>qs (1x1 double): Scalar component of the quaternion.</p></li>
+</ul>
+</dd>
+<dt>Outputs:</dt><dd><ul class="simple">
+<li><p>rotation_vec: (3x1 double): Euler rotation vector.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Last revised: 2/15/24
+Last author: Michael Krause</p>
+</dd></dl>
+
+<dl class="mat staticmethod">
+<dt class="sig sig-object mat" id="sonic.Attitude.rotationVecToAxAng">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">rotationVecToAxAng</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">rotation_vec</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Attitude.rotationVecToAxAng" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts an Euler rotation vector to an Euler axis/angle
+pair (angle in radians).</p>
+<dl class="simple">
+<dt>Inputs:</dt><dd><ul class="simple">
+<li><p>rotation_vec (3x1 double): Euler rotation vector.</p></li>
+</ul>
+</dd>
+<dt>Outputs:</dt><dd><ul class="simple">
+<li><p>ax (3x1 double): Euler rotation axis</p></li>
+<li><p>ang_RAD (1x1 double): Euler rotation angle, in radians</p></li>
+</ul>
+</dd>
+</dl>
+<p>Last revised: 2/15/24
+Last author: Michael Krause</p>
+</dd></dl>
+
+<dl class="mat staticmethod">
+<dt class="sig sig-object mat" id="sonic.Attitude.rotationVecToDCM">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">rotationVecToDCM</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">rotation_vec</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Attitude.rotationVecToDCM" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts an Euler rotation vector to a direction cosine
+matrix (DCM).</p>
+<dl class="simple">
+<dt>Inputs:</dt><dd><ul class="simple">
+<li><p>rotation_vec (3x1 double): Valid rotation vector</p></li>
+</ul>
+</dd>
+<dt>Outputs:</dt><dd><ul class="simple">
+<li><p>T (3x3 double): DCM representation of attitude.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Last revised: 2/15/24
+Last author: Michael Krause</p>
+</dd></dl>
+
+<dl class="mat staticmethod">
+<dt class="sig sig-object mat" id="sonic.Attitude.rotationVecToQuat">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">rotationVecToQuat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">rotation_vec</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Attitude.rotationVecToQuat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts an Euler rotation vector to a quaternion.</p>
+<dl class="simple">
+<dt>Inputs:</dt><dd><ul class="simple">
+<li><p>rotation_vec: (3x1 double): Valid rotation vector</p></li>
+</ul>
+</dd>
+<dt>Outputs:</dt><dd><ul class="simple">
+<li><p>qv (3x1 double): Vector component of the quaternion.</p></li>
+<li><p>qs (1x1 double): Scalar component of the quaternion.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Last revised: 2/29/24
+Last author: John Christian</p>
+</dd></dl>
+
+<dl class="mat staticmethod">
+<dt class="sig sig-object mat" id="sonic.Attitude.solveWahbasProblem">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">solveWahbasProblem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">pointsS2_cam</span></em>, <em class="sig-param"><span class="pre">pointsS2_world</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Attitude.solveWahbasProblem" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute attitude from world to camera using directions in
+the camera frame and corresponding directions in the world
+frame. Requires at least 2 points.</p>
+<dl class="simple">
+<dt>Inputs:</dt><dd><ul class="simple">
+<li><p>pointsS2_cam (1x1 sonic.PointsS2): directions in the
+camera frame</p></li>
+<li><p>pointsS2_world (1x1 sonic.PointsS2): directions in the
+world frame</p></li>
+</ul>
+</dd>
+<dt>Outputs:</dt><dd><ul class="simple">
+<li><p>att (1x1 sonic.Attitude): attitude object that goes
+from world to camera</p></li>
+<li><p>proper (1x1 logical): a flag that indicates true
+if the found Attitude is proper (DCM has det = +1) or
+false if improper (e.g. det = -1)</p></li>
+</ul>
+</dd>
+</dl>
+<p>Last revised: 4/15/24
+Last author: Sebastien Henry</p>
+</dd></dl>
+
+<dl class="mat staticmethod">
+<dt class="sig sig-object mat" id="sonic.Attitude.verifyValidDCM">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">verifyValidDCM</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cand_dcm</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Attitude.verifyValidDCM" title="Permalink to this definition">¶</a></dt>
+<dd><p>Verifies that a DCM is valid. Errors if invalid, runs to
+completion if valid. Currently, the validity checks are:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Ensure determinant is +1.</p></li>
+</ul>
+</div></blockquote>
+<dl class="simple">
+<dt>Inputs:</dt><dd><ul class="simple">
+<li><p>cand_dcm (3x3 double): Possible DCM</p></li>
+</ul>
+</dd>
+</dl>
+<p>Last revised: 2/15/24
+Last author: Michael Krause</p>
+</dd></dl>
+
+<dl class="mat staticmethod">
+<dt class="sig sig-object mat" id="sonic.Attitude.verifyValidQuat">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">verifyValidQuat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cand_quat</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Attitude.verifyValidQuat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Verifies that a quaternion is valid. Errors if invalid, runs to
+completion if valid. Currently, the validity checks are:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Ensure norm of quaternion is 1.</p></li>
+</ul>
+</div></blockquote>
+<dl class="simple">
+<dt>Inputs:</dt><dd><ul class="simple">
+<li><p>cand_quat (4x1 double): Possible quaternion</p></li>
+</ul>
+</dd>
+</dl>
+<p>Last revised: 2/15/24
+Last author: Michael Krause</p>
+</dd></dl>
+
+<dl class="mat staticmethod">
+<dt class="sig sig-object mat" id="sonic.Attitude.verifyValidRotationVec">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">verifyValidRotationVec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cand_rotation_vec</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Attitude.verifyValidRotationVec" title="Permalink to this definition">¶</a></dt>
+<dd><p>Verifies that a rotation vector is valid. Errors if invalid,
+runs to completion if valid. Currently, there are no validity
+checks, and this serves as a placeholder.</p>
+<dl class="simple">
+<dt>Inputs:</dt><dd><ul class="simple">
+<li><p>cand_rotation_vec (3x1 double): Possible rotation vector</p></li>
+</ul>
+</dd>
+</dl>
+<p>Last revised: 2/15/24
+Last author: Michael Krause</p>
+</dd></dl>
+
+</dd>
+</dl>
+</div>
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">SONIC</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installing SONIC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples with SONIC</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../api.html">API</a><ul>
+      <li>Previous: <a href="aberration.html" title="previous chapter">Aberration</a></li>
+      <li>Next: <a href="brownconrady.html" title="next chapter">BrownConrady</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2024, SEAL.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.0.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/api_src/attitude.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
