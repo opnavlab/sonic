@@ -1,19 +1,16 @@
-
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="en" data-content_root="../">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Lines3 &#8212; SONIC  documentation</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="../_static/doctools.js"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=12dfc556" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Math" href="math.html" />
@@ -21,8 +18,9 @@
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
+
   
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+  
 
   </head><body>
   
@@ -34,17 +32,17 @@
 
           <div class="body" role="main">
             
-  <section id="module-+sonic">
-<span id="lines3"></span><h1>Lines3<a class="headerlink" href="#module-+sonic" title="Permalink to this heading">¶</a></h1>
-<dl class="mat class">
+  <section id="lines3">
+<h1>Lines3<a class="headerlink" href="#lines3" title="Link to this heading">¶</a></h1>
+<dl class="mat class" id="module-+sonic">
 <dt class="sig sig-object mat" id="sonic.Lines3">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">sonic.</span></span><span class="sig-name descname"><span class="pre">Lines3</span></span><a class="headerlink" href="#sonic.Lines3" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">sonic.</span></span><span class="sig-name descname"><span class="pre">Lines3</span></span><a class="headerlink" href="#sonic.Lines3" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="geometryp3.html#sonic.GeometryP3" title="sonic.GeometryP3"><code class="xref mat mat-class docutils literal notranslate"><span class="pre">sonic.GeometryP3</span></code></a></p>
 <div class="members docutils container">
 <dl>
 <dt>Constructor Summary</dt><dd><dl class="mat method">
 <dt class="sig sig-object mat" id="sonic.Lines3.Lines3">
-<span class="sig-name descname"><span class="pre">Lines3</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">varargin</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Lines3.Lines3" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">Lines3</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">varargin</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Lines3.Lines3" title="Link to this definition">¶</a></dt>
 <dd><p>Container for Lines in P3. Can hold a multitude of lines, and
 can be parameterized by Plucker coordinates, Plucker matrices,
 or points and directions. See <cite>Inputs</cite> for details.</p>
@@ -81,43 +79,43 @@ Last author: Michael Krause</p>
 </dd>
 <dt>Property Summary</dt><dd><dl class="mat attribute">
 <dt class="sig sig-object mat" id="sonic.Lines3.direction">
-<span class="sig-name descname"><span class="pre">direction</span></span><a class="headerlink" href="#sonic.Lines3.direction" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">direction</span></span><a class="headerlink" href="#sonic.Lines3.direction" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="mat attribute">
 <dt class="sig sig-object mat" id="sonic.Lines3.moment">
-<span class="sig-name descname"><span class="pre">moment</span></span><a class="headerlink" href="#sonic.Lines3.moment" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">moment</span></span><a class="headerlink" href="#sonic.Lines3.moment" title="Link to this definition">¶</a></dt>
 <dd><p>Can extract moment and direction of a line from the Plucker
 coordinates as well:</p>
 </dd></dl>
 
 <dl class="mat attribute">
 <dt class="sig sig-object mat" id="sonic.Lines3.n">
-<span class="sig-name descname"><span class="pre">n</span></span><a class="headerlink" href="#sonic.Lines3.n" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">n</span></span><a class="headerlink" href="#sonic.Lines3.n" title="Link to this definition">¶</a></dt>
 <dd><p>Number of lines represented in this object:</p>
 </dd></dl>
 
 <dl class="mat attribute">
 <dt class="sig sig-object mat" id="sonic.Lines3.plucker">
-<span class="sig-name descname"><span class="pre">plucker</span></span><a class="headerlink" href="#sonic.Lines3.plucker" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">plucker</span></span><a class="headerlink" href="#sonic.Lines3.plucker" title="Link to this definition">¶</a></dt>
 <dd><p>Primarily encoding these lines in Plucker coords:</p>
 </dd></dl>
 
 <dl class="mat attribute">
 <dt class="sig sig-object mat" id="sonic.Lines3.plucker_dual">
-<span class="sig-name descname"><span class="pre">plucker_dual</span></span><a class="headerlink" href="#sonic.Lines3.plucker_dual" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">plucker_dual</span></span><a class="headerlink" href="#sonic.Lines3.plucker_dual" title="Link to this definition">¶</a></dt>
 <dd><p>Dual is just flip of Plucker coords:</p>
 </dd></dl>
 
 <dl class="mat attribute">
 <dt class="sig sig-object mat" id="sonic.Lines3.plucker_mtx">
-<span class="sig-name descname"><span class="pre">plucker_mtx</span></span><a class="headerlink" href="#sonic.Lines3.plucker_mtx" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">plucker_mtx</span></span><a class="headerlink" href="#sonic.Lines3.plucker_mtx" title="Link to this definition">¶</a></dt>
 <dd><p>Matrix is calculated from the Plucker coords on the fly:</p>
 </dd></dl>
 
 <dl class="mat attribute">
 <dt class="sig sig-object mat" id="sonic.Lines3.plucker_mtx_dual">
-<span class="sig-name descname"><span class="pre">plucker_mtx_dual</span></span><a class="headerlink" href="#sonic.Lines3.plucker_mtx_dual" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">plucker_mtx_dual</span></span><a class="headerlink" href="#sonic.Lines3.plucker_mtx_dual" title="Link to this definition">¶</a></dt>
 <dd><p>Matrix dual is calculated from the Plucker dual coords on the
 fly:</p>
 </dd></dl>
@@ -163,7 +161,7 @@ fly:</p>
   </ul></li>
 </ul>
 </div>
-<div id="searchbox" style="display: none" role="search">
+<search id="searchbox" style="display: none" role="search">
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
@@ -171,7 +169,7 @@ fly:</p>
       <input type="submit" value="Go" />
     </form>
     </div>
-</div>
+</search>
 <script>document.getElementById('searchbox').style.display = "block"</script>
 
 
@@ -186,11 +184,11 @@ fly:</p>
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2024, SEAL.
+      &#169;2024, SEAL.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.0.2</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.3.7</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
       
       |
       <a href="../_sources/api_src/lines3.rst.txt"
