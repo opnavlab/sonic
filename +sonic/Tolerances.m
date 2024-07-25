@@ -39,7 +39,7 @@ classdef Tolerances
         % QuatNormOne (Attitude.m)
         % Used as a threshold for checking if the norm of a potential
         % quaternion is one. 
-        QuatNormOne         double = 1e-9
+        QuatNormOne         double = 1e-6
 
         % InfPlaneDistRatio (Plane3.m) 
         % Used for testing the ratio between the normal vector of a plane
