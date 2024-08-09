@@ -21,6 +21,7 @@ If you want to see a new feature in SONIC, or think that a current feature could
 2. How would this addition/change aid in the development of optical navigation (OPNAV) solutions?
 3. How would you suggest we implement the new feature/change?
 
+If you implement your own feature to submit for review in a pull request, please test your changes by running the current examples and comparing the outputs to the pre-run online examples to ensure they match. Additionally, please code an example showing the use case for your implementation, proving that it integrates with the rest of SONIC.
 
 # Code review process
 The research team at SEAL is comprised of graduate students and full time research engineers, so availability of resources to respond to issues may vary throughout the year and based on the scope of the issue. 
