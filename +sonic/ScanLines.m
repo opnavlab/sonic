@@ -105,8 +105,8 @@ classdef ScanLines
                 rho_min = rows*sin(theta);
                 rho_max = cols*cos(theta);
             elseif theta < pi && theta > pi/2
-                rho_min = -cols*sin(theta);
-                rho_max = -rows*cos(theta);
+                rho_min = rows*cos(theta);
+                rho_max = cols*sin(theta);
             elseif theta < -pi/2 && theta >-pi
                 rho_min = (rows*tan(theta)+cols)*cos(theta);
                 rho_max = 0;
