@@ -41,6 +41,12 @@ classdef Aberration
 
             c_KMS = sonic.Constants.c_KMS;
             beta = v_KMS/c_KMS;
+
+            % check if norm of beta is close to zero
+            if norm(beta) <= sonic.Tolerances.SmallAngle
+                u_adj = u_in;
+                return;
+            end
             beta_hat = beta./norm(beta);
             [~,num] = size(u_obs);
             
