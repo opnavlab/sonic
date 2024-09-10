@@ -18,7 +18,7 @@ academic researchers, space science professionals, or anyone curious to learn mo
 
 For **API documentation**, please visit [https://opnavlab.github.io/sonic/](https://opnavlab.github.io/sonic/).
 
-For our Journal of Open Source Software publication, please click here:
+**If you would like to reference SONIC** in your work, please cite our publication from the Journal of Open Source Software publication. The paper can be found here:
 [![DOI](https://joss.theoj.org/papers/10.21105/joss.06916/status.svg)](https://doi.org/10.21105/joss.06916)
 
 # Getting Started
