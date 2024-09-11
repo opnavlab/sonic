@@ -182,18 +182,15 @@ classdef Image
                 v1 = floor(v);
                 v2 = ceil(v);
 
-                % Get pixel values
-                f11 = img(v1,u1);
-                f12 = img(v1,u2);
-                f21 = img(v2,u1);
-                f22 = img(v2,u2);
-
                 % Thresholding to see if linear interpolation is fine
                 thresh = sonic.Tolerances.bilinInterpThresh;
                 if abs(u - round(u)) <= thresh && abs(v - round(v)) <= thresh
                     DN_i = img(round(v), round(u));
 
                 elseif abs(u - round(u)) <= thresh
+                    f11 = img(v1,u1);
+                    f21 = img(v2,u1);
+
                     % Calculate weight between v values
                     w1 = (v2 - v);
                     w2 = (v - v1);
@@ -202,6 +199,9 @@ classdef Image
                     DN_i = w1*f11 + w2*f21;
 
                 elseif abs(v - round(v)) <= thresh
+                    f11 = img(v1,u1);
+                    f12 = img(v1,u2);
+
                     % Calculate weight between u values
                     w1 = (u2 - u);
                     w2 = (u - u1);
@@ -210,6 +210,11 @@ classdef Image
                     DN_i = w1*f11 + w2*f12;
 
                 else 
+                    f11 = img(v1,u1);
+                    f12 = img(v1,u2);
+                    f21 = img(v2,u1);
+                    f22 = img(v2,u2);
+
                     % Calculate weights
                     w11 = (u2 - u)*(v2 - v);
                     w12 = (u - u1)*(v2 - v);
