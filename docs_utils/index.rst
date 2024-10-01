@@ -13,7 +13,7 @@ unique workflows for a specific research or analysis problems. SONIC was designe
 - 3D-Reconstruction
 - And more
 
-SONIC was created by the researchers and students of the `Space Exploration and Design 
+SONIC was created by the researchers and students of the `Space Exploration Analysis 
 Laboratory <https://seal.ae.gatech.edu/>`_ at the Georgia Institute of Technology for student, 
 academic researchers, space science professionals, or anyone curious to learn more about OPNAV.
 
