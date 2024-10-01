@@ -14,7 +14,7 @@ unique workflows for a specific research or analysis problems. SONIC was designe
 - And more
 
 SONIC was created by the researchers and students of the `Space Exploration Analysis 
-Laboratory <https://seal.ae.gatech.edu/>`_ at the Georgia Institute of Technology for student, 
+Laboratory <https://seal.ae.gatech.edu/>`_ at the Georgia Institute of Technology for students, 
 academic researchers, space science professionals, or anyone curious to learn more about OPNAV.
 
 .. toctree::
