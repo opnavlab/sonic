@@ -201,6 +201,46 @@ classdef Units
         
         end
 
+        function val_KM = AUtoKM(val_AU)
+        %% val_KM = AUtoKM(val_AU)
+        %   Conversion function from astronomical units to kilometers, as
+        %   defined in the SI Brochure, 9th edition:
+        %       https://www.bipm.org/documents/20126/41483022/SI-Brochure-9-EN.pdf
+        %   Supports vectorized input.
+        %   
+        %   Inputs:
+        %       - val_AU (1xn double): vector of distances in astronomical
+        %         units (AU)
+        %   Outputs:
+        %       - val_KM (1xn double): vector of distances in kilometers
+        %
+        %   Last revised: 10/4/24
+        %   Last author: Tara Mina
+
+            val_KM = val_AU.*149597870.7;
+            
+        end
+
+        function val_AU = KMtoAU(val_KM)
+        %% val_AU = KMtoAU(val_KM)
+        %   Conversion function from kilometers to astronomical units, as
+        %   defined in the SI Brochure, 9th edition:
+        %       https://www.bipm.org/documents/20126/41483022/SI-Brochure-9-EN.pdf
+        %   Supports vectorized input.
+        %   
+        %   Inputs:
+        %       - val_KM (1xn double): vector of distances in kilometers
+        %   Outputs:
+        %       - val_AU (1xn double): vector of distances in astronomical
+        %         units (AU)
+        %
+        %   Last revised: 10/4/24
+        %   Last author: Tara Mina
+
+            val_AU = val_KM./149597870.7;
+            
+        end
+
 
     end
 end

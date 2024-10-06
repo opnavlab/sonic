@@ -63,7 +63,7 @@ classdef (Abstract) StarCatalog
             % isn't *really* in P3 (it's in S2), but this will make it
             % easier to work with when calculating a signed distance to the
             % planes of interest later on. 
-            targ_pt = sonic.Points3(sonic.SphereCoords.sphereToCart(ra_RAD, dec_RAD));
+            targ_pt = sonic.Points3(sonic.SphereCoords.raDecToCart(ra_RAD, dec_RAD));
 
             % Let's do a prefiltering step first to check how close we are
             % to a given constellation. This helps prioritize which
