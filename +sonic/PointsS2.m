@@ -46,7 +46,7 @@ classdef PointsS2
                 case 2  % Points are RA/DEC pairs:
                    
                     obj.ra_dec = pts;
-                    obj.u = sonic.SphereCoords.sphereToCart(pts(1, :)', pts(2, :)');
+                    obj.u = sonic.SphereCoords.raDecToCart(pts(1, :)', pts(2, :)');
 
                 case 3  % Points are unit vectors:
 
@@ -59,7 +59,7 @@ classdef PointsS2
                     end
 
                     obj.u = pts;
-                    [ra, dec] = sonic.SphereCoords.cartToSphere(pts);
+                    [ra, dec] = sonic.SphereCoords.cartToRaDec(pts);
                     obj.ra_dec = [ra'; dec'];
 
                 otherwise

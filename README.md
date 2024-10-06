@@ -12,11 +12,14 @@ unique workflows for a specific research or analysis problems. SONIC was designe
 - 3D-Reconstruction
 - And more
 
-SONIC was created by the researchers and students of the [Space Exploration and Design 
+SONIC was created by the researchers and students of the [Space Exploration Analysis 
 Laboratory](https://seal.ae.gatech.edu/) at the Georgia Institute of Technology for student, 
 academic researchers, space science professionals, or anyone curious to learn more about OPNAV.
 
 For **API documentation**, please visit [https://opnavlab.github.io/sonic/](https://opnavlab.github.io/sonic/).
+
+**If you would like to reference SONIC** in your work, please cite our publication from the Journal of Open Source Software publication. The paper can be found here:
+[![DOI](https://joss.theoj.org/papers/10.21105/joss.06916/status.svg)](https://doi.org/10.21105/joss.06916)
 
 # Getting Started
 Minimal preparation is needed to begin using SONIC. Simply clone the repository locally,
