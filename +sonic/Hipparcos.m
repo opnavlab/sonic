@@ -178,7 +178,7 @@ classdef Hipparcos < sonic.StarCatalog
             % being columns. 
             p = [-sin(obj.ra_RAD), cos(obj.ra_RAD), zeros(obj.n, 1)]';
             q = [-sin(obj.dec_RAD).*cos(obj.ra_RAD), -sin(obj.dec_RAD).*sin(obj.ra_RAD), cos(obj.dec_RAD)]';
-            e0 = sonic.SphereCoords.sphereToCart(obj.ra_RAD, obj.dec_RAD);   % Obtain our initial e0 from RA and DEC.
+            e0 = sonic.SphereCoords.raDecToCart(obj.ra_RAD, obj.dec_RAD);   % Obtain our initial e0 from RA and DEC.
         
             % Basic standard model equation. Note r is in AU, so no need for any
             % conversion term there. Normalization ensures these are unit vecs.

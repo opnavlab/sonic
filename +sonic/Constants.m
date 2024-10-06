@@ -5,7 +5,7 @@ classdef Constants
     properties (Constant)
         % c_KMS (Aberration.m)
         % speed of light. Used to get beta
-        c_KMS               double = 299792.458 % km/s
+        c_KMS               double = 299792.458; % km/s
 
         % Sobel Kernel x (EdgeFinder.sobel)
         Sx = [-1 0 1; -2 0 2; -1 0 1]; 

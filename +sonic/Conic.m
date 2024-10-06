@@ -142,8 +142,8 @@ classdef Conic
                         % calculate envelope
                         obj.envelope = sonic.Conic.locusToEnvelope(obj.locus);
 
-                        % the input is a non-degenerate conic
-                        obj.proper = true;
+                        % check if the input is a proper conic
+                        obj.proper = sonic.Conic.isProperConic(obj.locus);
 
                         % get conic type
                         obj.type = sonic.Conic.getType(obj.locus);

@@ -12,6 +12,7 @@ demos/
 # And b) adding the whitelisted files:
 !+sonic/+data/hipdata.mat
 !+sonic/+data/constdata.mat
+!+examples/+data/craterRimPoints.mat
 
 # Ignore .DS_Store:
 .DS_Store

@@ -102,6 +102,14 @@ classdef Tolerances
         % for a given line.
         PGRelation          double = 1e-12
 
+        % CosArgCheck (Reflectance.m)
+        % Used for testing if the input to acos() is is +1 or -1
+        CosArgCheck         double = 1e-15
+        
+        % PhaseAng (Reflectance.m)
+        % Used for testing if the spherical triangle inequality is
+        % satisfied
+        PhaseAng         double = eps
     end
 end
 
