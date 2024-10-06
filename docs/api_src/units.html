@@ -58,6 +58,30 @@ Last author: Michael Krause</p>
 </dd></dl>
 
 <dl class="mat staticmethod">
+<dt class="sig sig-object mat" id="sonic.Units.AUtoKM">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">AUtoKM</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">val_AU</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Units.AUtoKM" title="Link to this definition">¶</a></dt>
+<dd><p>Conversion function from astronomical units to kilometers, as
+defined in the SI Brochure, 9th edition:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://www.bipm.org/documents/20126/41483022/SI-Brochure-9-EN.pdf">https://www.bipm.org/documents/20126/41483022/SI-Brochure-9-EN.pdf</a></p>
+</div></blockquote>
+<p>Supports vectorized input.</p>
+<dl class="simple">
+<dt>Inputs:</dt><dd><ul class="simple">
+<li><p>val_AU (1xn double): vector of distances in astronomical
+units (AU)</p></li>
+</ul>
+</dd>
+<dt>Outputs:</dt><dd><ul class="simple">
+<li><p>val_KM (1xn double): vector of distances in kilometers</p></li>
+</ul>
+</dd>
+</dl>
+<p>Last revised: 10/4/24
+Last author: Tara Mina</p>
+</dd></dl>
+
+<dl class="mat staticmethod">
 <dt class="sig sig-object mat" id="sonic.Units.DEGtoHMS">
 <em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">DEGtoHMS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">val_DEG</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Units.DEGtoHMS" title="Link to this definition">¶</a></dt>
 <dd><p>Conversion function from degrees to Hours/Mins/Seconds.
@@ -114,6 +138,30 @@ hours, second row = minutes, third row = seconds</p></li>
 </dl>
 <p>Last revised: 2/14/24
 Last author: Michael Krause</p>
+</dd></dl>
+
+<dl class="mat staticmethod">
+<dt class="sig sig-object mat" id="sonic.Units.KMtoAU">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">KMtoAU</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">val_KM</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Units.KMtoAU" title="Link to this definition">¶</a></dt>
+<dd><p>Conversion function from kilometers to astronomical units, as
+defined in the SI Brochure, 9th edition:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://www.bipm.org/documents/20126/41483022/SI-Brochure-9-EN.pdf">https://www.bipm.org/documents/20126/41483022/SI-Brochure-9-EN.pdf</a></p>
+</div></blockquote>
+<p>Supports vectorized input.</p>
+<dl class="simple">
+<dt>Inputs:</dt><dd><ul class="simple">
+<li><p>val_KM (1xn double): vector of distances in kilometers</p></li>
+</ul>
+</dd>
+<dt>Outputs:</dt><dd><ul class="simple">
+<li><p>val_AU (1xn double): vector of distances in astronomical
+units (AU)</p></li>
+</ul>
+</dd>
+</dl>
+<p>Last revised: 10/4/24
+Last author: Tara Mina</p>
 </dd></dl>
 
 <dl class="mat staticmethod">

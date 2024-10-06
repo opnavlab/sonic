@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>OrthoPatch &#8212; SONIC  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=12dfc556" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="OrthoRender" href="orthorender.html" />
+    <link rel="prev" title="OrenNayar" href="orennayar.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="orthopatch">
+<h1>OrthoPatch<a class="headerlink" href="#orthopatch" title="Link to this heading">¶</a></h1>
+<dl class="mat class" id="module-+sonic">
+<dt class="sig sig-object mat" id="sonic.OrthoPatch">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">sonic.</span></span><span class="sig-name descname"><span class="pre">OrthoPatch</span></span><a class="headerlink" href="#sonic.OrthoPatch" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="orthorender.html#sonic.OrthoRender" title="sonic.OrthoRender"><code class="xref mat mat-class docutils literal notranslate"><span class="pre">sonic.OrthoRender</span></code></a></p>
+<div class="members docutils container">
+<dl>
+<dt>Constructor Summary</dt><dd><dl class="mat method">
+<dt class="sig sig-object mat" id="sonic.OrthoPatch.OrthoPatch">
+<span class="sig-name descname"><span class="pre">OrthoPatch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">terrain</span></em>, <em class="sig-param"><span class="pre">albedo</span></em>, <em class="sig-param"><span class="pre">l_inc_x</span></em>, <em class="sig-param"><span class="pre">l_inc_y</span></em>, <em class="sig-param"><span class="pre">l_inc_z</span></em>, <em class="sig-param"><span class="pre">htscale</span></em>, <em class="sig-param"><span class="pre">lgscale</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.OrthoPatch.OrthoPatch" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd>
+<dt>Property Summary</dt><dd><dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.OrthoPatch.albedo">
+<span class="sig-name descname"><span class="pre">albedo</span></span><a class="headerlink" href="#sonic.OrthoPatch.albedo" title="Link to this definition">¶</a></dt>
+<dd><p>albedos for each terrain point between 0 and 1</p>
+</dd></dl>
+
+<dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.OrthoPatch.facets">
+<span class="sig-name descname"><span class="pre">facets</span></span><a class="headerlink" href="#sonic.OrthoPatch.facets" title="Link to this definition">¶</a></dt>
+<dd><p>Actual properties of OrthoPatch to be used in rendering
+x is the number of columns, y is the number of rows in terrain</p>
+</dd></dl>
+
+<dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.OrthoPatch.htscale">
+<span class="sig-name descname"><span class="pre">htscale</span></span><a class="headerlink" href="#sonic.OrthoPatch.htscale" title="Link to this definition">¶</a></dt>
+<dd><p>scale of unit height</p>
+</dd></dl>
+
+<dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.OrthoPatch.l_i">
+<span class="sig-name descname"><span class="pre">l_i</span></span><a class="headerlink" href="#sonic.OrthoPatch.l_i" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.OrthoPatch.lgscale">
+<span class="sig-name descname"><span class="pre">lgscale</span></span><a class="headerlink" href="#sonic.OrthoPatch.lgscale" title="Link to this definition">¶</a></dt>
+<dd><p>scale of unit length (in plane)</p>
+</dd></dl>
+
+<dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.OrthoPatch.terrain">
+<span class="sig-name descname"><span class="pre">terrain</span></span><a class="headerlink" href="#sonic.OrthoPatch.terrain" title="Link to this definition">¶</a></dt>
+<dd><p>grayscale image with height encoded as int b/t 0 and 255, inclusive</p>
+</dd></dl>
+
+</dd>
+<dt>Method Summary</dt><dd><dl class="mat method">
+<dt class="sig sig-object mat" id="sonic.OrthoPatch.calcEmissionVectors">
+<span class="sig-name descname"><span class="pre">calcEmissionVectors</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sonic.OrthoPatch.calcEmissionVectors" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="mat method">
+<dt class="sig sig-object mat" id="sonic.OrthoPatch.calcFacets">
+<span class="sig-name descname"><span class="pre">calcFacets</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sonic.OrthoPatch.calcFacets" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="mat method">
+<dt class="sig sig-object mat" id="sonic.OrthoPatch.calcIncidenceVectors">
+<span class="sig-name descname"><span class="pre">calcIncidenceVectors</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sonic.OrthoPatch.calcIncidenceVectors" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="mat method">
+<dt class="sig sig-object mat" id="sonic.OrthoPatch.calcRefl">
+<span class="sig-name descname"><span class="pre">calcRefl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">reflObj</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.OrthoPatch.calcRefl" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="mat method">
+<dt class="sig sig-object mat" id="sonic.OrthoPatch.showPatch">
+<span class="sig-name descname"><span class="pre">showPatch</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sonic.OrthoPatch.showPatch" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="mat staticmethod">
+<dt class="sig sig-object mat" id="sonic.OrthoPatch.showRefl">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">showRefl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">r</span></em>, <em class="sig-param"><span class="pre">varargin</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.OrthoPatch.showRefl" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd>
+</dl>
+</div>
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">SONIC</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installing SONIC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples with SONIC</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../api.html">API</a><ul>
+      <li>Previous: <a href="orennayar.html" title="previous chapter">OrenNayar</a></li>
+      <li>Next: <a href="orthorender.html" title="next chapter">OrthoRender</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2024, SEAL.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.3.7</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="../_sources/api_src/orthopatch.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

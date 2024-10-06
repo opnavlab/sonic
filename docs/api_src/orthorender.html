@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>OrthoRender &#8212; SONIC  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=12dfc556" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="OrthoSphere" href="orthosphere.html" />
+    <link rel="prev" title="OrthoPatch" href="orthopatch.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="orthorender">
+<h1>OrthoRender<a class="headerlink" href="#orthorender" title="Link to this heading">¶</a></h1>
+<dl class="mat class" id="module-+sonic">
+<dt class="sig sig-object mat" id="sonic.OrthoRender">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">sonic.</span></span><span class="sig-name descname"><span class="pre">OrthoRender</span></span><a class="headerlink" href="#sonic.OrthoRender" title="Link to this definition">¶</a></dt>
+<dd><p>This software is made available under the MIT license. See SONIC/LICENSE
+for details.</p>
+<div class="members docutils container">
+<dl>
+<dt>Property Summary</dt><dd><dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.OrthoRender.e">
+<span class="sig-name descname"><span class="pre">e</span></span><a class="headerlink" href="#sonic.OrthoRender.e" title="Link to this definition">¶</a></dt>
+<dd><p>Emission angles [rad]</p>
+</dd></dl>
+
+<dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.OrthoRender.i">
+<span class="sig-name descname"><span class="pre">i</span></span><a class="headerlink" href="#sonic.OrthoRender.i" title="Link to this definition">¶</a></dt>
+<dd><p>Incidence angles [rad]</p>
+</dd></dl>
+
+<dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.OrthoRender.phi">
+<span class="sig-name descname"><span class="pre">phi</span></span><a class="headerlink" href="#sonic.OrthoRender.phi" title="Link to this definition">¶</a></dt>
+<dd><p>Emission azimuth angles [rad]</p>
+</dd></dl>
+
+<dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.OrthoRender.u_e">
+<span class="sig-name descname"><span class="pre">u_e</span></span><a class="headerlink" href="#sonic.OrthoRender.u_e" title="Link to this definition">¶</a></dt>
+<dd><p>Emission vectors (unit)</p>
+</dd></dl>
+
+<dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.OrthoRender.u_i">
+<span class="sig-name descname"><span class="pre">u_i</span></span><a class="headerlink" href="#sonic.OrthoRender.u_i" title="Link to this definition">¶</a></dt>
+<dd><p>Incidence vectors (unit)</p>
+</dd></dl>
+
+<dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.OrthoRender.u_n">
+<span class="sig-name descname"><span class="pre">u_n</span></span><a class="headerlink" href="#sonic.OrthoRender.u_n" title="Link to this definition">¶</a></dt>
+<dd><p>Normal vectors (unit)</p>
+</dd></dl>
+
+</dd>
+<dt>Method Summary</dt><dd><dl class="mat method">
+<dt class="sig sig-object mat" id="sonic.OrthoRender.renderRefl">
+<span class="sig-name descname"><span class="pre">renderRefl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">reflObj</span></em>, <em class="sig-param"><span class="pre">i</span></em>, <em class="sig-param"><span class="pre">e</span></em>, <em class="sig-param"><span class="pre">phi</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.OrthoRender.renderRefl" title="Link to this definition">¶</a></dt>
+<dd><p>Calculates BRDF values for all points on the render given a
+particular reflectance model</p>
+<dl class="simple">
+<dt>Current Rendering Options Supported: OrthoSphere</dt><dd><ul class="simple">
+<li><p>More coming soon.</p></li>
+</ul>
+</dd>
+<dt>Inputs:</dt><dd><ul class="simple">
+<li><p>obj (sonic.Orthosphere) - OrthoSphere class object</p></li>
+<li><p>reflObj - Any class under sonic.Reflectance</p></li>
+<li><p>i (nxm) (double) - incidence angles [rad]</p></li>
+<li><p>e (nxm) (double) - emission angles [rad]</p></li>
+<li><p>phi (nxm) (double) - emission azimuth angles [rad]</p></li>
+</ul>
+</dd>
+<dt>Outputs:</dt><dd><ul class="simple">
+<li><p>r (nxm) (double): BRDF values for all points given</p></li>
+</ul>
+</dd>
+</dl>
+<p>Last revised: 09/30/2024
+Last author: Priyal Soni</p>
+</dd></dl>
+
+</dd>
+</dl>
+</div>
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">SONIC</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installing SONIC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples with SONIC</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../api.html">API</a><ul>
+      <li>Previous: <a href="orthopatch.html" title="previous chapter">OrthoPatch</a></li>
+      <li>Next: <a href="orthosphere.html" title="next chapter">OrthoSphere</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2024, SEAL.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.3.7</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="../_sources/api_src/orthorender.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

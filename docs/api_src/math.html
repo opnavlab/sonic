@@ -14,7 +14,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="MeetJoinable" href="meetjoinable.html" />
-    <link rel="prev" title="Lines3" href="lines3.html" />
+    <link rel="prev" title="LunarLambert" href="lunarlambert.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
@@ -56,6 +56,47 @@ non-singular, otherwise returns the original function</p>
 </dl>
 <p>Last revised: 4/18/24
 Last author: Michela Mancini</p>
+</dd></dl>
+
+<dl class="mat staticmethod">
+<dt class="sig sig-object mat" id="sonic.Math.HFunction">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">HFunction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">mu</span></em>, <em class="sig-param"><span class="pre">AL_ss</span></em>, <em class="sig-param"><span class="pre">evalMethod</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Math.HFunction" title="Link to this definition">¶</a></dt>
+<dd><p>Computes the Chandrasekhar’s H-function for a given set of
+directional parameters (mu) an single-scattering albedo
+(AL_ss) using a user-defined evaluation method</p>
+<dl>
+<dt>Inputs:</dt><dd><ul class="simple">
+<li><p>mu (nxm double): matrix of values on the domain
+[0,1] (can be a scalar as well)</p></li>
+<li><p>AL_ss (nxm double): matrix of values on the domain
+[0,1] (can be a scalar as well)</p></li>
+<li><p>evalMethod (string): defines evaluation method of
+H-Function</p></li>
+</ul>
+<p>(must be “exact”, “numeric”, or “linear”)
+- Note: mu and AL_ss must have the same dimensions unless mu and/or
+AL_ss is a scalar value</p>
+</dd>
+<dt>Outputs:</dt><dd><ul class="simple">
+<li><p>Hval (nxm double): matrix of H-function values for either the</p></li>
+</ul>
+<p>pairwise (if both mu and AL_ss are matrices) or for each mu/AL_ss given
+a scalar AL_ss/mu</p>
+</dd>
+</dl>
+<p class="rubric">References</p>
+<dl class="simple">
+<dt>[1] D. W. N. Stibbs, and R. E. Weir,</dt><dd><p>“On the H-Functions for Isotropic Scattering”,
+<a class="reference external" href="https://doi.org/10.1093/mnras/119.5.512">https://doi.org/10.1093/mnras/119.5.512</a></p>
+</dd>
+<dt>[2] B. Hapke, “Bidirectional Reflectance Spectroscopy:</dt><dd><ol class="arabic simple">
+<li><p>Theory”, <a class="reference external" href="https://doi.org/10.1029/JB086iB04p03039">https://doi.org/10.1029/JB086iB04p03039</a></p></li>
+</ol>
+</dd>
+</dl>
+<p>[3] J. A. Christian, “Spacecraft Optical Navigation”</p>
+<p>Last revised: 9/24/24
+Last author: Jennifer Nolan</p>
 </dd></dl>
 
 <dl class="mat staticmethod">
@@ -101,6 +142,32 @@ Last author: Michael Krause</p>
 </dd></dl>
 
 <dl class="mat staticmethod">
+<dt class="sig sig-object mat" id="sonic.Math.computeI3Integrand">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">computeI3Integrand</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">mu</span></em>, <em class="sig-param"><span class="pre">AL_ss</span></em>, <em class="sig-param"><span class="pre">theta</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Math.computeI3Integrand" title="Link to this definition">¶</a></dt>
+<dd><p>Determine the value of the I3 integrand component from the
+Stibbs-Weird method [1] to compute the Chandrasekhar’s
+H-function. The functions f (Eq. 11.2 in [1]), g (Eq. 12 in
+[1]), and h (Eq. 16 in [1]) form the ingtegrand according
+to Eq. 17 in [1].</p>
+<dl class="simple">
+<dt>Inputs:</dt><dd><ul class="simple">
+<li><p>mu (double): scalar value on the domain [0,1]</p></li>
+<li><p>AL_ss (double): scalar value on the domain [0,1]</p></li>
+<li><p>theta (1xn double):</p></li>
+</ul>
+</dd>
+<dt>Outputs:</dt><dd><ul class="simple">
+<li><p>I3Integrand (1xn matrix): vector of values
+representing the ingtegrand
+f(theta)-g(theta)-h(theta) for each inputted theta</p></li>
+</ul>
+</dd>
+</dl>
+<p>Last revised: 9/26/24
+Last author: Jennifer Nolan</p>
+</dd></dl>
+
+<dl class="mat staticmethod">
 <dt class="sig sig-object mat" id="sonic.Math.crossmat">
 <em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">crossmat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">v</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Math.crossmat" title="Link to this definition">¶</a></dt>
 <dd><p>3x3 skew-symmetric cross-product matrix</p>
@@ -118,6 +185,166 @@ cross-product of those two vectors.</p></li>
 </dl>
 <p>Last revised: 2/14/24
 Last author: Michael Krause</p>
+</dd></dl>
+
+<dl class="mat staticmethod">
+<dt class="sig sig-object mat" id="sonic.Math.exactHFunction">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">exactHFunction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">mu</span></em>, <em class="sig-param"><span class="pre">AL_ss</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Math.exactHFunction" title="Link to this definition">¶</a></dt>
+<dd><p>Hval=exactFunction(mu,AL_ss)
+Uses the Stibbs-Weird method [1] to compute the
+Chandrasekhar’s H-function for a given set of directional
+parameters (mu) and single-scattering albedos (AL_ss).</p>
+<dl class="simple">
+<dt>Inputs:</dt><dd><ul class="simple">
+<li><p>mu (nxm double): matrix of values on the domain
+[0,1] (can be a scalar as well)</p></li>
+<li><p>AL_ss (nxm double): matrix of values on the domain
+[0,1] (can be a scalar as well)</p></li>
+<li><p>Note: mu and AL_ss mustst have the same dimensions
+unless mu and/or AL_ss is a scalar value</p></li>
+</ul>
+</dd>
+<dt>Outputs:</dt><dd><ul class="simple">
+<li><p>val (nxm double): matrix of H-function values for
+either the pairwise (if both mu and AL_ss are
+matrices) or for each mu/AL_ss given a scalar
+AL_ss/mu</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">References</p>
+<dl class="simple">
+<dt>[1] D. W. N. Stibbs, and R. E. Weir,</dt><dd><p>“On the H-Functions for Isotropic Scattering”,
+<a class="reference external" href="https://doi.org/10.1093/mnras/119.5.512">https://doi.org/10.1093/mnras/119.5.512</a></p>
+</dd>
+</dl>
+<p>Last revised: 9/24/24
+Last author: Jennifer Nolan</p>
+</dd></dl>
+
+<dl class="mat staticmethod">
+<dt class="sig sig-object mat" id="sonic.Math.getSmallestRSingVector">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">getSmallestRSingVector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">A</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Math.getSmallestRSingVector" title="Link to this definition">¶</a></dt>
+<dd><p>Get right singular vector corresponding to smallest magnitude
+magnitude value</p>
+<dl class="simple">
+<dt>Inputs:</dt><dd><ul class="simple">
+<li><p>A (mxn double): matrix for which we want to extract
+smallest singular value</p></li>
+</ul>
+</dd>
+<dt>Outputs:</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>minSingVal (1x1 double) – smallest magnitude singular</dt><dd><p>value</p>
+</dd>
+</dl>
+</li>
+<li><p>minRSingVect (nx1 double) – right singular vector
+corresponding to minSingVal</p></li>
+</ul>
+</dd>
+</dl>
+<p>Last revised: Sep 24, 2024
+Last author: Tara Mina</p>
+</dd></dl>
+
+<dl class="mat staticmethod">
+<dt class="sig sig-object mat" id="sonic.Math.linearHFunction">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">linearHFunction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">mu</span></em>, <em class="sig-param"><span class="pre">AL_ss</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Math.linearHFunction" title="Link to this definition">¶</a></dt>
+<dd><p>Uses the linearized method [1] to compute the
+Chandrasekhar’s H-function for a given set of directional
+parameters (mu) and single-scattering albedos (AL_ss).</p>
+<dl class="simple">
+<dt>Inputs:</dt><dd><ul class="simple">
+<li><p>mu (nxm double): matrix of values on the domain
+[0,1] (can be a scalar as well)</p></li>
+<li><p>AL_ss (nxm double): matrix of values on the domain
+[0,1] (can be a scalar as well)</p></li>
+<li><p>Note: mu and AL_ss mustst have the same dimensions
+unless mu and/or AL_ss is a scalar value</p></li>
+</ul>
+</dd>
+<dt>Outputs:</dt><dd><ul class="simple">
+<li><p>val (nxm double): matrix of H-function values for
+either the pairwise (if both mu and AL_ss are
+matrices) or for each mu/AL_ss given a scalar
+AL_ss/mu</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">References</p>
+<p>[1] J. A. Christian, “Spacecraft Optical Navigation”</p>
+<p>Last revised: 9/30/24
+Last author: Jennifer Nolan</p>
+</dd></dl>
+
+<dl class="mat staticmethod">
+<dt class="sig sig-object mat" id="sonic.Math.rationalHFunction">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">rationalHFunction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">mu</span></em>, <em class="sig-param"><span class="pre">AL_ss</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Math.rationalHFunction" title="Link to this definition">¶</a></dt>
+<dd><p>Uses the rational approximation method [1] to compute the
+Chandrasekhar’s H-function for a given set of directional
+parameters (mu) and single-scattering albedos (AL_ss).</p>
+<dl class="simple">
+<dt>Inputs:</dt><dd><ul class="simple">
+<li><p>mu (nxm double): matrix of values on the domain
+[0,1] (can be a scalar as well)</p></li>
+<li><p>AL_ss (nxm double): matrix of values on the domain
+[0,1] (can be a scalar as well)</p></li>
+<li><p>Note: mu and AL_ss must have the same dimensions
+unless mu and/or AL_ss is a scalar value</p></li>
+</ul>
+</dd>
+<dt>Outputs:</dt><dd><ul class="simple">
+<li><p>val (nxm double): matrix of H-function values for
+either the pairwise (if both mu and AL_ss are
+matrices) or for each mu/AL_ss given a scalar
+AL_ss/mu</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">References</p>
+<dl class="simple">
+<dt>[1] B. Hapke, “Bidirectional Reflectance Spectroscopy:</dt><dd><ol class="arabic simple">
+<li><p>Theory”, <a class="reference external" href="https://doi.org/10.1029/JB086iB04p03039">https://doi.org/10.1029/JB086iB04p03039</a></p></li>
+</ol>
+</dd>
+</dl>
+<p>[2] J. A. Christian, “Spacecraft Optical Navigation”</p>
+<p>Last revised: 9/30/24
+Last author: Jennifer Nolan</p>
+</dd></dl>
+
+<dl class="mat staticmethod">
+<dt class="sig sig-object mat" id="sonic.Math.solveGenEigvalSmallestLambda">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">solveGenEigvalSmallestLambda</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">M</span></em>, <em class="sig-param"><span class="pre">N</span></em>, <em class="sig-param"><span class="pre">boolNorm</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Math.solveGenEigvalSmallestLambda" title="Link to this definition">¶</a></dt>
+<dd><p>Helper function to solve the generalized eigenvalue problem,
+returning the eigenvector corresponding to the smallest
+magnitude eigenvalue lambda</p>
+<dl class="simple">
+<dt>Generalized eigenvalue problem finds x and lambda such that:</dt><dd><p>M x = lambda N x</p>
+</dd>
+</dl>
+<p>And this function returns the eigenvector x corresponding to
+the eigen value lambda with the smallest magnitude</p>
+<dl class="simple">
+<dt>Inputs:</dt><dd><ul class="simple">
+<li><p>M (nxn double): square matrix which corresponds to the
+generalized eigenvalue problem, defined above</p></li>
+<li><p>N (nxn double): square matrix normalization factor which
+corresp to generalized eigenvalue problem, defined above</p></li>
+<li><p>boolNorm (boolean): if True, L2-normalizes the
+eigenvector</p></li>
+</ul>
+</dd>
+<dt>Outputs:</dt><dd><ul class="simple">
+<li><p>minEigvec (nx1 double) – solution to the above-defined
+generalized eigenvalue problem, corresponding to the
+eigenvalue lambda with the smallest magnitude</p></li>
+</ul>
+</dd>
+</dl>
+<p>Last revised: Sep 24, 2024
+Last author: Tara Mina</p>
 </dd></dl>
 
 </dd>
@@ -155,7 +382,7 @@ Last author: Michael Krause</p>
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
   <li><a href="../api.html">API</a><ul>
-      <li>Previous: <a href="lines3.html" title="previous chapter">Lines3</a></li>
+      <li>Previous: <a href="lunarlambert.html" title="previous chapter">LunarLambert</a></li>
       <li>Next: <a href="meetjoinable.html" title="next chapter">MeetJoinable</a></li>
   </ul></li>
   </ul></li>

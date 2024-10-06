@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>OrthoSphere &#8212; SONIC  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=12dfc556" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Pinhole" href="pinhole.html" />
+    <link rel="prev" title="OrthoRender" href="orthorender.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="orthosphere">
+<h1>OrthoSphere<a class="headerlink" href="#orthosphere" title="Link to this heading">¶</a></h1>
+<dl class="mat class" id="module-+sonic">
+<dt class="sig sig-object mat" id="sonic.OrthoSphere">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">sonic.</span></span><span class="sig-name descname"><span class="pre">OrthoSphere</span></span><a class="headerlink" href="#sonic.OrthoSphere" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="orthorender.html#sonic.OrthoRender" title="sonic.OrthoRender"><code class="xref mat mat-class docutils literal notranslate"><span class="pre">sonic.OrthoRender</span></code></a></p>
+<p>This software is made available under the MIT license. See SONIC/LICENSE
+for details.</p>
+<div class="members docutils container">
+<dl>
+<dt>Constructor Summary</dt><dd><dl class="mat method">
+<dt class="sig sig-object mat" id="sonic.OrthoSphere.OrthoSphere">
+<span class="sig-name descname"><span class="pre">OrthoSphere</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">R</span></em>, <em class="sig-param"><span class="pre">g</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.OrthoSphere.OrthoSphere" title="Link to this definition">¶</a></dt>
+<dd><p>Instantiates a sonic OrthoSphere object.</p>
+<p>OrthoSphere assumes observer is nadir-viewing, and the
+light source is always in the horizontal plane. The phase
+angle is angle between the observer and the light source.</p>
+<p>OrthoSphere also renders a sphere with a homogeneous
+surface. As a result, all reflectance models used in
+conjunction with OrthoSphere should contain scalar model
+parameters like albedo (AL).</p>
+<dl class="simple">
+<dt>Inputs:</dt><dd><ul class="simple">
+<li><p>R (1,1) (double): Radius of sphere [pix]. R &gt; 0.</p></li>
+<li><p>g (1,1) (double): Phase Angle [rad] between 0 and pi</p></li>
+</ul>
+</dd>
+<dt>Outputs:</dt><dd><ul class="simple">
+<li><p>obj (sonic.OrthoSphere): OrthoSphere object.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Last revised: 09/30/2024
+Last author: Priyal Soni</p>
+</dd></dl>
+
+</dd>
+<dt>Property Summary</dt><dd><dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.OrthoSphere.R">
+<span class="sig-name descname"><span class="pre">R</span></span><a class="headerlink" href="#sonic.OrthoSphere.R" title="Link to this definition">¶</a></dt>
+<dd><p>radius of sphere [pix]</p>
+</dd></dl>
+
+<dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.OrthoSphere.g">
+<span class="sig-name descname"><span class="pre">g</span></span><a class="headerlink" href="#sonic.OrthoSphere.g" title="Link to this definition">¶</a></dt>
+<dd><p>phase angle [rad]</p>
+</dd></dl>
+
+<dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.OrthoSphere.imgSize">
+<span class="sig-name descname"><span class="pre">imgSize</span></span><a class="headerlink" href="#sonic.OrthoSphere.imgSize" title="Link to this definition">¶</a></dt>
+<dd><p>image size [pix]</p>
+</dd></dl>
+
+</dd>
+<dt>Method Summary</dt><dd><dl class="mat method">
+<dt class="sig sig-object mat" id="sonic.OrthoSphere.calcEmissionVecs">
+<span class="sig-name descname"><span class="pre">calcEmissionVecs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sonic.OrthoSphere.calcEmissionVecs" title="Link to this definition">¶</a></dt>
+<dd><p>Calculates emission vectors for all points on the sphere.</p>
+<dl class="simple">
+<dt>Inputs:</dt><dd><ul class="simple">
+<li><p>obj (sonic.Orthosphere) - OrthoSphere class object</p></li>
+</ul>
+</dd>
+<dt>Outputs:</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>u_i (3xn) (double): emission unit vectors for all</dt><dd><p>points on the sphere.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+<p>Last revised: 09/30/2024
+Last author: Priyal Soni</p>
+</dd></dl>
+
+<dl class="mat method">
+<dt class="sig sig-object mat" id="sonic.OrthoSphere.calcIncidenceVecs">
+<span class="sig-name descname"><span class="pre">calcIncidenceVecs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sonic.OrthoSphere.calcIncidenceVecs" title="Link to this definition">¶</a></dt>
+<dd><p>Calculates incidence vectors for all points on the sphere.</p>
+<dl class="simple">
+<dt>Inputs:</dt><dd><ul class="simple">
+<li><p>obj (sonic.Orthosphere) - OrthoSphere class object</p></li>
+</ul>
+</dd>
+<dt>Outputs:</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>u_i (3xn) (double): incidence unit vectors for all</dt><dd><p>points on the sphere.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+<p>Last revised: 09/30/2024
+Last author: Priyal Soni</p>
+</dd></dl>
+
+<dl class="mat method">
+<dt class="sig sig-object mat" id="sonic.OrthoSphere.calcNormals">
+<span class="sig-name descname"><span class="pre">calcNormals</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sonic.OrthoSphere.calcNormals" title="Link to this definition">¶</a></dt>
+<dd><p>Calculates normal vectors for all points on the sphere.</p>
+<dl class="simple">
+<dt>Inputs:</dt><dd><ul class="simple">
+<li><p>obj (sonic.Orthosphere) - OrthoSphere class object</p></li>
+</ul>
+</dd>
+<dt>Outputs:</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>u_n (3xn) (double): unit vectors for all the normals on</dt><dd><p>the sphere</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+<p>Last revised: 09/30/2024
+Last author: Priyal Soni</p>
+</dd></dl>
+
+<dl class="mat method">
+<dt class="sig sig-object mat" id="sonic.OrthoSphere.calcRefl">
+<span class="sig-name descname"><span class="pre">calcRefl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">reflObj</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.OrthoSphere.calcRefl" title="Link to this definition">¶</a></dt>
+<dd><p>Calculates BRDF values for all points on the sphere given a
+particular reflectance model</p>
+<dl class="simple">
+<dt>Inputs:</dt><dd><ul class="simple">
+<li><p>obj (sonic.Orthosphere) - OrthoSphere class object</p></li>
+<li><p>reflObj - Any class under sonic.Reflectance</p></li>
+</ul>
+</dd>
+<dt>Outputs:</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>r (nxn) (double): BRDF values for all points in image</dt><dd><dl class="simple">
+<dt>with n = obj.imgSize.</dt><dd><p>Note: Points outside of sphere are assigned -1
+in output BRDF matrix</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>sphereMask (nxn) (logical): Logical mask to identify</dt><dd><p>points on sphere with n = obj.imgSize =
+2*ceil(R)</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+<p>Last revised: 09/30/2024
+Last author: Priyal Soni</p>
+</dd></dl>
+
+<dl class="mat staticmethod">
+<dt class="sig sig-object mat" id="sonic.OrthoSphere.mustBe0ToPi">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">mustBe0ToPi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">a</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.OrthoSphere.mustBe0ToPi" title="Link to this definition">¶</a></dt>
+<dd><p>Input validation function for phase angle input</p>
+<dl class="simple">
+<dt>Inputs:</dt><dd><ul class="simple">
+<li><p>g: phase angle [rad]</p></li>
+</ul>
+</dd>
+<dt>Outputs:</dt><dd><ul class="simple">
+<li><p>N/A for input validation functions</p></li>
+</ul>
+</dd>
+</dl>
+<p>Last revised: 09/30/2024
+Last author: Priyal Soni</p>
+</dd></dl>
+
+</dd>
+</dl>
+</div>
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">SONIC</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installing SONIC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples with SONIC</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../api.html">API</a><ul>
+      <li>Previous: <a href="orthorender.html" title="previous chapter">OrthoRender</a></li>
+      <li>Next: <a href="pinhole.html" title="next chapter">Pinhole</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2024, SEAL.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.3.7</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="../_sources/api_src/orthosphere.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

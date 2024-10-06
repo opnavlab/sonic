@@ -6,21 +6,31 @@ API
 	./api_src/brownconrady
 	./api_src/camera
 	./api_src/centroider
+	./api_src/chandrasekhar
 	./api_src/conic
 	./api_src/constants
 	./api_src/distortionmodel
 	./api_src/edgefinder
+	./api_src/ellipsefitter
 	./api_src/ellipsoid
 	./api_src/geometryp2
 	./api_src/geometryp3
+	./api_src/hapke
 	./api_src/hipparcos
 	./api_src/horizonopnav
 	./api_src/image
 	./api_src/kvector
+	./api_src/lambert
 	./api_src/lines2
 	./api_src/lines3
+	./api_src/lommelseeliger
+	./api_src/lunarlambert
 	./api_src/math
 	./api_src/meetjoinable
+	./api_src/orennayar
+	./api_src/orthopatch
+	./api_src/orthorender
+	./api_src/orthosphere
 	./api_src/pinhole
 	./api_src/planes3
 	./api_src/points2
@@ -28,6 +38,7 @@ API
 	./api_src/pointss2
 	./api_src/project
 	./api_src/quadric
+	./api_src/reflectance
 	./api_src/samplegeom2d
 	./api_src/scanlines
 	./api_src/spherecoords

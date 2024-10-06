@@ -40,8 +40,56 @@
 <dd><div class="members docutils container">
 <dl>
 <dt>Method Summary</dt><dd><dl class="mat staticmethod">
-<dt class="sig sig-object mat" id="sonic.SphereCoords.cartToSphere">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">cartToSphere</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">v</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.SphereCoords.cartToSphere" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object mat" id="sonic.SphereCoords.azZenToCart">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">azZenToCart</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">az</span></em>, <em class="sig-param"><span class="pre">zen</span></em>, <em class="sig-param"><span class="pre">radi</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.SphereCoords.azZenToCart" title="Link to this definition">¶</a></dt>
+<dd><p>Converts azimuth and zenith points on a sphere of radius radi
+to 3D vectors in Cartesian coordinates.</p>
+<dl class="simple">
+<dt>Inputs:</dt><dd><ul class="simple">
+<li><p>az (1xn double): vector of azimuth values, or angles wrt
++x axis, in radians</p></li>
+<li><p>zen (1xn double): vector of zenith values, or angles wrt
++z axis, in radians (must be between 0 and pi)</p></li>
+<li><p>radi (1x1 double): radius of sphere, defaults to 1</p></li>
+</ul>
+</dd>
+<dt>Outputs:</dt><dd><ul class="simple">
+<li><p>cartVec (3xn double): corresponding 3D vector in
+Cartesian coords (x,y,z)</p></li>
+</ul>
+</dd>
+</dl>
+<p>Last revised: 10/01/24
+Last author: Tara Mina</p>
+</dd></dl>
+
+<dl class="mat staticmethod">
+<dt class="sig sig-object mat" id="sonic.SphereCoords.cartToAzZen">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">cartToAzZen</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cartVec</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.SphereCoords.cartToAzZen" title="Link to this definition">¶</a></dt>
+<dd><p>Converts 3D vectors in Cartesian coordinates to azimuth and
+zenith points on a sphere of radius radi.</p>
+<dl class="simple">
+<dt>Inputs:</dt><dd><ul class="simple">
+<li><p>cartVec (3xn double): corresponding 3D vector in
+Cartesian coords (x,y,z)</p></li>
+</ul>
+</dd>
+<dt>Outputs:</dt><dd><ul class="simple">
+<li><p>az (1xn double): vector of azimuth values, or angles wrt
++x axis, in radians (between 0 and 2*pi)</p></li>
+<li><p>zen (1xn double): vector of zenith values, or angles wrt
++z axis, in radians (between 0 and pi)</p></li>
+<li><p>radi (1x1 double): radius of sphere (positive)</p></li>
+</ul>
+</dd>
+</dl>
+<p>Last revised: 10/01/24
+Last author: Tara Mina</p>
+</dd></dl>
+
+<dl class="mat staticmethod">
+<dt class="sig sig-object mat" id="sonic.SphereCoords.cartToRaDec">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">cartToRaDec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">v</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.SphereCoords.cartToRaDec" title="Link to this definition">¶</a></dt>
 <dd><p>Converts vectors (v) in cartesian coordinates to spherical
 coordinates given by right ascension (RA) and declination
 (DEC), both in radians. Also returns the magnitude of each
@@ -67,8 +115,8 @@ Last author: Michael Krause</p>
 </dd></dl>
 
 <dl class="mat staticmethod">
-<dt class="sig sig-object mat" id="sonic.SphereCoords.sphereToCart">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">sphereToCart</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">ra_RAD</span></em>, <em class="sig-param"><span class="pre">dec_RAD</span></em>, <em class="sig-param"><span class="pre">r</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.SphereCoords.sphereToCart" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object mat" id="sonic.SphereCoords.raDecToCart">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">raDecToCart</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">ra_RAD</span></em>, <em class="sig-param"><span class="pre">dec_RAD</span></em>, <em class="sig-param"><span class="pre">r</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.SphereCoords.raDecToCart" title="Link to this definition">¶</a></dt>
 <dd><p>Converts equally sized vectors of right ascension and declination
 (given in radians) to vectors. If no <cite>r</cite> argument is supplied,
 it will convert them to unit vectors.</p>

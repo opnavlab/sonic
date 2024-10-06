@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Lambert &#8212; SONIC  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=12dfc556" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Lines2" href="lines2.html" />
+    <link rel="prev" title="Kvector" href="kvector.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="lambert">
+<h1>Lambert<a class="headerlink" href="#lambert" title="Link to this heading">¶</a></h1>
+<dl class="mat class" id="module-+sonic">
+<dt class="sig sig-object mat" id="sonic.Lambert">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">sonic.</span></span><span class="sig-name descname"><span class="pre">Lambert</span></span><a class="headerlink" href="#sonic.Lambert" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="reflectance.html#sonic.Reflectance" title="sonic.Reflectance"><code class="xref mat mat-class docutils literal notranslate"><span class="pre">sonic.Reflectance</span></code></a></p>
+<div class="members docutils container">
+<dl>
+<dt>Constructor Summary</dt><dd><dl class="mat method">
+<dt class="sig sig-object mat" id="sonic.Lambert.Lambert">
+<span class="sig-name descname"><span class="pre">Lambert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">AL</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Lambert.Lambert" title="Link to this definition">¶</a></dt>
+<dd><p>Instantiates a sonic Lambert object.</p>
+<dl class="simple">
+<dt>Inputs:</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>AL (n,m): Albedo matrix between 0 and 1</dt><dd><p>Note: can be scalar.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+<dt>Outputs:</dt><dd><ul class="simple">
+<li><p>obj (sonic.Lambert): Lambert reflectance model object</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">References</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>“Photometria sive de mensura et gradibus luminis…”</dt><dd><p>Jean-Henri Lambert</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Spacecraft Optical Navigation, forthcoming textbook</dt><dd><p>by John Christian</p>
+</dd>
+</dl>
+</li>
+</ul>
+<p>Last revised: 09/30/2024
+Last author: Priyal Soni</p>
+</dd></dl>
+
+</dd>
+<dt>Property Summary</dt><dd><dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.Lambert.AL">
+<span class="sig-name descname"><span class="pre">AL</span></span><a class="headerlink" href="#sonic.Lambert.AL" title="Link to this definition">¶</a></dt>
+<dd><p>Albedo</p>
+</dd></dl>
+
+</dd>
+<dt>Method Summary</dt><dd><dl class="mat method">
+<dt class="sig sig-object mat" id="sonic.Lambert.refl">
+<span class="sig-name descname"><span class="pre">refl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">inputType</span></em>, <em class="sig-param"><span class="pre">var1</span></em>, <em class="sig-param"><span class="pre">var2</span></em>, <em class="sig-param"><span class="pre">varargin</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Lambert.refl" title="Link to this definition">¶</a></dt>
+<dd><p>calculates the BRDF of a surface as described by the
+Lambert reflectance model.</p>
+<dl class="simple">
+<dt>Inputs:</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>obj (sonic.Lambert): Lambert reflectance</dt><dd><p>model object.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>inputType (string):</dt><dd><ul>
+<li><p>“iep” for incidence/emission/phase angles</p></li>
+<li><p>“iea” for incidence/emission/azimuth angles</p></li>
+<li><dl class="simple">
+<dt>“ien” for incidence/emission/normal vectors</dt><dd><p>– Must be column vectors, (3xn)</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>var1: Must be a double or PointsS2 object</p></li>
+<li><p>var2: Must be a double or PointsS2 object</p></li>
+<li><dl class="simple">
+<dt>varargin: - REQUIRED var3 input for “ien”</dt><dd><ul>
+<li><p>optional var3 input for “iea” and “iep”</p></li>
+<li><p>Must be a double or PointsS2 object</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+<dt>Outputs:</dt><dd><ul class="simple">
+<li><p>r (:,:) (double): matrix of BRDF values</p></li>
+</ul>
+</dd>
+</dl>
+<p>Last revised: 10/02/2024
+Last author: Priyal Soni</p>
+</dd></dl>
+
+</dd>
+</dl>
+</div>
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">SONIC</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installing SONIC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples with SONIC</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../api.html">API</a><ul>
+      <li>Previous: <a href="kvector.html" title="previous chapter">Kvector</a></li>
+      <li>Next: <a href="lines2.html" title="next chapter">Lines2</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2024, SEAL.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.3.7</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="../_sources/api_src/lambert.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
