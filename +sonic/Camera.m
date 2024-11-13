@@ -386,7 +386,7 @@ classdef Camera
             end
 
             % Rotate the points in the scene per our camera attitude:
-            to_proj_rot = sonic.Project.rotate(to_proj, attitude);
+            to_proj_rot = attitude*to_proj;
 
             % Do a pinhole projection:
             [proj_raw, did_proj] = ...
