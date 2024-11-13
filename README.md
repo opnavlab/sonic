@@ -30,6 +30,9 @@ for demonstrative purposes:
 - **ScanLinesTutorial**: Demonstrates the generic ability to extract image values along a specified scanline, which is useful for horizon-based OPNAV.
 - **SyntheticStarImgTutorial**: Demonstrates creating a synthetic image of the star Arcturus, and its surrounding starfield in SONIC. Being able to construct an expected image is an essential operation for OPNAV.
 - **TriangVestaReconTutorial**: Illustrates the use of the triangulation in SONIC to perform 3D structure reconstruction on the asteroid Vesta from features extracted in images. A few different approaches to triangulation are provided in SONIC, which can be used both for estimating the spacecraft state or reconstruction.
+- **Crater Rim Fitting**: Perform crater ellipse fitting using an image of Ceres, as captured by the Dawn spacecraft.
+- **Reflectance Modeling**: Demonstrate how to use reflectance models available under the sonic.Reflectance class.
+- **OrthoSphere Rendering with Reflectance Models**: Demonstrate how to render orthographic projections of spheres with homogenous surfaces using reflectance models provided in SONIC.
 
 To verify your installation of SONIC, please run these examples locally and compare the outputs to the pre-run demos in the SONIC API documentation, linked below.
 

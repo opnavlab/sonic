@@ -161,58 +161,6 @@ classdef Project
         
         end
 
-        function [rot_obj] = rotate(to_rot, rot_att)
-        %% [rot_obj] = rotate(to_rot, rot_att)
-        %
-        %   Rotates an object relative to the observer. Currently only
-        %   supports rotating points in P3, i.e., sonic.Points3 and
-        %   sonic.PointsS2.
-        %
-        %   Inputs:
-        %       - to_rot (1x1 sonic.Points3 or sonic.PointsS2): Object to
-        %         rotate. Currently only supports rotating 3D points.
-        %       - rot_att (1x1 sonic.Attitude): Object to Camera attitude. 
-        %
-        %   Outputs:
-        %       - rot_obj (1x1 sonic.Points3 or sonic.PointsS2): Rotated
-        %         object. Return type will match the input type.
-        %
-        %   Last revised: 03/06/24
-        %   Last author: Michael Krause
-            
-            arguments
-                to_rot      (1, 1)  % Make this sonic.GeometryP3 eventually
-                rot_att     (1, 1)      sonic.Attitude            
-            end
-
-            % For now just support points.
-            if isa(to_rot, 'sonic.PointsS2') || isa(to_rot, 'sonic.Points3')
-                    
-                % Pull out the points depending on the object:
-                if isa(to_rot, 'sonic.Points3')
-                    raw_pts = to_rot.r3;
-                else % is PointsS2
-                    raw_pts = to_rot.u;
-                end
-
-                % Do the actual rotation:
-                rot_pts = rot_att.dcm*raw_pts;
-
-                % Package up result commensurate with input type:
-                if isa(to_rot, 'sonic.Points3')
-                    rot_obj = sonic.Points3(rot_pts);
-                else % is PointsS2
-                    rot_obj = sonic.PointsS2(rot_pts);
-                end
-
-            else
-                error('sonic:PerspectiveProject:rotate:invalidType', ...
-                        ['Attempted to rotate invalid type. Valid ' ...
-                        'types are sonic.Points3 or sonic.PointsS2.']);
-            end
-        
-        end
-
         function [cropped_obj, crop_map] = crop(to_crop, hfov_RAD, vfov_RAD, dist_model)
         %% [cropped_obj, crop_map] = crop(to_crop, hfov_RAD, vfov_RAD, dist_model)
         %
@@ -283,8 +231,8 @@ classdef Project
                     switch major_sign
                         case -1
                             % Distort midpoints of edges to get bounds
-                            xmax_raw = sin(hfov_RAD/2);
-                            ymax_raw = sin(vfov_RAD/2);
+                            xmax_raw = tan(hfov_RAD/2);
+                            ymax_raw = tan(vfov_RAD/2);
                             
                             dist_bnds = dist_model.undistort(sonic.Points2(...
                                 [xmax_raw,        0, -xmax_raw,         0; ...
@@ -298,14 +246,14 @@ classdef Project
 
                         case 0
                             % Just normal bounds
-                            xmax = sin(hfov_RAD/2);
-                            ymax = sin(vfov_RAD/2);
+                            xmax = tan(hfov_RAD/2);
+                            ymax = tan(vfov_RAD/2);
                             xmin = -xmax;
                             ymin = -ymax;
                         case 1
                             % Distort corners to get bounds
-                            xmax_raw = sin(hfov_RAD/2);
-                            ymax_raw = sin(vfov_RAD/2);
+                            xmax_raw = tan(hfov_RAD/2);
+                            ymax_raw = tan(vfov_RAD/2);
                             
                             dist_bnds = dist_model.undistort(sonic.Points2(...
                                 [xmax_raw,  xmax_raw, -xmax_raw, -xmax_raw; ...
@@ -327,8 +275,8 @@ classdef Project
                     
                 case 'sonic.Pinhole'
                     % There's no distortion, no need to adjust.
-                    xmax = sin(hfov_RAD/2);
-                    ymax = sin(vfov_RAD/2);
+                    xmax = tan(hfov_RAD/2);
+                    ymax = tan(vfov_RAD/2);
                     xmin = -xmax;
                     ymin = -ymax;
                 otherwise
