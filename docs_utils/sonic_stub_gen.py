@@ -28,7 +28,8 @@ def genStubs(module, path, outdir):
     # Generate the tocfile, referecing each stubfile:
     template = '''API\n===\n.. toctree::\n'''
     for fn_out in rst_fn_out:
-        template = template + '\t{}\n'.format(os.path.join(outdir, fn_out))
+        #template = template + '\t{}\n'.format(os.path.join(outdir, fn_out))
+        template = template + '\t' + outdir + '/' + fn_out + '\n'
 
     # And write to file:
     with open('api.rst', 'w') as f:

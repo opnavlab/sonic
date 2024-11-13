@@ -36,6 +36,7 @@ API
 	./api_src/points2
 	./api_src/points3
 	./api_src/pointss2
+	./api_src/pose
 	./api_src/project
 	./api_src/quadric
 	./api_src/reflectance

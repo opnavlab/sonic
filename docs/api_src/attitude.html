@@ -51,8 +51,8 @@ adopts the passive representation of Attitude.</p>
 input representations are:</p>
 <blockquote>
 <div><ul class="simple">
-<li><p>(3 double): Rotation vector</p></li>
-<li><p>(4 double): Quaternion</p></li>
+<li><p>(3x1 double): Rotation vector</p></li>
+<li><p>(4x1 double): Quaternion</p></li>
 <li><p>(3x3 double): Direction Cosine Matrix (DCM)</p></li>
 </ul>
 </div></blockquote>
@@ -170,7 +170,7 @@ Last author: Michael Krause</p>
 </ul>
 </dd>
 <dt>Outputs:</dt><dd><ul class="simple">
-<li><p>angle (1x1 double): angle between the two attitudes</p></li>
+<li><p>ang_RAD (1x1 double): angle between the two attitudes</p></li>
 </ul>
 </dd>
 </dl>
@@ -296,6 +296,55 @@ representing the desired interpolated attitude.</p></li>
 Last author: Michael Krause</p>
 </dd></dl>
 
+<dl class="mat method">
+<dt class="sig sig-object mat" id="sonic.Attitude.inv">
+<span class="sig-name descname"><span class="pre">inv</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Attitude.inv" title="Link to this definition">¶</a></dt>
+<dd><p>Inverses attitude. This may be thought of in terms of
+DCMs as:</p>
+<blockquote>
+<div><p>new_att.dcm = obj.dcm’;</p>
+</div></blockquote>
+<dl class="simple">
+<dt>Inputs:</dt><dd><ul class="simple">
+<li><p>obj (1x1 sonic.Attitude): Attitude object</p></li>
+</ul>
+</dd>
+<dt>Outputs:</dt><dd><ul class="simple">
+<li><p>new_att (1x1 sonic.Attitude): The resultant inversed
+attitude object</p></li>
+</ul>
+</dd>
+</dl>
+<p>Last revised: 10/29/2024
+Last author: Sebastien Henry</p>
+</dd></dl>
+
+<dl class="mat method">
+<dt class="sig sig-object mat" id="sonic.Attitude.mtimes">
+<span class="sig-name descname"><span class="pre">mtimes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">to_mult</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Attitude.mtimes" title="Link to this definition">¶</a></dt>
+<dd><p>Pre-multiply the att to an object result depending on the
+type of to_mult</p>
+<dl>
+<dt>Inputs:</dt><dd><ul>
+<li><dl>
+<dt>to_mult: a SONIC object, either</dt><dd><ul class="simple">
+<li><p>(1x1 sonic.PointsS2): In this case, the output is</p></li>
+</ul>
+<p>the attitude matrix times the points s2
+- (1x1 sonic.Points3): In this case, the output is
+the attitude matrix times the points p3
+- (1x1 sonic.Attitude): In this case, the output is
+the compose of the attitude matrices</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+<p>Last revised: 11/07/2024
+Last author: Jennifer Nolan</p>
+</dd></dl>
+
 <dl class="mat staticmethod">
 <dt class="sig sig-object mat" id="sonic.Attitude.quatToAxAng">
 <em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">quatToAxAng</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">qv</span></em>, <em class="sig-param"><span class="pre">qs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Attitude.quatToAxAng" title="Link to this definition">¶</a></dt>
@@ -355,6 +404,29 @@ parts) to an Euler rotation vector.</p>
 </dl>
 <p>Last revised: 2/15/24
 Last author: Michael Krause</p>
+</dd></dl>
+
+<dl class="mat method">
+<dt class="sig sig-object mat" id="sonic.Attitude.rotate">
+<span class="sig-name descname"><span class="pre">rotate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">to_rot</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Attitude.rotate" title="Link to this definition">¶</a></dt>
+<dd><p>Rotates an object relative to the observer. Currently only
+supports rotating points in P3, i.e., sonic.Points3 and
+sonic.PointsS2.</p>
+<dl class="simple">
+<dt>Inputs:</dt><dd><ul class="simple">
+<li><p>to_rot (1x1 sonic.Points3 or sonic.PointsS2): Object to
+rotate. Currently only supports rotating 3D points.</p></li>
+<li><p>rot_att (1x1 sonic.Attitude): Object to Camera attitude.</p></li>
+</ul>
+</dd>
+<dt>Outputs:</dt><dd><ul class="simple">
+<li><p>rot_obj (1x1 sonic.Points3 or sonic.PointsS2): Rotated
+object. Return type will match the input type.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Last revised: 11/08/24
+Last author: Sebastien Henry</p>
 </dd></dl>
 
 <dl class="mat staticmethod">
@@ -432,9 +504,6 @@ world frame</p></li>
 <dt>Outputs:</dt><dd><ul class="simple">
 <li><p>att (1x1 sonic.Attitude): attitude object that goes
 from world to camera</p></li>
-<li><p>proper (1x1 logical): a flag that indicates true
-if the found Attitude is proper (DCM has det = +1) or
-false if improper (e.g. det = -1)</p></li>
 </ul>
 </dd>
 </dl>

@@ -14,7 +14,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Quadric" href="quadric.html" />
-    <link rel="prev" title="PointsS2" href="pointss2.html" />
+    <link rel="prev" title="Pose" href="pose.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
@@ -108,29 +108,6 @@ Last author: Michael Krause</p>
 </dd></dl>
 
 <dl class="mat staticmethod">
-<dt class="sig sig-object mat" id="sonic.Project.rotate">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">rotate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">to_rot</span></em>, <em class="sig-param"><span class="pre">rot_att</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Project.rotate" title="Link to this definition">¶</a></dt>
-<dd><p>Rotates an object relative to the observer. Currently only
-supports rotating points in P3, i.e., sonic.Points3 and
-sonic.PointsS2.</p>
-<dl class="simple">
-<dt>Inputs:</dt><dd><ul class="simple">
-<li><p>to_rot (1x1 sonic.Points3 or sonic.PointsS2): Object to
-rotate. Currently only supports rotating 3D points.</p></li>
-<li><p>rot_att (1x1 sonic.Attitude): Object to Camera attitude.</p></li>
-</ul>
-</dd>
-<dt>Outputs:</dt><dd><ul class="simple">
-<li><p>rot_obj (1x1 sonic.Points3 or sonic.PointsS2): Rotated
-object. Return type will match the input type.</p></li>
-</ul>
-</dd>
-</dl>
-<p>Last revised: 03/06/24
-Last author: Michael Krause</p>
-</dd></dl>
-
-<dl class="mat staticmethod">
 <dt class="sig sig-object mat" id="sonic.Project.stereographic">
 <em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">stereographic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">to_proj</span></em>, <em class="sig-param"><span class="pre">proj_behind_cam</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Project.stereographic" title="Link to this definition">¶</a></dt>
 <dd><p>Performs a stereographic projection of 3D points/lines/quadrics
@@ -199,7 +176,7 @@ Last author: Michael Krause</p>
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
   <li><a href="../api.html">API</a><ul>
-      <li>Previous: <a href="pointss2.html" title="previous chapter">PointsS2</a></li>
+      <li>Previous: <a href="pose.html" title="previous chapter">Pose</a></li>
       <li>Next: <a href="quadric.html" title="next chapter">Quadric</a></li>
   </ul></li>
   </ul></li>
