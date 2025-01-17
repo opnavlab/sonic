@@ -5,17 +5,17 @@ classdef StarId
     methods (Static)
 
         function [matches, att_ICRF2C] = interstarAngle( ...
-                kvec, hip_cat, pointsS2_meas, tol, max_angle, min_matches)
-            %% [matches, att_ICRF2C] = interstarAngle(kvec, hip_cat, pointsS2_meas, tol, max_angle, min_matches)
+                kvec, cat, pointsS2_meas, tol, max_angle, min_matches)
+            %% [matches, att_ICRF2C] = interstarAngle(kvec, cat, pointsS2_meas, tol, max_angle, min_matches)
             %
             %   Takes in multiple line of sight measurements, in the camera
-            %   frame, and matches them to stars in the Hipparcos catalog.
+            %   frame, and matches them to stars in the given star catalog.
             %   Also returns an attitude estimate from ICRF to camera.
             %
             %   Inputs:
             %       - kvec (sonic.Kvector): a k-vector object
-            %       - hip_cat (sonic.Hipparcos): the Hipparcos catalog
-            %         NOTE: it MUST be a new unfiltered Hipparcos catalog
+            %       - hip_cat (sonic.StarCatalog): star catalog
+            %         NOTE: it MUST be an unfiltered catalog
             %       - points2_meas (sonic.Points2): unit-normalized vectors
             %         measured in the camera frame
             %       - tol (1x1 double): angular tolerance, a match is
@@ -27,17 +27,17 @@ classdef StarId
             %         pairs in matches to deem the solution correct. Minimum
             %         is 4. Default is 5.
             %   Outputs:
-            %       - matches (2xn int): pairs of measurement-hipparcos_id.
+            %       - matches (2xn int): pairs of measurement-hipparcos index.
             %         In the i-th pair, element matches(1,i) is the number of
             %         the measurement and matches(2,i) is the corresponding
-            %         index in the hipparcos catalog
+            %         index in the hipparcos catalog (!!! not the id!!!)
             %       - att_ICRF2C (sonic.Attitude): attitude of the camera
             %
             %   Last revised: 05/01/24
             %   Last author: Sebastien Henry
             arguments
                 kvec            (1, 1)  sonic.Kvector
-                hip_cat         (1, 1)  sonic.Hipparcos
+                cat             (1, 1)  sonic.StarCatalog
                 pointsS2_meas   (1, 1)  sonic.PointsS2
                 tol             (1, 1)  double
                 max_angle       (1, 1)  double
@@ -50,17 +50,17 @@ classdef StarId
                     'Must require a minimum of 4 matches.');
             end
 
-            % Check that the full Hipparcos catalog has been provided:
-            if ~isempty(hip_cat.filter_map)
+            % check that the full catalog has been provided:
+            if ~isempty(cat.filter_map)
                 error('sonic:StarId:nonBaseCatalogEntered', ...
                     'A full, unfiltered Star Catalog must be provided.')
             end
 
             n = pointsS2_meas.n;
-            pointsS2_cat = hip_cat.eval(kvec.et, kvec.r_obs_AU);
+            pointsS2_cat = cat.eval(kvec.et, kvec.r_obs_AU);
 
-            % needs to be a fresh hipparcos catalog!!!
-            hip_cat_idx = 1:hip_cat.n;
+            % needs to be a fresh catalog!!!
+            cat_idx = 1:cat.n;
 
             % use smart pattern of for loops
             % see EPS from
@@ -77,8 +77,8 @@ classdef StarId
                             % for each triad, verify
                             ijk = [i,j,k];
                             [matches] = ...
-                                sonic.StarId.check_triad( ...
-                                kvec, hip_cat_idx, pointsS2_meas, pointsS2_cat, ...
+                                sonic.StarId.checkTriad( ...
+                                kvec, cat_idx, pointsS2_meas, pointsS2_cat, ...
                                 ijk, tol, max_angle, min_matches);
                             count = count+1;
 
@@ -100,17 +100,16 @@ classdef StarId
             end
         end
 
-        function [matches, att_ICRF2C] = check_triad( ...
-                kvec, hip_cat_idx, pointsS2_meas, pointsS2_cat, ...
+        function [matches, att_ICRF2C, valid] = checkTriad( ...
+                kvec, cat_idx, pointsS2_meas, pointsS2_cat, ...
                 ijk, tol, max_angle, min_matches)
-            %% [matches, att_ICRF2C] = check_triad(kvec, hip_cat_idx, pointsS2_meas, pointsS2_cat, ijk, tol, max_angle, min_matches)
+            %% [matches, att_ICRF2C] = check_triad(kvec, cat_idx, pointsS2_meas, pointsS2_cat, ijk, tol, max_angle, min_matches)
             %
             %  Check if a triad is a valid triad, given a k-vector table.
             %
             %   Inputs:
             %       - kvec (1x1sonic.Kvector): a k-vector table
-            %       - hip_cat_idx (:x1 uint64): indices of the hipparcos
-            %         catalog
+            %       - hip_cat_idx (:x1 uint64): indices of the catalog
             %       - points2_meas (sonic.Points2): unit-normalized vectors
             %         measured in the camera frame
             %       - pointsS2_cat (sonic.PointsS2): catalog line of sights
@@ -122,18 +121,20 @@ classdef StarId
             %       - min_matches (1x1 uint64): minimum matches to stop
             %         and return
             %   Outputs:
-            %       - matches (2x: int): pairs of measurement-hipparcos_id.
+            %       - matches (2x: int): pairs of measurement and id.
             %         In the i-th pair, element matches(1,i) is the number of
             %         the measurement and matches(2,i) is the corresponding
-            %         hipparcos id
+            %         catalog id
             %       - att_ICRF2C (sonic.Attitude): attitude of the camera
+            %       - valid (1x1 boolean): whether sufficient matches were
+            %       found
             %
             %   Last revised: 04/15/24
             %   Last author: Sebastien Henry
 
             arguments
                 kvec            (1, 1)  sonic.Kvector
-                hip_cat_idx     (:, 1)  uint64
+                cat_idx     (:, 1)  uint64
                 pointsS2_meas   (1, 1)  sonic.PointsS2
                 pointsS2_cat    (1, 1)  sonic.PointsS2
                 ijk             (3, 1)  uint64
@@ -141,7 +142,7 @@ classdef StarId
                 max_angle       (1, 1)  double
                 min_matches     (1, 1)  uint64 = 5
             end
-
+            valid = false;
             cosmaxangle = cos(max_angle);
 
             u_cat_all = pointsS2_cat.u;
@@ -245,7 +246,7 @@ classdef StarId
             u_triad_center = mean(u_cam, 2);
             u_triad_center = u_triad_center / norm(u_triad_center);
 
-            % [~, locs] = ismember(IJKs, hip_cat_idx');
+            % [~, locs] = ismember(IJKs, cat_idx');
 
             for ii = 1:size(IJKs, 2)
                 % use kvec to evaluate
@@ -260,11 +261,11 @@ classdef StarId
                 % reproject all measurement to world
                 u_meas_world = att_ICRF2C.dcm'*pointsS2_meas.u;
 
-                % only keep hipparcos stars near the center of
+                % only keep stars near the center of
                 % the triad
                 idx = (u_triad_center_world'*u_cat_all >= cosmaxangle);
                 u_cat_reduced = u_cat_all(:,idx);
-                hip_cat_idx_reduced = hip_cat_idx(idx);
+                cat_idx_reduced = cat_idx(idx);
                 costol = cos(tol);
 
                 % compute the interstar angles between
@@ -288,10 +289,11 @@ classdef StarId
                 cat_indices = cat_indices(prune2);
 
                 matches = [meas_indices';
-                    hip_cat_idx_reduced(cat_indices)'];
+                    cat_idx_reduced(cat_indices)'];
 
 
                 if size(matches, 2) >= min_matches
+                    valid = true;
                     return
                 end
             end

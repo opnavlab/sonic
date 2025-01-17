@@ -396,6 +396,38 @@ classdef AttitudeTest < matlab.unittest.TestCase
                 'sonic:Attitude:mtimes:invalidInputType')
         end
 
+        function dDCMdRotationVecTest(testCase)
+            small_scale = 1e-5;
+            drotation_vec = small_scale*[1;3;2];
+
+            %%% Check the partial at a random attitude
+            rotation_vec = [1; 2; 3];
+            dcm = sonic.Attitude.rotationVecToDCM(rotation_vec);
+
+            partial = sonic.Attitude.dDCMdRotationVec(rotation_vec);
+
+            dcm2 = sonic.Attitude.rotationVecToDCM(rotation_vec+drotation_vec);
+
+            expDiff = dcm2(:)-dcm(:);
+            actDiff = partial*drotation_vec;
+
+            testCase.verifyEqual(actDiff, expDiff, RelTol=1e-3)
+
+            %%% Check the partial at a zero attitude
+            rotation_vec = [0; 0; 0];
+            dcm = sonic.Attitude.rotationVecToDCM(rotation_vec);
+
+            partial = sonic.Attitude.dDCMdRotationVec(rotation_vec);
+
+            dcm2 = sonic.Attitude.rotationVecToDCM(rotation_vec+drotation_vec);
+
+            expDiff = dcm2(:)-dcm(:);
+            actDiff = partial*drotation_vec;
+
+            testCase.verifyEqual(actDiff, expDiff, AbsTol=small_scale)
+
+        end
+
     end
 
 

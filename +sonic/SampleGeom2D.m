@@ -6,7 +6,7 @@ classdef SampleGeom2D
 
         function [conicPoints] = conicPts(obj, points, thetaRange)
         %% [conicPoints] = conicPts(obj, points, thetaRange)
-        %   Creates a Points2 object of points around the closed conic. The
+        %   Creates a Points2 object of points around the conic. The
         %   points are spaced out evenly in terms of angular separation.
         %   
         %   Inputs:
@@ -20,8 +20,8 @@ classdef SampleGeom2D
         %       - conicPoints (1x1 sonic.Points2 object): Points2 object
         %         containing the generated points
         %
-        %   Last revised: 2/28/24
-        %   Last author: Ava Thrasher
+        %   Last revised: 10/30/24
+        %   Last author: Michela Mancini
 
             arguments
                 obj
@@ -41,6 +41,11 @@ classdef SampleGeom2D
             end
             
             % get a and b from the conic
+            if ~obj.proper
+                error('sonic:SampleGeom2D:invalidInput', ...
+                                ['Conic provided is not proper']);
+            end
+
             expVals = obj.explicit;
             x0 = expVals(1);
             y0 = expVals(2);
@@ -72,7 +77,7 @@ classdef SampleGeom2D
             % rotate points by psi
             rotPoints = [cos(psi) -sin(psi); sin(psi) cos(psi)]*points;
 
-            % translate points by x0 and y0
+            % translate points by x0 and y0 and account for origin position
             transformedPoints = rotPoints + [x0;y0];
 
             % store as a point object
