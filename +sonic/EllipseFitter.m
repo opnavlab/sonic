@@ -4,9 +4,8 @@ classdef EllipseFitter
     
     % TODO: change variable names to camel case (in Math too)
     methods(Static)
-        function [conicObj, implSoln, explSoln] = ...
-                fitEllipse(ellipsePts, method_str)
-        %% [conicObj implSoln, explSoln] = fitEllipse(ellipsePts, method_str)
+        function conicObj = fitEllipse(ellipsePts, method_str)
+        %% conicObj = fitEllipse(ellipsePts, method_str)
         %
         %   Performs an ellipse fitting to (x,y) points, given a particular
         %   fitting method. Currently can perform least-squares, semi-hyper
@@ -35,12 +34,8 @@ classdef EllipseFitter
         %
         %   Outputs:
         %       - conicObj (1,1) sonic.Conic: conic object for solution
-        %       - implSoln (6x1): values for the implicit representation
-        %         of the ellipse 
-        %       - explSoln (5x1): values for the explicit representation 
-        %         of the ellipse [xc; yc; a; b; psi]
         %
-        %   Last revised: Sep 24, 2024
+        %   Last revised: Nov 15, 2024
         %   Last author: Tara Mina
         
             arguments
@@ -83,38 +78,30 @@ classdef EllipseFitter
             end
             
             % get corresponding explicit solution
-            explSoln = sonic.Conic.implicitToExplicit(implSoln);
+            implConic = sonic.Conic(implSoln);
+            explSoln = implConic.explicit;
             
             % add back center of mass
             explSoln = explSoln + [xcom; ycom; 0; 0; 0];
-            implSoln = sonic.Conic.explicitToImplicit(explSoln);
-
+           
             % get and return sonic.Conic object
             conicObj = sonic.Conic(explSoln);
             
             % if conic is not proper, throw warning
             if ~conicObj.proper
-                if ( abs(explSoln(3))>sonic.Tolerances.CompZero ...
-                        && abs(explSoln(4))>sonic.Tolerances.CompZero )
-                    warning(['sonic:EllipseFitter:improperConicButStableExplicit ', ...
-                        'Current output Conic object is not proper. '...
-                        'Consider using explicit solution vector, '...
-                        'which is more numerically stable.']);
-                else
-                    warning(['sonic:EllipseFitter:improperConic ', ...
-                        'Current output Conic object is not proper.'])
-                end
+                warning(['sonic:EllipseFitter:improperConic ', ...
+                        'Current output Conic object is not proper.']);
             % otherwise, if conic fit is not an ellipse, throw warning
             elseif ~strcmp(conicObj.type,"ellipse")
-                warning(['sonic:EllipseFitter:fitNotAnEllipse ', ...
-                    'Current fit is not an ellipse, but of type: ', ...
-                    conicObj.type])
+                warning(strcat(['sonic:EllipseFitter:fitNotAnEllipse ', ...
+                    'Current fit is not an ellipse, but of type: '], ...
+                    conicObj.type))
             end
 
         end
 
-        function Pa = getEllipseCovariance(implSoln, ellipsePts, sigsqrXY)
-        %% Pa = getEllipseCovariance(implSoln, ellipsePts, sigsqrXY)
+        function Pa = getEllipseCovariance(conicObj, ellipsePts, sigsqrXY)
+        %% Pa = getEllipseCovariance(conicObj, ellipsePts, sigsqrXY)
         %
         %   Compute analytical covariance of implicit solution for
         %   ellipse fitting.
@@ -140,7 +127,7 @@ classdef EllipseFitter
         %         point samples
         %
         %   Inputs:
-        %       - implSoln (6x1 double): implicit solution, as computed by
+        %       - conicObj (1x1 sonic.Conic): conic fit, as computed by
         %         a particular ellipse fitting method
         %       - ellipsePts (sonic.Points2): X,Y vals of 2D points on 
         %         the edge of the ellipse, to fit
@@ -155,19 +142,25 @@ classdef EllipseFitter
         %   Last author: Tara Mina
 
             arguments
-                implSoln            (6, 1)      double
+                conicObj            (1, 1)      sonic.Conic
                 ellipsePts          (1, 1)      sonic.Points2
                 sigsqrXY            (1, 1)      double
             end
 
+            % Get explicit solution from conic, get centered conic
+            ellpCenter = conicObj.explicit(1:2)';
+            conicCentered = conicObj.center();
+            implSolnCentered = conicCentered.implicit;
+
             % number of coefficients for implicit ellipse representation
             ncoeff = 6;
 
-            % get xiVects
+            % get xiVects, and center them
             xyvals_2Darr = ellipsePts.r2;
-            xvals = xyvals_2Darr(1,:)';
-            yvals = xyvals_2Darr(2,:)';
-            xiVects = sonic.EllipseFitter.getXiVects(xvals,yvals);
+            xvalsCentered = xyvals_2Darr(1,:)' - ellpCenter(1);
+            yvalsCentered = xyvals_2Darr(2,:)' - ellpCenter(2);
+            xiVects = sonic.EllipseFitter.getXiVects(...
+                xvalsCentered,yvalsCentered);
 
             % Compute matrix used for total least squares, called M
             [M, xiOuterAll] = sonic.EllipseFitter.computeLSMatrix(xiVects);
@@ -178,16 +171,17 @@ classdef EllipseFitter
 
             % get R0xi (computational effort for this is most of the work
             % to compute the Taubin normalization factor, so we do that)
-            xvals = xiVects(:,4);   yvals = xiVects(:,5);
+            xvalsCentered = xiVects(:,4);   yvalsCentered = xiVects(:,5);
             [~, R0xiAll] = ...
-                sonic.EllipseFitter.computeTaubinNormFactor(xvals,yvals);
+                sonic.EllipseFitter.computeTaubinNormFactor(...
+                xvalsCentered,yvalsCentered);
             RxiAll = sigsqrXY*R0xiAll;
 
             % Loop through all observations to compute inner matrix
-            nobs = length(xvals);
+            nobs = length(xvalsCentered);
             sumInnerMat = zeros(ncoeff,ncoeff);
             for i=1:nobs
-                intermTerm = implSoln' * RxiAll(:,:,i) * implSoln;
+                intermTerm = implSolnCentered' * RxiAll(:,:,i) * implSolnCentered;
                 innerMat = (1/nsamp)^2 * intermTerm * xiOuterAll(:,:,i);
                 sumInnerMat = sumInnerMat + innerMat;
             end
@@ -231,9 +225,8 @@ classdef EllipseFitter
         %         xiVects. This is used to compute M, and can be reused 
         %         downstream for HLS fitting, so we output this term too.
         %
-        %   Last revised: Sep 24, 2024
+        %   Last revised: Nov 15, 2024
         %   Last author: Tara Mina
-        %   Last author for speed-up: Sebastien Henry
 
             arguments
                 xiVects            (:, 6)      double   {mustBeNonempty}

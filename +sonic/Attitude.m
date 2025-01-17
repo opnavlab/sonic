@@ -616,6 +616,76 @@ classdef Attitude
             att = sonic.Attitude(T);
         end
 
+        function dvecDCM_drotVec = dDCMdRotationVec(rotVec)
+            % Compute the partial of a vectorized DCM with respect to a rotation
+            % vector.
+
+            % Decompose rotationVec into axis / angle
+            [n, theta] = sonic.Attitude.rotationVecToAxAng(rotVec);
+
+            % Compute dvec(crossmat(n)) / dn
+            dveccrossn_dn = [
+                0,  0,  0;
+                0,  0,  1;
+                0, -1,  0;
+                0,  0, -1;
+                0,  0,  0;
+                1,  0,  0;
+                0,  1,  0;
+                -1,  0,  0;
+                0,  0,  0];
+
+            % If small angle, return the simplified version
+            if theta < sonic.Tolerances.SmallAngle
+                % approx R = I - crossmat(rotVec)
+                dvecDCM_drotVec = -dveccrossn_dn;
+                return
+            end
+
+            % some pre-computations
+            ctheta = cos(theta);
+            stheta = sin(theta);
+            crossn = sonic.Math.crossmat(n);
+            outern = n*n';
+
+            % Partial of outer product
+            n1 = n(1);
+            n2 = n(2);
+            n3 = n(3);
+            dvecoutern_dn = [
+                2*n1,    0,    0;
+                n2,     n1,    0;
+                n3,      0,   n1;
+                n2,     n1,    0;
+                0,    2*n2,    0;
+                0,      n3,   n2;
+                n3,      0,   n1;
+                0,      n3,   n2;
+                0,       0, 2*n3];
+
+            % Partial of DCM with respect to axis
+            dvecDCM_dn = -stheta*dveccrossn_dn + (1-ctheta)*dvecoutern_dn;
+
+            % Partial of axis with respect to rotation vector
+            dn_drotVec = 1/theta;
+
+            % Partial of axis with respect to angle
+            dn_dtheta = -rotVec/theta^2;
+
+            % Partial of DCM with respect to angle
+            I3 = eye(3);
+            dvecDCM_dtheta = -stheta*I3(:) - ctheta*crossn(:) + stheta*outern(:);
+
+            % Partial of angle with respect to rotation vector
+            dtheta_drotVec = n';
+
+            % Partial of DCM with respect to rotation vector
+            % Application of the chain rule
+            dvecDCM_drotVec = dvecDCM_dtheta*dtheta_drotVec + ...
+                dvecDCM_dn*dn_drotVec + dvecDCM_dn*(dn_dtheta*dtheta_drotVec);
+        end
+
+
     end
 
     %%  Verification functions:

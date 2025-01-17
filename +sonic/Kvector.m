@@ -38,14 +38,14 @@ classdef Kvector
     end
     
     methods
-        function obj = Kvector(hip_cat, min_angle, max_angle, max_Vmag, ...
+        function obj = Kvector(cat, min_angle, max_angle, max_mag, ...
                 bin_width_cos_angle, et, r_obs_AU)
             %% obj = Kvector(varargin)
             %   Instantiate the Kvector table
             %   no preallocation but fast append in MATLAB
             %
             %   Inputs:
-            %       - hip_cat (sonic.Hipparcos): Hipparcso Catalog, or
+            %       - hip_cat (sonic.StarCatalog): Star Catalog, or
             %         subset thereof that we wish to create a k-ver
             %       - min_angle (1x1 double): the minimum interstar angle
             %         that will be stored in the k-vector (radians)
@@ -67,37 +67,41 @@ classdef Kvector
             %   Last revised: 4/7/24
             %   Last author: Sebastien Henry
             arguments
-            hip_cat            (1, 1)      sonic.Hipparcos
+            cat                 (1, 1)      sonic.StarCatalog
             min_angle           (1, 1)      double
             max_angle           (1, 1)      double
-            max_Vmag            (1, 1)      double
+            max_mag            (1, 1)      double
             bin_width_cos_angle (1, 1)      double = 0
             et                  (1, 1)      double = 0 % default at time 0
             r_obs_AU            (3, 1)      double = [0;0;0] % default at SSB
             end
 
-            % Check that the full Hipparcos catalog has been provided:
-            if ~isempty(hip_cat.filter_map)
+            % Check that the full star catalog has been provided:
+            if ~isempty(cat.filter_map)
                 error('sonic:StarId:nonBaseCatalogEntered', ...
                     'A full, unfiltered Star Catalog must be provided.')
             end
 
             % filter stars that are too faint
-            hip_cat = hip_cat.filter(hip_cat.Vmag < max_Vmag);
-            
+            if isa(cat,"sonic.Hipparcos")
+                cat = cat.filter(cat.Vmag < max_mag);
+            elseif isa(cat,"sonic.USNOGNC")
+                cat = cat.filter(cat.gmag < max_mag);
+            end
+
             % register the time and central position
             obj.et = et;
             obj.r_obs_AU = r_obs_AU; 
 
-            hip_eval = hip_cat.eval(obj.et, obj.r_obs_AU);
+            eval = cat.eval(obj.et, obj.r_obs_AU);
             
-            for i = 1:hip_eval.n-1
+            for i = 1:eval.n-1
                 % first star direction
-                ui = hip_eval.u(:,i);
+                ui = eval.u(:,i);
                 
                 % compute all possible interstar angle at once
                 cos_ij_remaining = ...
-                    ui'*hip_eval.u(:,(i+1):end);
+                    ui'*eval.u(:,(i+1):end);
                 
                 % only keep the interstar angles between max_angle and
                 % min_angle
@@ -117,9 +121,9 @@ classdef Kvector
                 obj.cos_interstar_angle(end+1:end+length(cos_ij_valid)) = ...
                     cos_ij_valid;
                 obj.Is(end+1:end+length(locs)) = ... 
-                    hip_cat.filter_map(i*uint64(ones(1,length(locs))));
+                    cat.filter_map(i*uint64(ones(1,length(locs))));
                 obj.Js(end+1:end+length(locs)) = ...
-                    hip_cat.filter_map(i+uint64(locs));
+                    cat.filter_map(i+uint64(locs));
 
             end
 

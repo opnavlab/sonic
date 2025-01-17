@@ -28,6 +28,34 @@ classdef Math
                 B*E - C*D, B*D - A*E, A*C - B^2];
         end
 
+        function adj = adjoint4x4(matrix)
+            %% adj = adjoint4x4(matrix)
+            %   Determines the adjoint of the given 4x4 matrix
+            %
+            %   Inputs:
+            %       - matrix (4x4 double): any 4x4 matrix
+            %   Outputs:
+            %       - adj (4x4 double): adjoint of the given matrix
+            %
+            %   Last revised: 11/07/24
+            %   Last author: Michela Mancini
+
+            A = matrix(1,1);
+            B = matrix(1,2);
+            C = matrix(1,3);
+            D = matrix(1,4);
+            E = matrix(2,2);
+            F = matrix(2,3);
+            G = matrix(2,4);
+            H = matrix(3,3);
+            I = matrix(3,4);
+            J = matrix(4,4);
+
+            adj = [- J*F^2 + 2*I*F*G - H*G^2 - E*I^2 + H*J*E, B*I^2 + C*F*J - C*G*I + D*G*H - D*F*I - B*H*J, C*G^2 - D*F*G + B*F*J - B*G*I - C*E*J + D*E*I, D*F^2 - C*F*G + B*G*H - B*F*I + C*E*I - D*E*H;
+                B*I^2 + C*F*J - C*G*I + D*G*H - D*F*I - B*H*J,     - J*C^2 + 2*D*I*C - A*I^2 - H*D^2 + A*H*J, D^2*F - C*D*G + B*C*J - B*D*I - A*F*J + A*G*I, C^2*G - C*D*F - B*C*I + B*D*H - A*G*H + A*F*I;
+                C*G^2 - D*F*G + B*F*J - B*G*I - C*E*J + D*E*I, D^2*F - C*D*G + B*C*J - B*D*I - A*F*J + A*G*I,     - J*B^2 + 2*D*B*G - A*G^2 - D^2*E + A*J*E, B^2*I - B*C*G - B*D*F + C*D*E + A*F*G - A*E*I;
+                D*F^2 - C*F*G + B*G*H - B*F*I + C*E*I - D*E*H, C^2*G - C*D*F - B*C*I + B*D*H - A*G*H + A*F*I, B^2*I - B*C*G - B*D*F + C*D*E + A*F*G - A*E*I,     - H*B^2 + 2*B*C*F - E*C^2 - A*F^2 + A*H*E];
+        end
         function T = crossmat(v)
             %% T = crossmat(v)
             %   3x3 skew-symmetric cross-product matrix
@@ -135,33 +163,72 @@ classdef Math
 
         end
 
-        function A_det1 = A_toDet1(A)
+        function [A_det1, signNew, scale, wasRescaled] = A_toDet1(A)
             %% A_det1 = A_toDet1(A)
-            %   Normalizes matrix to determinant of 1 if the matrix is
-            %   non-singular, otherwise returns the original function
-            %
+            %   If the matrix has even dimension, normalizes the determinant
+            %   to one. If it has odd dimension, normalizes the determinant
+            %   to either one or minus one. If the matrix is nearly
+            %   singular, returns the original matrix. Outputs the scaled
+            %   matrix, the sign of the new determinant, the scale used for
+            %   re-scaling and a flag indicating if rescaling took place
+            %   scale, t
             %   Inputs:
             %       - A (nxn double): matrix
             %   Outputs:
             %       - A_det1 (nxn string): matrix with determinant of 1
+            %       - sign (1x1 double): sign of the determinant of the
+            %         rescaled matrix
+            %       - scale (1x1 double): scale used to re-scale the matrix
+            %       - wasRescaled (1x1 logical): false if no rescaling took
+            %         place, true otherwise.
             %
-            %   Last revised: 4/18/24
+            %   Last revised: 15/11/24
             %   Last author: Michela Mancini
+
             Adim = size(A);
             if Adim(1) ~= Adim(2)
                 error('A_toDet1:NonSquareMtx', 'Matrix A must be square.');
             end
 
             N = Adim(1);
-            detA = det(A);
-            % difference tolerance not with conic
-            detTol = sonic.Tolerances.ConicLocusDetOne;
-            % added check for degeneracy
-            if abs(detA) >= detTol
-                A_det1 = A./nthroot(det(A), N);
+
+            % extract tolerance on reciprocal of condition number
+            tolCond = sonic.Tolerances.CondTol;
+
+            % check if the matrix is singular or not
+            rcondNumber = rcond(A);
+
+            if rcondNumber >= tolCond
+                singular = false;
             else
-                A_det1 = A;
+                singular = true;
             end
+
+           wasRescaled = true;
+            if ~singular
+                if mod(N,2)==0
+                    % if N is even, change determinant to +-1
+                    scale = nthroot(abs(det(A)), N);
+                    A_det1 = A./scale;
+                    if det(A_det1)<0
+                        signNew = -1;
+                    else
+                        signNew = 1;
+                    end
+                else
+                    % if N is odd, change determinant to 1
+                    scale = nthroot(det(A), N);
+                    A_det1 = A./scale;
+                    signNew = 1;
+                end
+            else
+                % if matrix is singular return original one
+                A_det1 = A;
+                scale = 1;
+                signNew = sign(det(A_det1));
+                wasRescaled = false;
+            end
+
         end
 
         function [minSingVal, minRSingVect] = getSmallestRSingVector(A)

@@ -80,9 +80,20 @@ classdef Lines2 < sonic.GeometryP2
                             'this matrix.']);
                     end
 
+                    small = abs(coeffs) < sonic.Tolerances.SmallNumber;
+                     badScale = any(all(small));
+                     if badScale
+                        error('sonic:Lines2:invalidInput', ...
+                            ['Line [0; 0; 0] not member of P2. If ' ...
+                            'this error arises from scaling issues, ' ...
+                            'consider normalizing the line coefficients.']);
+                     end
+
                     % Number of lines = number of columns:
                     obj.n = in_size(2);
     
+                    throughOrigin = abs(coeffs(3, :)) < sonic.Tolerances.HomNorm;
+                   
                     % Check for lines at infinity. When we normalize by the
                     % third component, if the first two components are
                     % close enough to zero, we consider this to be a line
@@ -96,11 +107,16 @@ classdef Lines2 < sonic.GeometryP2
                     coeffs(1:2, obj.inf_lines) = 0;
                     coeffs(3, obj.inf_lines) = 1;
                     
-                    % For lines not at infinity, normalize such that the
-                    % norm of the first two components is 1. 
-                    coeffs(:, ~obj.inf_lines) = ...
-                        norm_coeffs(:, ~obj.inf_lines)./ang_coeffs_norm(~obj.inf_lines);
-                    
+                    if obj.n>size(coeffs(1:2, obj.inf_lines),2) + size(coeffs(1:2, throughOrigin),2)
+                        % For lines not at infinity, normalize such that the
+                        % norm of the first two components is 1.
+                        coeffs(:, ~obj.inf_lines & ~throughOrigin) = ...
+                            norm_coeffs(:, ~obj.inf_lines  & ~throughOrigin )./ang_coeffs_norm(~obj.inf_lines  & ~throughOrigin);
+                    end
+
+                    % account separately for line that goes through the origin
+                    coeffs(:,throughOrigin) = coeffs(:,throughOrigin)./vecnorm(coeffs(:,throughOrigin));
+
                     % Store the P2 representation and calculate the angles
                     % and perpendicular distances. For lines at infinity,
                     % angle = NaN, perp distance = Inf.

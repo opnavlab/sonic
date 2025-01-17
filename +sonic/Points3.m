@@ -59,9 +59,18 @@ classdef Points3 < sonic.GeometryP3
                     obj.inf_points = inf_pts;
                     obj.has_inf_points = any(inf_pts);
                 case 4  % Points are in P3
+               
+                    % if [0;0;0;0] was input, error
+                     small = abs(pts) < sonic.Tolerances.SmallNumber;
+                     badScale = any(all(small));
+                     if badScale
+                        error('sonic:Points3:invalidInput', ...
+                            ['Point [0; 0; 0; 0] not member of P3. If ' ...
+                            'this error arises from scaling issues, ' ...
+                            'consider normalizing the point with respect' ...
+                            'to the fourth component.']);
+                     end
 
-                    % Check for points at infinity and points with negative
-                    % homogenous component:
                     inf_pts = abs(pts(4, :)) < sonic.Tolerances.HomNorm;
 
                     % Normalize the infinite points accordingly:

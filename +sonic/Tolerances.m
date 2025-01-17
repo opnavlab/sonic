@@ -22,7 +22,7 @@ classdef Tolerances
         % comparing the trace of (T*T' - I) to zero.
         DCMOrthogCheck      double = sqrt(eps)
 
-        % ConicLocusDetOne (Conic.m)
+        % ConicLocusDetOne (Conic.m, Math.m)
         % Used as a threshold for checking if the locus of a conic has a
         % determinant of one.
         ConicLocusDetOne    double = 1e-14
@@ -86,6 +86,10 @@ classdef Tolerances
         % SmallNumber (GeometryP2.m and Conic.m)
         % Used for testing if division by zero occurs
         SmallNumber double = 1e-7
+
+        % RepeatedPointTol (Conic.m)
+        % Used for testing if two points are the same point
+        RepeatedPointTol double = 1e-5
         
         % LineNorm (Lines2.m) 
         % Used for testing if the norm of the first two homogenous
@@ -110,6 +114,17 @@ classdef Tolerances
         % Used for testing if the spherical triangle inequality is
         % satisfied
         PhaseAng         double = eps
+
+        % MatrixDetOne (Conic.m)
+        % Used as a threshold for checking if the matrix has a
+        % determinant of one.
+        MatrixDetOne    double = 1e-14
+
+        % RelaxedCompZero (TestQuadric.m)
+        % Used as a threshold for checking if two outputs are the same in
+        % case of expected numerical issues
+        RelaxedCompZero double = 1e-5
+
     end
 end
 
