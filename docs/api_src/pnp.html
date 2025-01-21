@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>PnP &#8212; SONIC  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=12dfc556" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Points2" href="points2.html" />
+    <link rel="prev" title="Planes3" href="planes3.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="pnp">
+<h1>PnP<a class="headerlink" href="#pnp" title="Link to this heading">¶</a></h1>
+<dl class="mat class" id="module-+sonic">
+<dt class="sig sig-object mat" id="sonic.PnP">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">sonic.</span></span><span class="sig-name descname"><span class="pre">PnP</span></span><a class="headerlink" href="#sonic.PnP" title="Link to this definition">¶</a></dt>
+<dd><p>A class to solve for the PnP</p>
+<div class="members docutils container">
+<dl>
+<dt>Method Summary</dt><dd><dl class="mat staticmethod">
+<dt class="sig sig-object mat" id="sonic.PnP.PnPCalibrated">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">PnPCalibrated</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">x_C</span></em>, <em class="sig-param"><span class="pre">points_I</span></em>, <em class="sig-param"><span class="pre">method</span></em>, <em class="sig-param"><span class="pre">covx</span></em>, <em class="sig-param"><span class="pre">computeCov</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.PnP.PnPCalibrated" title="Link to this definition">¶</a></dt>
+<dd><p>Estimate the pose of a calibrated camera using the
+Perspective-n-Point with specified method.</p>
+<blockquote>
+<div><p>References:
+- [1] Henry, S., &amp; Christian, J. A. (2024).</p>
+<blockquote>
+<div><p>Optimal DLT-based Solutions for the Perspective-n-Point.
+<a class="reference external" href="https://doi.org/10.48550/arXiv.2410.14164">https://doi.org/10.48550/arXiv.2410.14164</a></p>
+</div></blockquote>
+<dl>
+<dt>Inputs:</dt><dd><ul class="simple">
+<li><p>x_C (sonic.Points2): image plane coordinates</p></li>
+</ul>
+<p>(equivalent of K^-1 * pixel coordinates)
+- points_I  (sonic.Points3): respective 3D position objects</p>
+<blockquote>
+<div><p>that are used for estimation</p>
+</div></blockquote>
+<ul class="simple">
+<li><dl class="simple">
+<dt>method (string): “DLT” (normalized DLT)</dt><dd><p>or “oDLT” (optimal DLT)</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>covx (OPTIONAL)</dt><dd><ul>
+<li><p>DEFAULT: unit variance</p></li>
+<li><p>(1x1 double): isotropic variance, same for all
+measurements</p></li>
+<li><p>(1xn double): isotropic variance of points2</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>computeCov (1x1 logical) (OPTIONAL): flag to decide
+whether to compute covariance or not. This will make
+the PnP function slightly slower. Defaults to false.</p></li>
+</ul>
+</dd>
+<dt>Outputs:</dt><dd><ul class="simple">
+<li><p>pose (sonic.Pose): camera pose</p></li>
+<li><p>covVecP (12x12 double) covariance of the vectorized</p></li>
+</ul>
+<p>camera matrix P</p>
+</dd>
+</dl>
+<p>Last revised: 11/24/24
+Last author: Sebastien Henry</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="mat staticmethod">
+<dt class="sig sig-object mat" id="sonic.PnP.PnPUncalibrated">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">PnPUncalibrated</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">u_C</span></em>, <em class="sig-param"><span class="pre">p_I</span></em>, <em class="sig-param"><span class="pre">method</span></em>, <em class="sig-param"><span class="pre">covu</span></em>, <em class="sig-param"><span class="pre">computeCov</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.PnP.PnPUncalibrated" title="Link to this definition">¶</a></dt>
+<dd><p>Estimate the pose of a calibrated camera using the
+Perspective-n-Point with specified method.</p>
+<blockquote>
+<div><p>References:
+- [1] Henry, S., &amp; Christian, J. A. (2024).</p>
+<blockquote>
+<div><p>Optimal DLT-based Solutions for the Perspective-n-Point.
+<a class="reference external" href="https://doi.org/10.48550/arXiv.2410.14164">https://doi.org/10.48550/arXiv.2410.14164</a></p>
+</div></blockquote>
+<dl>
+<dt>Inputs:</dt><dd><ul class="simple">
+<li><p>u_C (sonic.Points2): pixel coordinates</p></li>
+<li><p>points_I  (sonic.Points3): respective 3D position objects
+that are used for estimation</p></li>
+<li><dl class="simple">
+<dt>method (string): “DLT” (normalized DLT)</dt><dd><p>or “oDLT” (optimal DLT)</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>covu (OPTIONAL)</dt><dd><ul>
+<li><p>DEFAULT: unit variance</p></li>
+<li><p>(1x1 double): isotropic variance, same for all
+measurements</p></li>
+<li><p>(1xn double): isotropic variance of points2</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>computeCov (1x1 logical) (OPTIONAL): flag to decide
+whether to compute covariance or not. This will make
+the PnP function slightly slower. Defaults to false.</p></li>
+</ul>
+</dd>
+<dt>Outputs:</dt><dd><ul class="simple">
+<li><p>pose (sonic.Pose): camera pose</p></li>
+<li><p>camera (sonic.Camera): calibrated camera</p></li>
+<li><p>covVecP (12x12 double) covariance of the vectorized</p></li>
+</ul>
+<p>camera matrix P</p>
+</dd>
+</dl>
+<p>Last revised: 11/24/24
+Last author: Sebastien Henry</p>
+</div></blockquote>
+</dd></dl>
+
+</dd>
+</dl>
+</div>
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">SONIC</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installing SONIC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples with SONIC</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../api.html">API</a><ul>
+      <li>Previous: <a href="planes3.html" title="previous chapter">Planes3</a></li>
+      <li>Next: <a href="points2.html" title="next chapter">Points2</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2024, SEAL.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.3.7</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="../_sources/api_src/pnp.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

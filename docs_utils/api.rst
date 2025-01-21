@@ -17,7 +17,6 @@ API
 	./api_src/geometryp3
 	./api_src/hapke
 	./api_src/hipparcos
-	./api_src/horizonopnav
 	./api_src/image
 	./api_src/kvector
 	./api_src/lambert
@@ -33,18 +32,21 @@ API
 	./api_src/orthosphere
 	./api_src/pinhole
 	./api_src/planes3
+	./api_src/pnp
 	./api_src/points2
 	./api_src/points3
 	./api_src/pointss2
 	./api_src/pose
+	./api_src/positionestimation
 	./api_src/project
 	./api_src/quadric
 	./api_src/reflectance
+	./api_src/robbins
 	./api_src/samplegeom2d
 	./api_src/scanlines
 	./api_src/spherecoords
 	./api_src/starcatalog
 	./api_src/starid
 	./api_src/tolerances
-	./api_src/triangulation
 	./api_src/units
+	./api_src/usnognc

@@ -13,8 +13,6 @@
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Units" href="units.html" />
-    <link rel="prev" title="Tolerances" href="tolerances.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
@@ -34,72 +32,10 @@
             
   <section id="triangulation">
 <h1>Triangulation<a class="headerlink" href="#triangulation" title="Link to this heading">¶</a></h1>
-<dl class="mat class" id="module-+sonic">
+<dl class="mat attribute" id="module-+sonic">
 <dt class="sig sig-object mat" id="sonic.Triangulation">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">sonic.</span></span><span class="sig-name descname"><span class="pre">Triangulation</span></span><a class="headerlink" href="#sonic.Triangulation" title="Link to this definition">¶</a></dt>
-<dd><div class="members docutils container">
-<dl>
-<dt>Method Summary</dt><dd><dl class="mat staticmethod">
-<dt class="sig sig-object mat" id="sonic.Triangulation.triangulate">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">triangulate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">x_C</span></em>, <em class="sig-param"><span class="pre">p_I</span></em>, <em class="sig-param"><span class="pre">attitudes</span></em>, <em class="sig-param"><span class="pre">method</span></em>, <em class="sig-param"><span class="pre">cov_x</span></em>, <em class="sig-param"><span class="pre">compute_cov</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Triangulation.triangulate" title="Link to this definition">¶</a></dt>
-<dd><p>Triangulate using the specified method.</p>
-<p>References:
-- [1] S. Henry and J. A. Christian. Absolute Triangulation
-Algorithms for Space Exploration. JGCD (2023).
-<a class="reference external" href="https://doi.org/10.2514/1.G006989">https://doi.org/10.2514/1.G006989</a></p>
-<dl>
-<dt>Inputs:</dt><dd><ul>
-<li><p>x_C (sonic.Points2): image_plane coordinates
-(equivalent of K^-1 * pixel coordinate)</p></li>
-<li><p>p_I  (sonic.Points3): respective 3D position objects
-that are used to triangulate (resection) OR position of
-the respective cameras (intersection)</p></li>
-<li><dl>
-<dt>attitudes</dt><dd><ul class="simple">
-<li><p>(nx1 sonic.Attitude): attitudes of the cameras</p></li>
-</ul>
-<p>OR</p>
-<ul class="simple">
-<li><p>(1x1 sonic.Attitude): then all cameras have
-the same attitude</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><p>method (string): “midpoint”, “DLT”, or “LOST”</p></li>
-<li><dl class="simple">
-<dt>cov_x (OPTIONAL)</dt><dd><ul class="simple">
-<li><p>DEFAULT: unit variance</p></li>
-<li><p>(1x1 double): isotropic variance, same for all
-measurements</p></li>
-<li><p>(1xn double): isotropic variance of points2</p></li>
-<li><p>(2x2xn double): NOT YET IMPLEMENTED. Isotropic
-variance MUST be assumed.</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><p>compute_cov (1x1 logical) (OPTIONAL): flag to decide
-whether to compute covariance or not. This will make
-the triangulation function slightly slower,
-especially for DLT and midpoint. Defaults to false.</p></li>
-</ul>
-</dd>
-<dt>Outputs:</dt><dd><ul class="simple">
-<li><p>rI (sonic.Points3): triangulated 3D point in inertial</p></li>
-<li><p>cov_r (3x3 double): 3D covariance of the triangulated
-point</p></li>
-</ul>
-</dd>
-</dl>
-<p>Last revised: 4/26/24
-Last author: Sebastien Henry</p>
-</dd></dl>
-
-</dd>
-</dl>
-</div>
-</dd></dl>
+<span class="sig-prename descclassname"><span class="pre">sonic.</span></span><span class="sig-name descname"><span class="pre">Triangulation</span></span><a class="headerlink" href="#sonic.Triangulation" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </section>
 
@@ -120,20 +56,16 @@ Last author: Sebastien Henry</p>
 
 
 <h3>Navigation</h3>
-<ul class="current">
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../install.html">Installing SONIC</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples with SONIC</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">API</a></li>
 </ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
-  <li><a href="../api.html">API</a><ul>
-      <li>Previous: <a href="tolerances.html" title="previous chapter">Tolerances</a></li>
-      <li>Next: <a href="units.html" title="next chapter">Units</a></li>
-  </ul></li>
   </ul></li>
 </ul>
 </div>

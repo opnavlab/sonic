@@ -43,12 +43,12 @@ Last author: Sebastien Henry</p>
 <dl>
 <dt>Constructor Summary</dt><dd><dl class="mat method">
 <dt class="sig sig-object mat" id="sonic.Kvector.Kvector">
-<span class="sig-name descname"><span class="pre">Kvector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">hip_cat</span></em>, <em class="sig-param"><span class="pre">min_angle</span></em>, <em class="sig-param"><span class="pre">max_angle</span></em>, <em class="sig-param"><span class="pre">max_Vmag</span></em>, <em class="sig-param"><span class="pre">bin_width_cos_angle</span></em>, <em class="sig-param"><span class="pre">et</span></em>, <em class="sig-param"><span class="pre">r_obs_AU</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Kvector.Kvector" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">Kvector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">cat</span></em>, <em class="sig-param"><span class="pre">min_angle</span></em>, <em class="sig-param"><span class="pre">max_angle</span></em>, <em class="sig-param"><span class="pre">max_mag</span></em>, <em class="sig-param"><span class="pre">bin_width_cos_angle</span></em>, <em class="sig-param"><span class="pre">et</span></em>, <em class="sig-param"><span class="pre">r_obs_AU</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Kvector.Kvector" title="Link to this definition">¶</a></dt>
 <dd><p>Instantiate the Kvector table
 no preallocation but fast append in MATLAB</p>
 <dl class="simple">
 <dt>Inputs:</dt><dd><ul class="simple">
-<li><p>hip_cat (sonic.Hipparcos): Hipparcso Catalog, or
+<li><p>hip_cat (sonic.StarCatalog): Star Catalog, or
 subset thereof that we wish to create a k-ver</p></li>
 <li><p>min_angle (1x1 double): the minimum interstar angle
 that will be stored in the k-vector (radians)</p></li>

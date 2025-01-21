@@ -13,7 +13,7 @@
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Triangulation" href="triangulation.html" />
+    <link rel="next" title="Units" href="units.html" />
     <link rel="prev" title="StarId" href="starid.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
@@ -72,7 +72,7 @@ of a conic.</p>
 <dl class="mat attribute">
 <dt class="sig sig-object mat" id="sonic.Tolerances.ConicLocusDetOne">
 <span class="sig-name descname"><span class="pre">ConicLocusDetOne</span></span><a class="headerlink" href="#sonic.Tolerances.ConicLocusDetOne" title="Link to this definition">¶</a></dt>
-<dd><p>ConicLocusDetOne (Conic.m)
+<dd><p>ConicLocusDetOne (Conic.m, Math.m)
 Used as a threshold for checking if the locus of a conic has a
 determinant of one.</p>
 </dd></dl>
@@ -133,6 +133,14 @@ coordinates of a line are “zero”.</p>
 </dd></dl>
 
 <dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.Tolerances.MatrixDetOne">
+<span class="sig-name descname"><span class="pre">MatrixDetOne</span></span><a class="headerlink" href="#sonic.Tolerances.MatrixDetOne" title="Link to this definition">¶</a></dt>
+<dd><p>MatrixDetOne (Conic.m)
+Used as a threshold for checking if the matrix has a
+determinant of one.</p>
+</dd></dl>
+
+<dl class="mat attribute">
 <dt class="sig sig-object mat" id="sonic.Tolerances.MaxIters">
 <span class="sig-name descname"><span class="pre">MaxIters</span></span><a class="headerlink" href="#sonic.Tolerances.MaxIters" title="Link to this definition">¶</a></dt>
 <dd><p>MaxIters (BrownConrady.m)
@@ -161,6 +169,21 @@ satisfied</p>
 <dd><p>QuatNormOne (Attitude.m)
 Used as a threshold for checking if the norm of a potential
 quaternion is one.</p>
+</dd></dl>
+
+<dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.Tolerances.RelaxedCompZero">
+<span class="sig-name descname"><span class="pre">RelaxedCompZero</span></span><a class="headerlink" href="#sonic.Tolerances.RelaxedCompZero" title="Link to this definition">¶</a></dt>
+<dd><p>RelaxedCompZero (TestQuadric.m)
+Used as a threshold for checking if two outputs are the same in
+case of expected numerical issues</p>
+</dd></dl>
+
+<dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.Tolerances.RepeatedPointTol">
+<span class="sig-name descname"><span class="pre">RepeatedPointTol</span></span><a class="headerlink" href="#sonic.Tolerances.RepeatedPointTol" title="Link to this definition">¶</a></dt>
+<dd><p>RepeatedPointTol (Conic.m)
+Used for testing if two points are the same point</p>
 </dd></dl>
 
 <dl class="mat attribute">
@@ -256,7 +279,7 @@ Used for testing how close psi is to zero.</p>
   <li><a href="../index.html">Documentation overview</a><ul>
   <li><a href="../api.html">API</a><ul>
       <li>Previous: <a href="starid.html" title="previous chapter">StarId</a></li>
-      <li>Next: <a href="triangulation.html" title="next chapter">Triangulation</a></li>
+      <li>Next: <a href="units.html" title="next chapter">Units</a></li>
   </ul></li>
   </ul></li>
 </ul>

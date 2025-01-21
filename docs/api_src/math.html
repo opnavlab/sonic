@@ -42,19 +42,31 @@
 <dt>Method Summary</dt><dd><dl class="mat staticmethod">
 <dt class="sig sig-object mat" id="sonic.Math.A_toDet1">
 <em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">A_toDet1</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">A</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Math.A_toDet1" title="Link to this definition">¶</a></dt>
-<dd><p>Normalizes matrix to determinant of 1 if the matrix is
-non-singular, otherwise returns the original function</p>
-<dl class="simple">
-<dt>Inputs:</dt><dd><ul class="simple">
+<dd><p>If the matrix has even dimension, normalizes the determinant
+to one. If it has odd dimension, normalizes the determinant
+to either one or minus one. If the matrix is nearly
+singular, returns the original matrix. Outputs the scaled
+matrix, the sign of the new determinant, the scale used for
+re-scaling and a flag indicating if rescaling took place
+scale, t
+Inputs:</p>
+<blockquote>
+<div><ul class="simple">
 <li><p>A (nxn double): matrix</p></li>
 </ul>
-</dd>
+</div></blockquote>
+<dl class="simple">
 <dt>Outputs:</dt><dd><ul class="simple">
 <li><p>A_det1 (nxn string): matrix with determinant of 1</p></li>
+<li><p>sign (1x1 double): sign of the determinant of the
+rescaled matrix</p></li>
+<li><p>scale (1x1 double): scale used to re-scale the matrix</p></li>
+<li><p>wasRescaled (1x1 logical): false if no rescaling took
+place, true otherwise.</p></li>
 </ul>
 </dd>
 </dl>
-<p>Last revised: 4/18/24
+<p>Last revised: 15/11/24
 Last author: Michela Mancini</p>
 </dd></dl>
 
@@ -114,6 +126,24 @@ Last author: Jennifer Nolan</p>
 </dd>
 </dl>
 <p>Last revised: 4/19/24
+Last author: Michela Mancini</p>
+</dd></dl>
+
+<dl class="mat staticmethod">
+<dt class="sig sig-object mat" id="sonic.Math.adjoint4x4">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">adjoint4x4</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">matrix</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Math.adjoint4x4" title="Link to this definition">¶</a></dt>
+<dd><p>Determines the adjoint of the given 4x4 matrix</p>
+<dl class="simple">
+<dt>Inputs:</dt><dd><ul class="simple">
+<li><p>matrix (4x4 double): any 4x4 matrix</p></li>
+</ul>
+</dd>
+<dt>Outputs:</dt><dd><ul class="simple">
+<li><p>adj (4x4 double): adjoint of the given matrix</p></li>
+</ul>
+</dd>
+</dl>
+<p>Last revised: 11/07/24
 Last author: Michela Mancini</p>
 </dd></dl>
 

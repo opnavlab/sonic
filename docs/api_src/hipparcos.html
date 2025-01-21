@@ -13,7 +13,7 @@
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="HorizonOPNAV" href="horizonopnav.html" />
+    <link rel="next" title="Image" href="image.html" />
     <link rel="prev" title="Hapke" href="hapke.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
@@ -85,96 +85,12 @@ Last author: Michael Krause</p>
 <dd></dd></dl>
 
 <dl class="mat attribute">
-<dt class="sig sig-object mat" id="sonic.Hipparcos.dec_RAD">
-<span class="sig-name descname"><span class="pre">dec_RAD</span></span><a class="headerlink" href="#sonic.Hipparcos.dec_RAD" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="mat attribute">
-<dt class="sig sig-object mat" id="sonic.Hipparcos.filter_map">
-<span class="sig-name descname"><span class="pre">filter_map</span></span><a class="headerlink" href="#sonic.Hipparcos.filter_map" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="mat attribute">
 <dt class="sig sig-object mat" id="sonic.Hipparcos.id">
 <span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#sonic.Hipparcos.id" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="mat attribute">
-<dt class="sig sig-object mat" id="sonic.Hipparcos.n">
-<span class="sig-name descname"><span class="pre">n</span></span><a class="headerlink" href="#sonic.Hipparcos.n" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="mat attribute">
-<dt class="sig sig-object mat" id="sonic.Hipparcos.plx_RAD">
-<span class="sig-name descname"><span class="pre">plx_RAD</span></span><a class="headerlink" href="#sonic.Hipparcos.plx_RAD" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="mat attribute">
-<dt class="sig sig-object mat" id="sonic.Hipparcos.pm_dec_RPS">
-<span class="sig-name descname"><span class="pre">pm_dec_RPS</span></span><a class="headerlink" href="#sonic.Hipparcos.pm_dec_RPS" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="mat attribute">
-<dt class="sig sig-object mat" id="sonic.Hipparcos.pm_ra_RPS">
-<span class="sig-name descname"><span class="pre">pm_ra_RPS</span></span><a class="headerlink" href="#sonic.Hipparcos.pm_ra_RPS" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="mat attribute">
-<dt class="sig sig-object mat" id="sonic.Hipparcos.ra_RAD">
-<span class="sig-name descname"><span class="pre">ra_RAD</span></span><a class="headerlink" href="#sonic.Hipparcos.ra_RAD" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd>
-<dt>Method Summary</dt><dd><dl class="mat method">
-<dt class="sig sig-object mat" id="sonic.Hipparcos.eval">
-<span class="sig-name descname"><span class="pre">eval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">et</span></em>, <em class="sig-param"><span class="pre">r_obs_AU</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Hipparcos.eval" title="Link to this definition">¶</a></dt>
-<dd><p>Evaluate the Hipparcos catalog per the 5-parameter standard
-model.</p>
-<dl class="simple">
-<dt>Inputs:</dt><dd><ul class="simple">
-<li><p>obj (sonic.Hipparcos): Hipparcos catalog object</p></li>
-<li><p>et (1x1 double): Epoch at which to evaluate the catalog,
-in TDB (consistent with SPICE ephemeris time)</p></li>
-<li><p>r_obs_AU (3x1 double): The position of the observer in
-ICRF, in astronomical units (AU).</p></li>
-</ul>
-</dd>
-<dt>Outputs:</dt><dd><ul class="simple">
-<li><p>u (1x1 sonic.Points3): The resultant star unit vectors,
-packed into a Points3 object.</p></li>
-</ul>
-</dd>
-</dl>
-<p>Last revised: 2/14/24
-Last author: Michael Krause</p>
-</dd></dl>
-
-<dl class="mat method">
-<dt class="sig sig-object mat" id="sonic.Hipparcos.filter">
-<span class="sig-name descname"><span class="pre">filter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">filt_vec</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Hipparcos.filter" title="Link to this definition">¶</a></dt>
-<dd><p>Filter the catalog based on the supplied binary vector, which
-can be arbitrarily crafted.</p>
-<dl class="simple">
-<dt>Inputs:</dt><dd><ul class="simple">
-<li><p>obj (sonic.Hipparcos): Hipparcos catalog object</p></li>
-<li><p>filt_vec (1xm double): Vector of indices to filter to
-(where <cite>m</cite> will be the size of the resultant catalog), OR
-a logical vector of size <cite>n</cite>, with <cite>m</cite> true values, where
-only those marked <cite>true</cite> will be retained by the filter.</p></li>
-</ul>
-</dd>
-<dt>Outputs:</dt><dd><ul class="simple">
-<li><p>filtered_cat (sonic.Hipparcos): Filtered Hipparcos
-catalog object, with <cite>n</cite> corresponding to the number of
-<cite>true</cite> found in bin_vec.</p></li>
-</ul>
-</dd>
-</dl>
-<p>Last revised: 2/14/24
-Last author: Michael Krause</p>
-</dd></dl>
-
-<dl class="mat staticmethod">
+<dt>Method Summary</dt><dd><dl class="mat staticmethod">
 <dt class="sig sig-object mat" id="sonic.Hipparcos.getBayerParseTargs">
 <em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">getBayerParseTargs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Hipparcos.getBayerParseTargs" title="Link to this definition">¶</a></dt>
 <dd><p>Yields the struct for appropriately parsing the raw Bayer
@@ -308,7 +224,7 @@ Last author: Michael Krause</p>
   <li><a href="../index.html">Documentation overview</a><ul>
   <li><a href="../api.html">API</a><ul>
       <li>Previous: <a href="hapke.html" title="previous chapter">Hapke</a></li>
-      <li>Next: <a href="horizonopnav.html" title="next chapter">HorizonOPNAV</a></li>
+      <li>Next: <a href="image.html" title="next chapter">Image</a></li>
   </ul></li>
   </ul></li>
 </ul>

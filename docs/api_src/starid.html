@@ -40,15 +40,15 @@
 <dd><div class="members docutils container">
 <dl>
 <dt>Method Summary</dt><dd><dl class="mat staticmethod">
-<dt class="sig sig-object mat" id="sonic.StarId.check_triad">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">check_triad</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">kvec</span></em>, <em class="sig-param"><span class="pre">hip_cat_idx</span></em>, <em class="sig-param"><span class="pre">pointsS2_meas</span></em>, <em class="sig-param"><span class="pre">pointsS2_cat</span></em>, <em class="sig-param"><span class="pre">ijk</span></em>, <em class="sig-param"><span class="pre">tol</span></em>, <em class="sig-param"><span class="pre">max_angle</span></em>, <em class="sig-param"><span class="pre">min_matches</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.StarId.check_triad" title="Link to this definition">¶</a></dt>
-<dd><p>Check if a triad is a valid triad, given a k-vector table.</p>
+<dt class="sig sig-object mat" id="sonic.StarId.checkTriad">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">checkTriad</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">kvec</span></em>, <em class="sig-param"><span class="pre">cat_idx</span></em>, <em class="sig-param"><span class="pre">pointsS2_meas</span></em>, <em class="sig-param"><span class="pre">pointsS2_cat</span></em>, <em class="sig-param"><span class="pre">ijk</span></em>, <em class="sig-param"><span class="pre">tol</span></em>, <em class="sig-param"><span class="pre">max_angle</span></em>, <em class="sig-param"><span class="pre">min_matches</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.StarId.checkTriad" title="Link to this definition">¶</a></dt>
+<dd><p>[matches, att_ICRF2C] = check_triad(kvec, cat_idx, pointsS2_meas, pointsS2_cat, ijk, tol, max_angle, min_matches)</p>
+<p>Check if a triad is a valid triad, given a k-vector table.</p>
 <blockquote>
-<div><dl class="simple">
+<div><dl>
 <dt>Inputs:</dt><dd><ul class="simple">
 <li><p>kvec (1x1sonic.Kvector): a k-vector table</p></li>
-<li><p>hip_cat_idx (:x1 uint64): indices of the hipparcos
-catalog</p></li>
+<li><p>hip_cat_idx (:x1 uint64): indices of the catalog</p></li>
 <li><p>points2_meas (sonic.Points2): unit-normalized vectors
 measured in the camera frame</p></li>
 <li><p>pointsS2_cat (sonic.PointsS2): catalog line of sights</p></li>
@@ -62,12 +62,14 @@ and return</p></li>
 </ul>
 </dd>
 <dt>Outputs:</dt><dd><ul class="simple">
-<li><p>matches (2x: int): pairs of measurement-hipparcos_id.
+<li><p>matches (2x: int): pairs of measurement and id.
 In the i-th pair, element matches(1,i) is the number of
 the measurement and matches(2,i) is the corresponding
-hipparcos id</p></li>
+catalog id</p></li>
 <li><p>att_ICRF2C (sonic.Attitude): attitude of the camera</p></li>
+<li><p>valid (1x1 boolean): whether sufficient matches were</p></li>
 </ul>
+<p>found</p>
 </dd>
 </dl>
 <p>Last revised: 04/15/24
@@ -77,15 +79,15 @@ Last author: Sebastien Henry</p>
 
 <dl class="mat staticmethod">
 <dt class="sig sig-object mat" id="sonic.StarId.interstarAngle">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">interstarAngle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">kvec</span></em>, <em class="sig-param"><span class="pre">hip_cat</span></em>, <em class="sig-param"><span class="pre">pointsS2_meas</span></em>, <em class="sig-param"><span class="pre">tol</span></em>, <em class="sig-param"><span class="pre">max_angle</span></em>, <em class="sig-param"><span class="pre">min_matches</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.StarId.interstarAngle" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">interstarAngle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">kvec</span></em>, <em class="sig-param"><span class="pre">cat</span></em>, <em class="sig-param"><span class="pre">pointsS2_meas</span></em>, <em class="sig-param"><span class="pre">tol</span></em>, <em class="sig-param"><span class="pre">max_angle</span></em>, <em class="sig-param"><span class="pre">min_matches</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.StarId.interstarAngle" title="Link to this definition">¶</a></dt>
 <dd><p>Takes in multiple line of sight measurements, in the camera
-frame, and matches them to stars in the Hipparcos catalog.
+frame, and matches them to stars in the given star catalog.
 Also returns an attitude estimate from ICRF to camera.</p>
 <dl class="simple">
 <dt>Inputs:</dt><dd><ul class="simple">
 <li><p>kvec (sonic.Kvector): a k-vector object</p></li>
-<li><p>hip_cat (sonic.Hipparcos): the Hipparcos catalog
-NOTE: it MUST be a new unfiltered Hipparcos catalog</p></li>
+<li><p>hip_cat (sonic.StarCatalog): star catalog
+NOTE: it MUST be an unfiltered catalog</p></li>
 <li><p>points2_meas (sonic.Points2): unit-normalized vectors
 measured in the camera frame</p></li>
 <li><p>tol (1x1 double): angular tolerance, a match is
@@ -99,10 +101,10 @@ is 4. Default is 5.</p></li>
 </ul>
 </dd>
 <dt>Outputs:</dt><dd><ul class="simple">
-<li><p>matches (2xn int): pairs of measurement-hipparcos_id.
+<li><p>matches (2xn int): pairs of measurement-hipparcos index.
 In the i-th pair, element matches(1,i) is the number of
 the measurement and matches(2,i) is the corresponding
-index in the hipparcos catalog</p></li>
+index in the hipparcos catalog (!!! not the id!!!)</p></li>
 <li><p>att_ICRF2C (sonic.Attitude): attitude of the camera</p></li>
 </ul>
 </dd>

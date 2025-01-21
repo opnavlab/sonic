@@ -70,6 +70,46 @@ Last author: Michael Krause</p>
 <span class="sig-name descname"><span class="pre">const_data</span></span><a class="headerlink" href="#sonic.StarCatalog.const_data" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
+<dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.StarCatalog.dec_RAD">
+<span class="sig-name descname"><span class="pre">dec_RAD</span></span><a class="headerlink" href="#sonic.StarCatalog.dec_RAD" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.StarCatalog.filter_map">
+<span class="sig-name descname"><span class="pre">filter_map</span></span><a class="headerlink" href="#sonic.StarCatalog.filter_map" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.StarCatalog.n">
+<span class="sig-name descname"><span class="pre">n</span></span><a class="headerlink" href="#sonic.StarCatalog.n" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.StarCatalog.plx_RAD">
+<span class="sig-name descname"><span class="pre">plx_RAD</span></span><a class="headerlink" href="#sonic.StarCatalog.plx_RAD" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.StarCatalog.pm_dec_RPS">
+<span class="sig-name descname"><span class="pre">pm_dec_RPS</span></span><a class="headerlink" href="#sonic.StarCatalog.pm_dec_RPS" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.StarCatalog.pm_ra_RPS">
+<span class="sig-name descname"><span class="pre">pm_ra_RPS</span></span><a class="headerlink" href="#sonic.StarCatalog.pm_ra_RPS" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.StarCatalog.ra_RAD">
+<span class="sig-name descname"><span class="pre">ra_RAD</span></span><a class="headerlink" href="#sonic.StarCatalog.ra_RAD" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.StarCatalog.t_epoch">
+<span class="sig-name descname"><span class="pre">t_epoch</span></span><a class="headerlink" href="#sonic.StarCatalog.t_epoch" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd>
 <dt>Method Summary</dt><dd><dl class="mat method">
 <dt class="sig sig-object mat" id="sonic.StarCatalog.checkInSphericalPolygon">
@@ -98,6 +138,55 @@ spherical polygon, false otherwise.</p></li>
 </dl>
 <p>Last revised: 3/29/24
 Last author: Michael Krause</p>
+</dd></dl>
+
+<dl class="mat method">
+<dt class="sig sig-object mat" id="sonic.StarCatalog.eval">
+<span class="sig-name descname"><span class="pre">eval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">et</span></em>, <em class="sig-param"><span class="pre">r_obs_AU</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.StarCatalog.eval" title="Link to this definition">¶</a></dt>
+<dd><p>Evaluate a star catalog per the 5-parameter standard
+model.</p>
+<dl class="simple">
+<dt>Inputs:</dt><dd><ul class="simple">
+<li><p>obj (sonic.StarCatalog): Star catalog object</p></li>
+<li><p>et (1x1 double): Epoch at which to evaluate the catalog,
+in TDB (consistent with SPICE ephemeris time)</p></li>
+<li><p>r_obs_AU (3x1 double): The position of the observer in
+ICRF, in astronomical units (AU).</p></li>
+</ul>
+</dd>
+<dt>Outputs:</dt><dd><ul class="simple">
+<li><p>u (1x1 sonic.PointsS2): The resultant star unit vectors,
+packed into a PointsS2 object.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Last revised: 2/14/24
+Last author: Michael Krause</p>
+</dd></dl>
+
+<dl class="mat method">
+<dt class="sig sig-object mat" id="sonic.StarCatalog.filter">
+<span class="sig-name descname"><span class="pre">filter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">filt_vec</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.StarCatalog.filter" title="Link to this definition">¶</a></dt>
+<dd><p>Filter the catalog based on the supplied binary vector, which
+can be arbitrarily crafted.</p>
+<dl class="simple">
+<dt>Inputs:</dt><dd><ul class="simple">
+<li><p>obj (sonic.StarCatalog): Star catalog object</p></li>
+<li><p>filt_vec (1xm double): Vector of indices to filter to
+(where <cite>m</cite> will be the size of the resultant catalog), OR
+a logical vector of size <cite>n</cite>, with <cite>m</cite> true values, where
+only those marked <cite>true</cite> will be retained by the filter.</p></li>
+</ul>
+</dd>
+<dt>Outputs:</dt><dd><ul class="simple">
+<li><p>filtered_cat (sonic.StarCatalog): Filtered star catalog
+catalog object, with <cite>n</cite> corresponding to the number of
+<cite>true</cite> found in bin_vec.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Last revised: 10/30/24
+Last author: Ava Thrasher</p>
 </dd></dl>
 
 <dl class="mat method">

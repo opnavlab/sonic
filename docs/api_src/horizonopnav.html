@@ -13,8 +13,6 @@
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Image" href="image.html" />
-    <link rel="prev" title="Hipparcos" href="hipparcos.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
@@ -34,42 +32,10 @@
             
   <section id="horizonopnav">
 <h1>HorizonOPNAV<a class="headerlink" href="#horizonopnav" title="Link to this heading">¶</a></h1>
-<dl class="mat class" id="module-+sonic">
+<dl class="mat attribute" id="module-+sonic">
 <dt class="sig sig-object mat" id="sonic.HorizonOPNAV">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">sonic.</span></span><span class="sig-name descname"><span class="pre">HorizonOPNAV</span></span><a class="headerlink" href="#sonic.HorizonOPNAV" title="Link to this definition">¶</a></dt>
-<dd><div class="members docutils container">
-<dl>
-<dt>Method Summary</dt><dd><dl class="mat staticmethod">
-<dt class="sig sig-object mat" id="sonic.HorizonOPNAV.CRA">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">CRA</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">limbPts</span></em>, <em class="sig-param"><span class="pre">radii_P</span></em>, <em class="sig-param"><span class="pre">att_P2C</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.HorizonOPNAV.CRA" title="Link to this definition">¶</a></dt>
-<dd><p>Performs horizon based optical navigation using the Christian-Robinson
-algorithm as detailed in “A Tutorial on Horizon-Based Optical
-Navigation and Attitude Determination With Space Imaging Systems”</p>
-<p>Reference DOI: 10.1109/ACCESS.2021.3051914</p>
-<dl class="simple">
-<dt>Inputs:</dt><dd><ul class="simple">
-<li><p>limbPts (1x1 sonic.Points2): Image plane coordinates of
-the limb</p></li>
-<li><p>radii_P (3x1 double): Celestial body’s principle ai radii
-as described in the planet’s principle axis frame</p></li>
-<li><p>att_P2C (1x1 sonic.Attitude): Attitude transformation from the
-celestial body’s principle axis frame to the camera frame</p></li>
-</ul>
-</dd>
-<dt>Outputs:</dt><dd><ul class="simple">
-<li><p>r_C (1x1 sonic.Points3): vector from the camera to the center of the celestial
-body expressed in the camera frame</p></li>
-</ul>
-</dd>
-</dl>
-<p>Last revised: 3/27/24
-Last author: Ava Thrasher</p>
-</dd></dl>
-
-</dd>
-</dl>
-</div>
-</dd></dl>
+<span class="sig-prename descclassname"><span class="pre">sonic.</span></span><span class="sig-name descname"><span class="pre">HorizonOPNAV</span></span><a class="headerlink" href="#sonic.HorizonOPNAV" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </section>
 
@@ -90,20 +56,16 @@ Last author: Ava Thrasher</p>
 
 
 <h3>Navigation</h3>
-<ul class="current">
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../install.html">Installing SONIC</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples with SONIC</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">API</a></li>
 </ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
-  <li><a href="../api.html">API</a><ul>
-      <li>Previous: <a href="hipparcos.html" title="previous chapter">Hipparcos</a></li>
-      <li>Next: <a href="image.html" title="next chapter">Image</a></li>
-  </ul></li>
   </ul></li>
 </ul>
 </div>

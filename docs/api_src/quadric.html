@@ -57,7 +57,7 @@ and envelope</p></li>
 </ul>
 </dd>
 </dl>
-<p>Last revised: 05/07/24
+<p>Last revised: 11/14/24
 Last author:Michela Mancini</p>
 </dd></dl>
 
@@ -79,14 +79,40 @@ Last author:Michela Mancini</p>
 <dd></dd></dl>
 
 <dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.Quadric.stable">
+<span class="sig-name descname"><span class="pre">stable</span></span><a class="headerlink" href="#sonic.Quadric.stable" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="mat attribute">
 <dt class="sig sig-object mat" id="sonic.Quadric.type">
 <span class="sig-name descname"><span class="pre">type</span></span><a class="headerlink" href="#sonic.Quadric.type" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd>
-<dt>Method Summary</dt><dd><dl class="mat staticmethod">
+<dt>Method Summary</dt><dd><dl class="mat method">
+<dt class="sig sig-object mat" id="sonic.Quadric.center">
+<span class="sig-name descname"><span class="pre">center</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">quadric</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Quadric.center" title="Link to this definition">¶</a></dt>
+<dd><p>Takes a quadric object and translates it by its center.</p>
+<dl>
+<dt>Inputs:</dt><dd><ul class="simple">
+<li><p>quadric (sonic.Quadric object): the original quadric</p></li>
+</ul>
+</dd>
+<dt>Outputs:</dt><dd><ul class="simple">
+<li><p>centeredQuadric (sonic.Quadric object): the quadric</p></li>
+</ul>
+<p>translated by its center
+- center (sonic.Points3 object): new origin of the
+coordinate system (center of the original quadric)</p>
+</dd>
+</dl>
+<p>Last revised: 11/14/2024
+Last author: Michela Mancini</p>
+</dd></dl>
+
+<dl class="mat staticmethod">
 <dt class="sig sig-object mat" id="sonic.Quadric.getType">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">getType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">locus</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Quadric.getType" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">getType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">matrix</span></em>, <em class="sig-param"><span class="pre">matrixType</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Quadric.getType" title="Link to this definition">¶</a></dt>
 <dd><p>Determines type of quadric</p>
 <dl class="simple">
 <dt>Inputs:</dt><dd><ul class="simple">
@@ -103,8 +129,31 @@ Last author: Michela Mancini</p>
 </dd></dl>
 
 <dl class="mat staticmethod">
+<dt class="sig sig-object mat" id="sonic.Quadric.isNumericallyStable">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">isNumericallyStable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">matrix</span></em>, <em class="sig-param"><span class="pre">matrixType</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Quadric.isNumericallyStable" title="Link to this definition">¶</a></dt>
+<dd><p>Determines whether the quadric matrix representation is
+numerically stable or not considering if an origin shift
+makes the previously degenerate matrix a non-degenerate one</p>
+<dl>
+<dt>Inputs:</dt><dd><ul class="simple">
+<li><p>matrix (4x4 double): quadric locus or envelope</p></li>
+</ul>
+</dd>
+<dt>Outputs:</dt><dd><ul class="simple">
+<li><p>stable (1x1 logical): true if the quadric is proper, or</p></li>
+</ul>
+<p>degenerate and remains degenerate after origin shift,
+false if origin shift transforms degenerate quadric to
+non-degenerate quadric</p>
+</dd>
+</dl>
+<p>Last revised: 10/25/24
+Last author: Michela Mancini</p>
+</dd></dl>
+
+<dl class="mat staticmethod">
 <dt class="sig sig-object mat" id="sonic.Quadric.isProperQuadric">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">isProperQuadric</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">matrix</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Quadric.isProperQuadric" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">isProperQuadric</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">matrix</span></em>, <em class="sig-param"><span class="pre">matrixType</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Quadric.isProperQuadric" title="Link to this definition">¶</a></dt>
 <dd><p>Determines whether the quadric locus represents a proper
 quadric</p>
 <dl class="simple">
@@ -118,7 +167,50 @@ false otherwise</p></li>
 </ul>
 </dd>
 </dl>
-<p>Last revised: 4/24/24
+<p>Last revised: 10/30/24
+Last author: Michela Mancini</p>
+</dd></dl>
+
+<dl class="mat method">
+<dt class="sig sig-object mat" id="sonic.Quadric.rotate">
+<span class="sig-name descname"><span class="pre">rotate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">quadric</span></em>, <em class="sig-param"><span class="pre">DCM</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Quadric.rotate" title="Link to this definition">¶</a></dt>
+<dd><p>Takes a quadric object and a translation vector and outputs
+the quadric object shifted by the translation vector</p>
+<dl>
+<dt>Inputs:</dt><dd><ul class="simple">
+<li><p>quadric (sonic.Quadric object): the original quadric</p></li>
+<li><p>DCM (3x3 double): the rotation matrix</p></li>
+</ul>
+</dd>
+<dt>Outputs:</dt><dd><ul class="simple">
+<li><p>rotatedQuadric (sonic.Quadric object): the quadric</p></li>
+</ul>
+<p>rotated by the DCM</p>
+</dd>
+</dl>
+<p>Last revised: 11/14/2024
+Last author: Michela Mancini</p>
+</dd></dl>
+
+<dl class="mat method">
+<dt class="sig sig-object mat" id="sonic.Quadric.translate">
+<span class="sig-name descname"><span class="pre">translate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">quadric</span></em>, <em class="sig-param"><span class="pre">translation</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Quadric.translate" title="Link to this definition">¶</a></dt>
+<dd><p>Takes a quadric object and a translation vector and outputs
+the quadric object shifted by the translation vector</p>
+<dl>
+<dt>Inputs:</dt><dd><ul class="simple">
+<li><p>quadric (sonic.Quadric object): the original quadric</p></li>
+<li><p>translation (sonic.Points3 object): the translation</p></li>
+</ul>
+<p>vector (origin of the new coordinate system)</p>
+</dd>
+<dt>Outputs:</dt><dd><ul class="simple">
+<li><p>translatedQuadric (sonic.Quadric object): the quadric</p></li>
+</ul>
+<p>translated by the translation vector</p>
+</dd>
+</dl>
+<p>Last revised: 11/14/2024
 Last author: Michela Mancini</p>
 </dd></dl>
 

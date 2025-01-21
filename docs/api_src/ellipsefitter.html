@@ -74,20 +74,16 @@ least-squares, ‘shls’ for semi-hyper least squares, or
 </dd>
 <dt>Outputs:</dt><dd><ul class="simple">
 <li><p>conicObj (1,1) sonic.Conic: conic object for solution</p></li>
-<li><p>implSoln (6x1): values for the implicit representation
-of the ellipse</p></li>
-<li><p>explSoln (5x1): values for the explicit representation
-of the ellipse [xc; yc; a; b; psi]</p></li>
 </ul>
 </dd>
 </dl>
-<p>Last revised: Sep 24, 2024
+<p>Last revised: Nov 15, 2024
 Last author: Tara Mina</p>
 </dd></dl>
 
 <dl class="mat staticmethod">
 <dt class="sig sig-object mat" id="sonic.EllipseFitter.getEllipseCovariance">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">getEllipseCovariance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">implSoln</span></em>, <em class="sig-param"><span class="pre">ellipsePts</span></em>, <em class="sig-param"><span class="pre">sigsqrXY</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.EllipseFitter.getEllipseCovariance" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">getEllipseCovariance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">conicObj</span></em>, <em class="sig-param"><span class="pre">ellipsePts</span></em>, <em class="sig-param"><span class="pre">sigsqrXY</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.EllipseFitter.getEllipseCovariance" title="Link to this definition">¶</a></dt>
 <dd><p>Compute analytical covariance of implicit solution for
 ellipse fitting.</p>
 <p>Derivation of HLS covariance originally from Kanatani
@@ -113,7 +109,7 @@ point samples</p></li>
 </div></blockquote>
 <dl class="simple">
 <dt>Inputs:</dt><dd><ul class="simple">
-<li><p>implSoln (6x1 double): implicit solution, as computed by
+<li><p>conicObj (1x1 sonic.Conic): conic fit, as computed by
 a particular ellipse fitting method</p></li>
 <li><p>ellipsePts (sonic.Points2): X,Y vals of 2D points on
 the edge of the ellipse, to fit</p></li>

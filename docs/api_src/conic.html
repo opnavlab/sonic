@@ -42,7 +42,7 @@
 <dt>Constructor Summary</dt><dd><dl class="mat method">
 <dt class="sig sig-object mat" id="sonic.Conic.Conic">
 <span class="sig-name descname"><span class="pre">Conic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">raw_conic</span></em>, <em class="sig-param"><span class="pre">varargin</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Conic.Conic" title="Link to this definition">¶</a></dt>
-<dd><p>Creates a Conic object.</p>
+<dd><p>Creates a conic object.</p>
 <dl>
 <dt>Inputs:</dt><dd><ul class="simple">
 <li><p>raw_conic (1,6 double): Implicit representation of the
@@ -77,12 +77,12 @@ contain exactly two lines.</p></li>
 </ul>
 </dd>
 <dt>Outputs:</dt><dd><ul class="simple">
-<li><p>obj (1,1 sonic.Conic): Conic object containing properties
+<li><p>obj (1,1 sonic.Conic): conic object containing properties
 of the input conic.</p></li>
 </ul>
 </dd>
 </dl>
-<p>Last revised: 4/19/24
+<p>Last revised: 11/11/24
 Last author: Michela Mancini</p>
 </dd></dl>
 
@@ -96,7 +96,7 @@ Last author: Michela Mancini</p>
 <dl class="mat attribute">
 <dt class="sig sig-object mat" id="sonic.Conic.envelope">
 <span class="sig-name descname"><span class="pre">envelope</span></span><a class="headerlink" href="#sonic.Conic.envelope" title="Link to this definition">¶</a></dt>
-<dd><p>inverse of conic locus satisfying all lines tangent to the conic</p>
+<dd><p>inverse of Conic locus satisfying all lines tangent to the Conic</p>
 </dd></dl>
 
 <dl class="mat attribute">
@@ -116,7 +116,7 @@ equation Ax^2 + Bxy + Cy^2 + Dx + Ey + F = 0</p>
 <dl class="mat attribute">
 <dt class="sig sig-object mat" id="sonic.Conic.locus">
 <span class="sig-name descname"><span class="pre">locus</span></span><a class="headerlink" href="#sonic.Conic.locus" title="Link to this definition">¶</a></dt>
-<dd><p>conic locus of the form [A, B/2, D/2; B/2, C, E/2; D/2, E/2, F]
+<dd><p>Conic locus of the form [A, B/2, D/2; B/2, C, E/2; D/2, E/2, F]
 satisfies all points lying on the conic</p>
 </dd></dl>
 
@@ -127,291 +127,38 @@ satisfies all points lying on the conic</p>
 </dd></dl>
 
 <dl class="mat attribute">
+<dt class="sig sig-object mat" id="sonic.Conic.stable">
+<span class="sig-name descname"><span class="pre">stable</span></span><a class="headerlink" href="#sonic.Conic.stable" title="Link to this definition">¶</a></dt>
+<dd><p>numerical stability, where a conic is considered not stable if
+a proper conic is recognized as such only after origin shift</p>
+</dd></dl>
+
+<dl class="mat attribute">
 <dt class="sig sig-object mat" id="sonic.Conic.type">
 <span class="sig-name descname"><span class="pre">type</span></span><a class="headerlink" href="#sonic.Conic.type" title="Link to this definition">¶</a></dt>
 <dd><p>conic classification (ellipse, circle, parabola, etc…)</p>
 </dd></dl>
 
 </dd>
-<dt>Method Summary</dt><dd><dl class="mat staticmethod">
-<dt class="sig sig-object mat" id="sonic.Conic.degenerateToImplicit">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">degenerateToImplicit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">degenerateLocus</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Conic.degenerateToImplicit" title="Link to this definition">¶</a></dt>
-<dd><p>Converts the degenerate conic representation in terms of two
-lines to the implicit representation</p>
+<dt>Method Summary</dt><dd><dl class="mat method">
+<dt class="sig sig-object mat" id="sonic.Conic.center">
+<span class="sig-name descname"><span class="pre">center</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">conic</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Conic.center" title="Link to this definition">¶</a></dt>
+<dd><p>Takes a conic object and translates it by its center.</p>
 <dl>
-<dt>Inputs:</dt><dd><blockquote>
-<div><ul class="simple">
-<li><p>degenerateLocus (1x1 Lines2 object): lines representing
-the degenerate conic</p></li>
+<dt>Inputs:</dt><dd><ul class="simple">
+<li><p>conic (sonic.Conic object): the original conic</p></li>
 </ul>
-</div></blockquote>
-<dl class="simple">
+</dd>
 <dt>Outputs:</dt><dd><ul class="simple">
-<li><p>implicit_normalized (6x1 double): normalized implicit
-coefficients</p></li>
+<li><p>translatedConic (sonic.Conic object): the conic</p></li>
 </ul>
+<p>translated by its center
+- center (sonic.Points2 object): new origin of the
+coordinate system (center of the original conic)</p>
 </dd>
 </dl>
-</dd>
-</dl>
-<p>Last revised: 4/15/24
+<p>Last revised: 11/14/2024
 Last author: Michela Mancini</p>
-</dd></dl>
-
-<dl class="mat staticmethod">
-<dt class="sig sig-object mat" id="sonic.Conic.degenerateToLocus">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">degenerateToLocus</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">degenerateLocus</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Conic.degenerateToLocus" title="Link to this definition">¶</a></dt>
-<dd><p>Converts the degenerate conic representation in terms of two
-lines to the conic locus</p>
-<dl>
-<dt>Inputs:</dt><dd><blockquote>
-<div><ul class="simple">
-<li><p>degenerateLocus (1x1 Lines2 object): lines representing
-the degenerate conic</p></li>
-</ul>
-</div></blockquote>
-<dl class="simple">
-<dt>Outputs:</dt><dd><ul class="simple">
-<li><p>locus (3x3 double): conic locus</p></li>
-</ul>
-</dd>
-</dl>
-</dd>
-</dl>
-<p>Last revised: 4/15/24
-Last author: Michela Mancini</p>
-</dd></dl>
-
-<dl class="mat staticmethod">
-<dt class="sig sig-object mat" id="sonic.Conic.envelopeToLocus">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">envelopeToLocus</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">envelope</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Conic.envelopeToLocus" title="Link to this definition">¶</a></dt>
-<dd><p>Converts envelope representation to locus</p>
-<dl class="simple">
-<dt>Inputs:</dt><dd><ul class="simple">
-<li><p>envelope (3x3 double): conic envelope</p></li>
-</ul>
-</dd>
-<dt>Outputs:</dt><dd><ul class="simple">
-<li><p>locus (3x3 double): conic locus</p></li>
-</ul>
-</dd>
-</dl>
-<p>Last revised: 4/16/24
-Last author: Michela Mancini</p>
-</dd></dl>
-
-<dl class="mat staticmethod">
-<dt class="sig sig-object mat" id="sonic.Conic.explicitToImplicit">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">explicitToImplicit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">explicit</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Conic.explicitToImplicit" title="Link to this definition">¶</a></dt>
-<dd><p>Converts explicit representation to normalized implicit
-coefficients</p>
-<dl class="simple">
-<dt>Inputs:</dt><dd><ul class="simple">
-<li><p>explicit (5x1 double): explicit representation
-of the conic</p></li>
-</ul>
-</dd>
-<dt>Outputs:</dt><dd><ul class="simple">
-<li><p>implicit_normalized (6x1 double): normalized implicit
-coefficients</p></li>
-</ul>
-</dd>
-</dl>
-<p>Last revised: 2/15/24
-Last author: Ava Thrasher</p>
-</dd></dl>
-
-<dl class="mat staticmethod">
-<dt class="sig sig-object mat" id="sonic.Conic.explicitToLocus">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">explicitToLocus</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">explicit</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Conic.explicitToLocus" title="Link to this definition">¶</a></dt>
-<dd><p>Converts explicit representation to conic locus</p>
-<dl class="simple">
-<dt>Inputs:</dt><dd><ul class="simple">
-<li><p>explicit (5x1 double): explicit representation
-of the conic</p></li>
-</ul>
-</dd>
-<dt>Outputs:</dt><dd><ul class="simple">
-<li><p>locus (3x3 double): conic locus</p></li>
-</ul>
-</dd>
-</dl>
-<p>Last revised: 4/18/24
-Last author: Michela Mancini</p>
-</dd></dl>
-
-<dl class="mat staticmethod">
-<dt class="sig sig-object mat" id="sonic.Conic.getType">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">getType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">locus</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Conic.getType" title="Link to this definition">¶</a></dt>
-<dd><p>Determines type of conic</p>
-<dl class="simple">
-<dt>Inputs:</dt><dd><ul class="simple">
-<li><p>locus (3x3 double): conic locus matrix</p></li>
-</ul>
-</dd>
-<dt>Outputs:</dt><dd><ul class="simple">
-<li><p>type (1xn string): string signifying the type of the
-conic. Will be one of: “circle”, “ellipse”, “hyperbola”,
-“parabola”, “point”, “intersecting_lines”, “parallel_lines”</p></li>
-</ul>
-</dd>
-</dl>
-<p>Last revised: 4/18/24
-Last author: Michela Mancini</p>
-</dd></dl>
-
-<dl class="mat staticmethod">
-<dt class="sig sig-object mat" id="sonic.Conic.implicitToDegenerate">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">implicitToDegenerate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">implicit</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Conic.implicitToDegenerate" title="Link to this definition">¶</a></dt>
-<dd><p>Converts implicit representation to degenerate conic</p>
-<dl class="simple">
-<dt>Inputs:</dt><dd><ul class="simple">
-<li><p>implicit_normalized (6x1 double): Vector containing implicit
-coefficients [A;B;C;D;E;F]</p></li>
-</ul>
-</dd>
-<dt>Outputs:</dt><dd><ul class="simple">
-<li><p>degenerateConic (1x1 Lines2 object): representation of
-the degenerate conic in terms of two lines</p></li>
-</ul>
-</dd>
-</dl>
-<p>Last revised: 4/15/24
-Last author: Michela Mancini</p>
-</dd></dl>
-
-<dl class="mat staticmethod">
-<dt class="sig sig-object mat" id="sonic.Conic.implicitToExplicit">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">implicitToExplicit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">implicit</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Conic.implicitToExplicit" title="Link to this definition">¶</a></dt>
-<dd><p>Converts implicit representation to explicit</p>
-<dl class="simple">
-<dt>Inputs:</dt><dd><ul class="simple">
-<li><p>implicit_normalized (6x1 double): Vector containing implicit
-coefficients [A;B;C;D;E;F]</p></li>
-</ul>
-</dd>
-<dt>Outputs:</dt><dd><ul class="simple">
-<li><p>explicit (5x1 double): Explicit representation of conic
-[xc; yc; a; b; psi]</p></li>
-</ul>
-</dd>
-</dl>
-<p>Last revised: 2/15/24
-Last author: Ava Thrasher</p>
-</dd></dl>
-
-<dl class="mat staticmethod">
-<dt class="sig sig-object mat" id="sonic.Conic.implicitToLocus">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">implicitToLocus</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">implicit</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Conic.implicitToLocus" title="Link to this definition">¶</a></dt>
-<dd><p>Converts implicit representation to locus representation of
-conic</p>
-<dl class="simple">
-<dt>Inputs:</dt><dd><ul class="simple">
-<li><p>locus_det1 (6x1 double): Vector containing implicit
-coefficients [A;B;C;D;E;F]</p></li>
-</ul>
-</dd>
-<dt>Outputs:</dt><dd><ul class="simple">
-<li><p>locus_det1 (3x3 double): Conic locus matrix</p></li>
-</ul>
-</dd>
-</dl>
-<p>Last revised: 2/15/24
-Last author: Ava Thrasher</p>
-</dd></dl>
-
-<dl class="mat staticmethod">
-<dt class="sig sig-object mat" id="sonic.Conic.isProperConic">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">isProperConic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">matrix</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Conic.isProperConic" title="Link to this definition">¶</a></dt>
-<dd><p>Determines whether the conic locus represents a proper conic</p>
-<dl class="simple">
-<dt>Inputs:</dt><dd><ul class="simple">
-<li><p>matrix (3x3 double): conic locus or conic envelope</p></li>
-</ul>
-</dd>
-<dt>Outputs:</dt><dd><ul class="simple">
-<li><p>proper (1x1 logical): true if the conic is proper, false
-otherwise</p></li>
-</ul>
-</dd>
-</dl>
-<p>Last revised: 4/19/24
-Last author: Michela Mancini</p>
-</dd></dl>
-
-<dl class="mat staticmethod">
-<dt class="sig sig-object mat" id="sonic.Conic.locusToDegenerate">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">locusToDegenerate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">locus</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Conic.locusToDegenerate" title="Link to this definition">¶</a></dt>
-<dd><p>Converts degenerate conic from locus to two lines</p>
-<dl class="simple">
-<dt>Inputs:</dt><dd><ul class="simple">
-<li><p>locus (3x3 double): conic locus</p></li>
-</ul>
-</dd>
-<dt>Outputs:</dt><dd><ul class="simple">
-<li><p>degenerateConic (1x1 Lines2 object): two lines
-representing the degenerate conic</p></li>
-</ul>
-</dd>
-</dl>
-<p>Last revised: 4/15/24
-Last author: Michela Mancini</p>
-</dd></dl>
-
-<dl class="mat staticmethod">
-<dt class="sig sig-object mat" id="sonic.Conic.locusToEnvelope">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">locusToEnvelope</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">locus</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Conic.locusToEnvelope" title="Link to this definition">¶</a></dt>
-<dd><p>Converts locus representation to envelope</p>
-<dl class="simple">
-<dt>Inputs:</dt><dd><ul class="simple">
-<li><p>locus (3x3 double): conic locus</p></li>
-</ul>
-</dd>
-<dt>Outputs:</dt><dd><ul class="simple">
-<li><p>envelope (3x3 double): conic envelope</p></li>
-</ul>
-</dd>
-</dl>
-<p>Last revised: 4/15/24
-Last author: Michela Mancini</p>
-</dd></dl>
-
-<dl class="mat staticmethod">
-<dt class="sig sig-object mat" id="sonic.Conic.locusToExplicit">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">locusToExplicit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">locus</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Conic.locusToExplicit" title="Link to this definition">¶</a></dt>
-<dd><p>Converts locus representation to explicit</p>
-<dl class="simple">
-<dt>Inputs:</dt><dd><ul class="simple">
-<li><p>locus (3x3 double): conic locus</p></li>
-</ul>
-</dd>
-<dt>Outputs:</dt><dd><ul class="simple">
-<li><p>explicit (5x1 double): explicit representation
-of the conic</p></li>
-</ul>
-</dd>
-</dl>
-<p>Last revised: 4/19/24
-Last author: Michela Mancini</p>
-</dd></dl>
-
-<dl class="mat staticmethod">
-<dt class="sig sig-object mat" id="sonic.Conic.locusToImplicit">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">locusToImplicit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">locus</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Conic.locusToImplicit" title="Link to this definition">¶</a></dt>
-<dd><p>Converts locus representation to implicit</p>
-<dl class="simple">
-<dt>Inputs:</dt><dd><ul class="simple">
-<li><p>locus (3x3 double): conic locus</p></li>
-</ul>
-</dd>
-<dt>Outputs:</dt><dd><ul class="simple">
-<li><p>implicit_normalized (6x1 double): normalized implicit
-coefficients</p></li>
-</ul>
-</dd>
-</dl>
-<p>Last revised: 2/15/24
-Last author: Ava Thrasher</p>
 </dd></dl>
 
 <dl class="mat staticmethod">
@@ -476,12 +223,12 @@ Last author: Michela Mancini</p>
 
 <dl class="mat staticmethod">
 <dt class="sig sig-object mat" id="sonic.Conic.parabolaToLocus">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">parabolaToLocus</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">explicit_parabola</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Conic.parabolaToLocus" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">parabolaToLocus</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">explicitParabola</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Conic.parabolaToLocus" title="Link to this definition">¶</a></dt>
 <dd><p>Determine the conic locus associated with a parabola with a
 specified vertex, tilt angle and semi-latus rectum</p>
 <dl class="simple">
 <dt>Inputs:</dt><dd><ul class="simple">
-<li><p>explicit_parabola (4x1 double): contains a
+<li><p>explicitParabola (4x1 double): contains a
 parameterization of the parabola in terms of vertex
 coordinates (xc,yc), tilt angle (psi) and the semi-latus
 rectum (p). The expected ordering is the following:
@@ -493,7 +240,52 @@ explicit_parabola = [xc; yc; psi; p].</p></li>
 </ul>
 </dd>
 </dl>
-<p>Last revised: 4/22/24
+<p>Last revised: 10/30/24
+Last author: Michela Mancini</p>
+</dd></dl>
+
+<dl class="mat method">
+<dt class="sig sig-object mat" id="sonic.Conic.rotate">
+<span class="sig-name descname"><span class="pre">rotate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">conic</span></em>, <em class="sig-param"><span class="pre">angle</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Conic.rotate" title="Link to this definition">¶</a></dt>
+<dd><p>Takes a conic object and an angle and outputs the
+conic object rotated about the origin by that angle
+(counterclock rotation)</p>
+<dl>
+<dt>Inputs:</dt><dd><ul class="simple">
+<li><p>conic (sonic.Conic object): the original conic</p></li>
+<li><p>angle (double): the angle of counter clock rotation
+(rad)</p></li>
+</ul>
+</dd>
+<dt>Outputs:</dt><dd><ul class="simple">
+<li><p>newConic (sonic.Conic object): the conic</p></li>
+</ul>
+<p>translated by the translation vector</p>
+</dd>
+</dl>
+<p>Last revised: 11/17/2024
+Last author: Michela Mancini</p>
+</dd></dl>
+
+<dl class="mat method">
+<dt class="sig sig-object mat" id="sonic.Conic.translate">
+<span class="sig-name descname"><span class="pre">translate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">conic</span></em>, <em class="sig-param"><span class="pre">translation</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sonic.Conic.translate" title="Link to this definition">¶</a></dt>
+<dd><p>Takes a conic object and a translation vector and outputs
+the conic object shifted by the translation vector</p>
+<dl>
+<dt>Inputs:</dt><dd><ul class="simple">
+<li><p>conic (sonic.Conic object): the original conic</p></li>
+<li><p>translation (sonic.Points2 object): the translation</p></li>
+</ul>
+<p>vector (origin of the new coordinate system)</p>
+</dd>
+<dt>Outputs:</dt><dd><ul class="simple">
+<li><p>translatedConic (sonic.Conic object): the conic</p></li>
+</ul>
+<p>translated by the translation vector</p>
+</dd>
+</dl>
+<p>Last revised: 11/14/2024
 Last author: Michela Mancini</p>
 </dd></dl>
 
