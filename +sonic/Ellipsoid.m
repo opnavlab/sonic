@@ -14,7 +14,7 @@ classdef Ellipsoid < sonic.Quadric
         %   Constructs an ellipsoid object from the principle axis radii.
         %   If attitude and position of ellipsoid relative to observer are
         %   provided, the ellipsoid will be represented relative to the
-        %   observer. Otherwise, the ellipsoid will be represented
+        %   observer. Otherwisse, the ellipsoid will be represented
         %   relative to the principle axis frame.
         %
         %   Inputs

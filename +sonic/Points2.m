@@ -61,6 +61,17 @@ classdef Points2 < sonic.GeometryP2
                 
                 case 3  % Points are in P2
 
+ 
+                    % if [0;0;0] was input, error
+                     small = abs(pts) < sonic.Tolerances.HomNorm;
+                     if any(sum(small)==3)
+                        error('sonic:Points2:invalidInput', ...
+                            ['Point [0; 0; 0] not member of P2. If ' ...
+                            'this error arises from scaling issues, ' ...
+                            'consider normalizing the point with respect' ...
+                            'to the third component.']);
+                    end
+                    
                     % Check for points at infinity and points with negative
                     % homogenous component:
                     inf_pts = abs(pts(3, :)) < sonic.Tolerances.HomNorm;
@@ -78,6 +89,7 @@ classdef Points2 < sonic.GeometryP2
                         'Must input a 2 or 3-by-n matrix of 2D points.');
             end
         end
+
 
         function val = get.r2(obj)
         %% val = get.r2(obj)
@@ -152,4 +164,5 @@ classdef Points2 < sonic.GeometryP2
         end
 
     end
+
 end
