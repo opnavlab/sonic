@@ -13,7 +13,7 @@ demos/
 !+sonic/+data/hipparcos.mat
 !+sonic/+data/constellations.mat
 !+sonic/+data/usnognc.mat
-!+sonic/+data/robbinsData.mat
+!+sonic/+data/robbins.mat
 !+examples/+data/craterRimPoints.mat
 
 # Ignore .DS_Store:
