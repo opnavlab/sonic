@@ -5,10 +5,9 @@
 scratchfile.m
 demos/
 
-# Explicitly whitelist data files by:
-# a) excluding the data folder and all .mat files by default:
+# Exclude the data folder .mat files by default:
 +sonic/+data/*.mat
-*.mat
+
 
 # Ignore .DS_Store:
 .DS_Store
