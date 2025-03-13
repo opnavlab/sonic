@@ -85,7 +85,7 @@ classdef Robbins
 
             if loadParsedRobbins
                 % Load in the parsed data file
-                dbLoc = '+sonic/+data/robbinsData.mat';
+                dbLoc = '+sonic/+data/robbins.mat';
                 rbnMat = load(dbLoc);
                 rbn = rbnMat.robTab;
 
