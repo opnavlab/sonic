@@ -24,7 +24,7 @@ For **API documentation**, please visit [https://opnavlab.github.io/sonic/](http
 # Getting Started
 Minimal preparation is needed to begin using SONIC. Simply follow these steps:
 1. Clone the repository locally.
-2. Download the .mat data files from [this link](https://gatech.box.com/s/0e56ugrdv2u6e2zwqm7gw3t8yt3ddlrm) and place them in the +sonic/+data folder within your local repository.
+2. Download the .mat data files from [this link](https://gatech.box.com/s/khb5ifmqxzgyt08lmh834xp5csbqte85) and place them in the +sonic/+data folder within your local repository.
 3. Add the sonic directory to the search path that you're working in (i.e. using addpath). 
 
 A few MATLAB live tutorials are provided under [+examples](https://github.com/opnavlab/sonic/tree/main/%2Bexamples)
