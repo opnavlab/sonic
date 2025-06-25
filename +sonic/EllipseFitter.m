@@ -147,20 +147,18 @@ classdef EllipseFitter
                 sigsqrXY            (1, 1)      double
             end
 
-            % Get explicit solution from conic, get centered conic
-            ellpCenter = conicObj.explicit(1:2)';
-            conicCentered = conicObj.center();
-            implSolnCentered = conicCentered.implicit;
+            % Get explicit solution from conic, get centered conic 
+            implSoln = conicObj.implicit;
 
             % number of coefficients for implicit ellipse representation
             ncoeff = 6;
 
             % get xiVects, and center them
             xyvals_2Darr = ellipsePts.r2;
-            xvalsCentered = xyvals_2Darr(1,:)' - ellpCenter(1);
-            yvalsCentered = xyvals_2Darr(2,:)' - ellpCenter(2);
+            xvals = xyvals_2Darr(1,:)';
+            yvals = xyvals_2Darr(2,:)';
             xiVects = sonic.EllipseFitter.getXiVects(...
-                xvalsCentered,yvalsCentered);
+                xvals,yvals);
 
             % Compute matrix used for total least squares, called M
             [M, xiOuterAll] = sonic.EllipseFitter.computeLSMatrix(xiVects);
@@ -171,17 +169,17 @@ classdef EllipseFitter
 
             % get R0xi (computational effort for this is most of the work
             % to compute the Taubin normalization factor, so we do that)
-            xvalsCentered = xiVects(:,4);   yvalsCentered = xiVects(:,5);
+            xvals = xiVects(:,4);   yvals = xiVects(:,5);
             [~, R0xiAll] = ...
                 sonic.EllipseFitter.computeTaubinNormFactor(...
-                xvalsCentered,yvalsCentered);
+                xvals,yvals);
             RxiAll = sigsqrXY*R0xiAll;
 
             % Loop through all observations to compute inner matrix
-            nobs = length(xvalsCentered);
+            nobs = length(xvals);
             sumInnerMat = zeros(ncoeff,ncoeff);
             for i=1:nobs
-                intermTerm = implSolnCentered' * RxiAll(:,:,i) * implSolnCentered;
+                intermTerm = implSoln' * RxiAll(:,:,i) * implSoln;
                 innerMat = (1/nsamp)^2 * intermTerm * xiOuterAll(:,:,i);
                 sumInnerMat = sumInnerMat + innerMat;
             end
